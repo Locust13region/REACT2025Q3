@@ -1,11 +1,27 @@
 import { Component } from 'react';
 import type { ContentProps } from '@/types/types';
+import dataFetch from '@/api/api-request';
 
-class Content extends Component<ContentProps> {
+export default class Content extends Component<ContentProps> {
+  state = {
+    loading: false,
+    errorOccurred: false,
+    searchSubstring: this.props.searchSubstring,
+  };
+
+  async componentDidUpdate(prevProps: Readonly<ContentProps>) {
+    if (prevProps.searchSubstring !== this.props.searchSubstring) {
+      this.setState({
+        searchSubstring: this.props.searchSubstring,
+        loading: true,
+      });
+      const fetchResponse = await dataFetch();
+    }
+  }
+
   render() {
-    const { searchSubstring } = this.props;
-    return <main className="content">{searchSubstring}</main>;
+    console.log('render content');
+    console.log(this.state.searchSubstring);
+    return <main className="content">{this.state.searchSubstring}</main>;
   }
 }
-
-export default Content;

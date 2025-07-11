@@ -29,6 +29,7 @@ export default class Header extends Component<HeaderProps> {
           <label htmlFor="searchInput">Find items</label>
           <input
             type="search"
+            id="searchInput"
             name="searchInput"
             value={this.state.inputValue}
             onChange={this.handleInputChange}
