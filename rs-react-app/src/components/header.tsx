@@ -23,7 +23,6 @@ export default class Header extends Component<HeaderProps> {
   };
 
   render() {
-    console.log(this.props.searchSubstring);
     return (
       <header className="header">
         <form onSubmit={this.handleSubmit}>
