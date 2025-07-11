@@ -5,43 +5,26 @@
   padding: 1rem;
   display: grid;
   grid-template-rows: 4rem 1fr;
-  box-sizing: border-box;
-  /* text-align: center; */
+  text-align: center;
 }
 
 .header {
-  display: flex;
-  place-items: center;
-  background-color: aqua;
+  padding: 0.5rem 1rem;
+  gap: 5rem;
+  border-bottom: 1px solid gray;
+  & form {
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    gap: 2rem;
+  }
 }
 
 .content {
-  background-color: blueviolet;
+  border: 1px solid gray;
   height: 100%;
+  padding: 1rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

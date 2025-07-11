@@ -7,11 +7,29 @@ class App extends Component {
   state = {
     searchSubstring: '',
   };
+
+  setSearchSubstring = (value: string): void => {
+    this.setState({ searchSubstring: value });
+    localStorage.setItem('rs-react-app', value);
+  };
+
+  componentDidMount(): void {
+    const restoredSearch = localStorage.getItem('rs-react-app');
+    if (restoredSearch) {
+      this.setState({ searchSubstring: restoredSearch });
+    } else {
+      localStorage.removeItem('rs-react-app');
+    }
+  }
+
   render() {
     return (
       <>
-        <Header></Header>
-        <Content></Content>
+        <Header
+          searchSubstring={this.state.searchSubstring}
+          setSearchSubstring={this.setSearchSubstring}
+        ></Header>
+        <Content searchSubstring={this.state.searchSubstring}></Content>
       </>
     );
   }

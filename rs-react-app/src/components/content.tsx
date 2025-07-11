@@ -1,8 +1,13 @@
 import { Component } from 'react';
 
-class Content extends Component {
+type ContentProps = {
+  searchSubstring: string;
+};
+
+class Content extends Component<ContentProps> {
   render() {
-    return <main className="content"></main>;
+    const { searchSubstring } = this.props;
+    return <main className="content">{searchSubstring}</main>;
   }
 }
 
