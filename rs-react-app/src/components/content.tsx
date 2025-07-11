@@ -1,8 +1,5 @@
 import { Component } from 'react';
-
-type ContentProps = {
-  searchSubstring: string;
-};
+import type { ContentProps } from '@/types/types';
 
 class Content extends Component<ContentProps> {
   render() {

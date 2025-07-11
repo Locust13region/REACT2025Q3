@@ -1,12 +1,8 @@
 import { Component } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
+import type { HeaderProps } from '@/types/types';
 
-type HeaderProps = {
-  searchSubstring: string;
-  setSearchSubstring: (value: string) => void;
-};
-
-class Header extends Component<HeaderProps> {
+export default class Header extends Component<HeaderProps> {
   state = {
     inputValue: this.props.searchSubstring,
   };
@@ -44,5 +40,3 @@ class Header extends Component<HeaderProps> {
     );
   }
 }
-
-export default Header;
