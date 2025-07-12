@@ -7,8 +7,21 @@ export default class Header extends Component<HeaderProps> {
     inputValue: this.props.searchSubstring,
   };
 
+  componentDidMount(): void {
+    const restoredSearch = localStorage.getItem('rs-react-app');
+    if (restoredSearch) {
+      this.setState({ inputValue: restoredSearch });
+      this.props.setSearchSubstring(restoredSearch);
+    } else {
+      localStorage.removeItem('rs-react-app');
+    }
+  }
+
   componentDidUpdate(prevProps: Readonly<HeaderProps>) {
-    if (prevProps.searchSubstring !== this.props.searchSubstring) {
+    if (
+      prevProps.searchSubstring !== this.props.searchSubstring &&
+      this.state.inputValue !== this.props.searchSubstring
+    ) {
       this.setState({ inputValue: this.props.searchSubstring });
     }
   }
@@ -19,7 +32,7 @@ export default class Header extends Component<HeaderProps> {
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.setSearchSubstring(this.state.inputValue);
+    this.props.setSearchSubstring(this.state.inputValue.trim());
   };
 
   render() {
@@ -32,7 +45,7 @@ export default class Header extends Component<HeaderProps> {
             id="searchInput"
             name="searchInput"
             value={this.state.inputValue}
-            onChange={this.handleInputChange}
+            onInput={this.handleInputChange}
           />
           <button type="submit">Search</button>
         </form>

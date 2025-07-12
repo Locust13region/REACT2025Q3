@@ -2,10 +2,12 @@ import { Component } from 'react';
 import Header from '@/components/header';
 import Content from '@/components/content';
 import './App.css';
+import ErrorBoundary from './components/error-boundary';
 
 export default class App extends Component {
   state = {
     searchSubstring: '',
+    errorInfo: '',
   };
 
   setSearchSubstring = (value: string): void => {
@@ -13,14 +15,9 @@ export default class App extends Component {
     localStorage.setItem('rs-react-app', value);
   };
 
-  componentDidMount(): void {
-    const restoredSearch = localStorage.getItem('rs-react-app');
-    if (restoredSearch) {
-      this.setState({ searchSubstring: restoredSearch });
-    } else {
-      localStorage.removeItem('rs-react-app');
-    }
-  }
+  setErrorInfo = (value: string): void => {
+    this.setState({ errorInfo: value });
+  };
 
   render() {
     return (
@@ -29,7 +26,12 @@ export default class App extends Component {
           searchSubstring={this.state.searchSubstring}
           setSearchSubstring={this.setSearchSubstring}
         ></Header>
-        <Content searchSubstring={this.state.searchSubstring}></Content>
+        <ErrorBoundary>
+          <Content
+            searchSubstring={this.state.searchSubstring}
+            setErrorInfo={this.setErrorInfo}
+          ></Content>
+        </ErrorBoundary>
       </>
     );
   }

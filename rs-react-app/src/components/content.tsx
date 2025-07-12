@@ -5,23 +5,34 @@ import dataFetch from '@/api/api-request';
 export default class Content extends Component<ContentProps> {
   state = {
     loading: false,
-    errorOccurred: false,
-    searchSubstring: this.props.searchSubstring,
   };
 
-  async componentDidUpdate(prevProps: Readonly<ContentProps>) {
+  async componentDidMount(): Promise<void> {
+    this.setState({
+      loading: true,
+    });
+    await dataFetch(this.props.searchSubstring);
+    this.setState({ loading: false });
+  }
+
+  async componentDidUpdate(prevProps: Readonly<ContentProps>): Promise<void> {
     if (prevProps.searchSubstring !== this.props.searchSubstring) {
       this.setState({
-        searchSubstring: this.props.searchSubstring,
         loading: true,
       });
-      const fetchResponse = await dataFetch();
+      await dataFetch(this.props.searchSubstring);
+      this.setState({ loading: false });
     }
   }
 
   render() {
     console.log('render content');
-    console.log(this.state.searchSubstring);
-    return <main className="content">{this.state.searchSubstring}</main>;
+    const content = this.state.loading ? (
+      <h2>Loading...</h2>
+    ) : (
+      <main className="content"> {this.props.searchSubstring}</main>
+    );
+
+    return content;
   }
 }

@@ -5,4 +5,17 @@ export type HeaderProps = {
 
 export type ContentProps = {
   searchSubstring: string;
+  setErrorInfo: (value: string) => void;
 };
+
+export type ErrorBoundaryProps = {
+  //   hasError: boolean;
+  children: Element;
+  //   fallback: Element;
+};
+
+export type MappedResponse = {
+  id: number;
+  author: string;
+  title: string;
+}[];
