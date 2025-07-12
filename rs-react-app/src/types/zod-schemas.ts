@@ -17,10 +17,8 @@ export const responseSchema = z.object({
   results: z.array(bookSchema),
 });
 
-export const mappedResponse = z.array(
-  z.object({
-    id: z.number(),
-    author: z.string(),
-    title: z.string(),
-  })
-);
+export const mappedBook = z.object({
+  id: z.number(),
+  author: z.string(),
+  title: z.string(),
+});

@@ -23,7 +23,6 @@ export default async function dataFetch(searchSubstring: string = '') {
       author: item.authors[0].name,
       title: item.title,
     }));
-    console.log(mappedResponse);
     return mappedResponse;
   } catch (error: unknown) {
     if (error instanceof Error) {
