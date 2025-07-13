@@ -19,9 +19,8 @@ export type ContentState = {
 };
 
 export type ErrorBoundaryProps = {
-  //   hasError: boolean;
+  searchSubstring: string;
   children: ReactNode;
-  //   fallback: Element;
 };
 
 export type BooksListProps = {
@@ -31,3 +30,7 @@ export type BooksListProps = {
 export type ItemViewProps = MappedBook;
 
 export type MappedBook = z.infer<typeof mappedBook>;
+
+export type ErrorButtonProps = {
+  setError: () => void;
+};

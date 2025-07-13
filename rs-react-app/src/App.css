@@ -34,6 +34,12 @@
   align-content: start;
 }
 
+.content__error-button {
+  color: red;
+  margin-top: 0.5em;
+  place-self: end;
+}
+
 .content__books-list-title {
   position: sticky;
   top: 0;

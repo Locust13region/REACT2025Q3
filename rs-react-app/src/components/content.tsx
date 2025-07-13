@@ -2,6 +2,7 @@ import { Component } from 'react';
 import type { ContentProps, ContentState } from '@/types/types';
 import dataFetch from '@/api/api-request';
 import BooksList from './books-list';
+import ErrorButton from './error-button';
 
 export default class Content extends Component<ContentProps, ContentState> {
   state = {
@@ -21,6 +22,12 @@ export default class Content extends Component<ContentProps, ContentState> {
       }
     }
   }
+
+  setError = () => {
+    this.setState({
+      fetchError: new Error('Test ErrorBoundary'),
+    });
+  };
 
   async componentDidMount(): Promise<void> {
     this.dataRequest();
@@ -44,6 +51,7 @@ export default class Content extends Component<ContentProps, ContentState> {
     return (
       <main className="content">
         <BooksList books={this.state.fetchResult} />
+        <ErrorButton setError={this.setError} />
       </main>
     );
   }

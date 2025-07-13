@@ -26,7 +26,7 @@ export default class App extends Component {
           searchSubstring={this.state.searchSubstring}
           setSearchSubstring={this.setSearchSubstring}
         ></Header>
-        <ErrorBoundary>
+        <ErrorBoundary searchSubstring={this.state.searchSubstring}>
           <Content
             searchSubstring={this.state.searchSubstring}
             setErrorInfo={this.setErrorInfo}
