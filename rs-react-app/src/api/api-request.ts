@@ -15,7 +15,7 @@ export default async function dataFetch(searchSubstring: string = '') {
     }
 
     if (parsedResponseData.data.results.length === 0) {
-      throw new Error(`Item(s) not found!`);
+      throw new Error(`Book(s) not found!`);
     }
 
     const mappedResponse = parsedResponseData.data.results.map((item) => ({

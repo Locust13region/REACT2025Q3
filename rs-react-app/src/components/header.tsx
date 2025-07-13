@@ -29,7 +29,7 @@ export default class Header extends Component<HeaderProps> {
     return (
       <header className="header">
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="searchInput">Find items</label>
+          <label htmlFor="searchInput">Find book</label>
           <input
             type="search"
             id="searchInput"
