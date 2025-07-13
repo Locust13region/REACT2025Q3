@@ -40,6 +40,7 @@ export default class Content extends Component<ContentProps> {
 
   render() {
     console.log('render content');
+    console.log(this.state.fetchResult);
     const content = this.state.loading ? (
       <h2>Loading...</h2>
     ) : (

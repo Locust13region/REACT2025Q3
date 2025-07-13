@@ -11,7 +11,7 @@
 .header {
   padding: 0.5rem 1rem;
   gap: 5rem;
-  border-bottom: 1px solid gray;
+  border-bottom: 3px solid gray;
   & form {
     display: flex;
     justify-content: center;
@@ -21,18 +21,30 @@
 }
 
 .content {
-  border: 1px solid gray;
   height: 100%;
-  padding: 1rem;
+  padding: 0 1rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .content_books-list {
+  height: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 30% 70%;
 }
 
 .content_book {
-  display: flex;
-  border: 1px solid gray;
+  display: contents;
+  text-align: left;
+  width: 100%;
+  & * {
+    border-bottom: 1px solid dimgray;
+    padding: 2em;
+    padding-left: 2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
