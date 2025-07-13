@@ -12,6 +12,12 @@ export type ContentProps = {
   setErrorInfo: (value: string) => void;
 };
 
+export type ContentState = {
+  loading: boolean;
+  fetchResult: z.infer<typeof mappedBooks> | null;
+  fetchError: Error | null;
+};
+
 export type ErrorBoundaryProps = {
   //   hasError: boolean;
   children: ReactNode;
