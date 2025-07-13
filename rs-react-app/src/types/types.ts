@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { z } from 'zod';
-import type { mappedBook } from './zod-schemas';
+import type { mappedBook, mappedBooks } from './zod-schemas';
 
 export type HeaderProps = {
   searchSubstring: string;
@@ -19,7 +19,7 @@ export type ErrorBoundaryProps = {
 };
 
 export type BooksListProps = {
-  books: MappedBook[];
+  books: z.infer<typeof mappedBooks>;
 };
 
 export type ItemViewProps = MappedBook;

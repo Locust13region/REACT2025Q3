@@ -22,3 +22,5 @@ export const mappedBook = z.object({
   author: z.string(),
   title: z.string(),
 });
+
+export const mappedBooks = z.array(mappedBook).nullable();

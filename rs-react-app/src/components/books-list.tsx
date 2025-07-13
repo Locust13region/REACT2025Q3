@@ -7,6 +7,8 @@ export default class BooksList extends Component<BooksListProps> {
     const { books } = this.props;
     return (
       <div className="content_books-list">
+        <div className="books-list_title">Author</div>
+        <div className="books-list_title">Title</div>
         {books && books.map((book) => <BookView key={book.id} {...book} />)}
       </div>
     );
