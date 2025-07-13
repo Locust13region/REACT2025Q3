@@ -6,7 +6,7 @@ import ErrorBoundary from './components/error-boundary';
 
 export default class App extends Component {
   state = {
-    searchSubstring: '',
+    searchSubstring: localStorage.getItem('rs-react-app') ?? '',
     errorInfo: '',
   };
 

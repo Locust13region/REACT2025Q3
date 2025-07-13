@@ -7,16 +7,6 @@ export default class Header extends Component<HeaderProps> {
     inputValue: this.props.searchSubstring,
   };
 
-  componentDidMount(): void {
-    const restoredSearch = localStorage.getItem('rs-react-app');
-    if (restoredSearch) {
-      this.setState({ inputValue: restoredSearch });
-      this.props.setSearchSubstring(restoredSearch);
-    } else {
-      localStorage.removeItem('rs-react-app');
-    }
-  }
-
   componentDidUpdate(prevProps: Readonly<HeaderProps>) {
     if (
       prevProps.searchSubstring !== this.props.searchSubstring &&

@@ -11,13 +11,9 @@ export default class Content extends Component<ContentProps> {
 
   async dataRequest(): Promise<void> {
     try {
-      this.setState({
-        loading: true,
-      });
-      this.setState({
-        fetchResult: await dataFetch(this.props.searchSubstring),
-      });
-      this.setState({ loading: false });
+      this.setState({ loading: true });
+      const fetchResult = await dataFetch(this.props.searchSubstring);
+      this.setState({ fetchResult: fetchResult, loading: false });
     } catch (error) {
       console.warn('error', error);
       if (error instanceof Error) {
@@ -29,17 +25,19 @@ export default class Content extends Component<ContentProps> {
   }
 
   async componentDidMount(): Promise<void> {
+    console.log('content mount');
     this.dataRequest();
   }
 
   async componentDidUpdate(prevProps: Readonly<ContentProps>): Promise<void> {
+    console.log('content update');
     if (prevProps.searchSubstring !== this.props.searchSubstring) {
       this.dataRequest();
     }
   }
 
   render() {
-    console.log('render content');
+    console.log('render content', this.state.loading);
     console.log(this.state.fetchResult);
     const content = this.state.loading ? (
       <h2>Loading...</h2>
