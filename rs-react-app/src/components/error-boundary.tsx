@@ -21,7 +21,13 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
     const { hasError, errorMessage } = this.state;
     if (hasError) {
       console.warn('has Error', errorMessage);
+      return (
+        <div>
+          <h2>{errorMessage}</h2>
+          <p>Try a new search query.</p>
+        </div>
+      );
     }
-    return hasError ? <h2>{errorMessage}</h2> : this.props.children;
+    return this.props.children;
   }
 }
