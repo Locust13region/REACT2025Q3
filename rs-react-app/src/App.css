@@ -26,29 +26,31 @@
   flex-direction: column;
 }
 
-.content_books-list {
+.content__books-list {
   height: 100%;
   overflow-y: scroll;
   display: grid;
   grid-template-columns: 30% 70%;
   align-content: start;
-  & .books-list_title {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    padding: 0.3em 0;
-    background-color: light-dark(
-      var(--background-color-light),
-      var(--background-color-dark)
-    );
-    border-bottom: 3px solid gray;
-    font-size: 1.1rem;
-  }
 }
 
-.content_book {
+.content__books-list-title {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0.3em 0;
+  background-color: light-dark(
+    var(--background-color-light),
+    var(--background-color-dark)
+  );
+  border-bottom: 3px solid gray;
+  font-size: 1.1rem;
+}
+
+.content__book {
   display: contents;
   text-align: left;
+
   & p {
     display: flex;
     justify-content: left;
@@ -56,6 +58,7 @@
     border-bottom: 1px solid dimgray;
     font-size: 1.2rem;
     padding: 1em 0.5em 0.5em 2em;
+
     & span {
       display: block;
       flex: 1 1 auto;
