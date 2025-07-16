@@ -1,0 +1,5 @@
+echo "Husky is running"
+
+cd rs-react-app
+npm run format:fix
+npm run lint
