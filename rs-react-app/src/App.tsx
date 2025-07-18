@@ -14,10 +14,6 @@ export default class App extends Component {
     localStorage.setItem('rs-react-app', value);
   };
 
-  setErrorInfo = (value: string): void => {
-    this.setState({ errorInfo: value });
-  };
-
   render() {
     return (
       <>

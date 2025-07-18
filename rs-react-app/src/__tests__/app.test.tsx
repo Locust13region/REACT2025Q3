@@ -21,6 +21,4 @@ describe('App component', () => {
     await user.click(searchButton);
     expect(localStorage.getItem('rs-react-app')).toBe('Dickens');
   });
-
-  test('');
 });
