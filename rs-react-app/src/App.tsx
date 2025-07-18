@@ -22,7 +22,7 @@ export default class App extends Component {
           setSearchSubstring={this.setSearchSubstring}
         ></Header>
         <ErrorBoundary searchSubstring={this.state.searchSubstring}>
-          <Content searchSubstring={this.state.searchSubstring}></Content>
+          <Content searchSubstring={this.state.searchSubstring} />
         </ErrorBoundary>
       </>
     );
