@@ -6,10 +6,10 @@ export default class BookView extends Component<ItemViewProps> {
     return (
       <li className="book">
         <p>
-          <span>{this.props.author}</span>
+          <span>{this.props.author ?? 'no data available'}</span>
         </p>
         <p>
-          <span>{this.props.title}</span>
+          <span>{this.props.title ?? 'no data available'}</span>
         </p>
       </li>
     );
