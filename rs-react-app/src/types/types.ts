@@ -9,7 +9,6 @@ export type HeaderProps = {
 
 export type ContentProps = {
   searchSubstring: string;
-  setErrorInfo: (value: string) => void;
 };
 
 export type ContentState = {

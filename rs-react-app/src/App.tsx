@@ -7,7 +7,6 @@ import ErrorBoundary from './components/error-boundary';
 export default class App extends Component {
   state = {
     searchSubstring: localStorage.getItem('rs-react-app') ?? '',
-    errorInfo: '',
   };
 
   setSearchSubstring = (value: string): void => {
@@ -27,10 +26,7 @@ export default class App extends Component {
           setSearchSubstring={this.setSearchSubstring}
         ></Header>
         <ErrorBoundary searchSubstring={this.state.searchSubstring}>
-          <Content
-            searchSubstring={this.state.searchSubstring}
-            setErrorInfo={this.setErrorInfo}
-          ></Content>
+          <Content searchSubstring={this.state.searchSubstring}></Content>
         </ErrorBoundary>
       </>
     );
