@@ -4,14 +4,14 @@ import { Component, type ReactNode } from 'react';
 export default class BookView extends Component<ItemViewProps> {
   render(): ReactNode {
     return (
-      <div className="content__book">
+      <li className="book">
         <p>
-          <span>{this.props.author}</span>
+          <span>{this.props.author ?? 'no data available'}</span>
         </p>
         <p>
-          <span>{this.props.title}</span>
+          <span>{this.props.title ?? 'no data available'}</span>
         </p>
-      </div>
+      </li>
     );
   }
 }

@@ -26,7 +26,13 @@
   flex-direction: column;
 }
 
-.content__books-list {
+.content__error-button {
+  color: red;
+  margin-top: 0.5em;
+  place-self: end;
+}
+
+.books-list {
   height: 100%;
   overflow-y: scroll;
   display: grid;
@@ -34,13 +40,11 @@
   align-content: start;
 }
 
-.content__error-button {
-  color: red;
-  margin-top: 0.5em;
-  place-self: end;
+.books-list__header {
+  display: contents;
 }
 
-.content__books-list-title {
+.books-list__title {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -53,7 +57,7 @@
   font-size: 1.1rem;
 }
 
-.content__book {
+.book {
   display: contents;
   text-align: left;
 

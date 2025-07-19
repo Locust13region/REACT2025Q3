@@ -6,11 +6,13 @@ export default class BooksList extends Component<BooksListProps> {
   render(): ReactNode {
     const { books } = this.props;
     return (
-      <div className="content__books-list">
-        <div className="content__books-list-title">Author</div>
-        <div className="content__books-list-title">Title</div>
+      <ul className="books-list">
+        <li className="books-list__header">
+          <div className="books-list__title">Author</div>
+          <div className="books-list__title">Title</div>
+        </li>
         {books && books.map((book) => <BookView key={book.id} {...book} />)}
-      </div>
+      </ul>
     );
   }
 }
