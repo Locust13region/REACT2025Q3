@@ -19,8 +19,8 @@ export const responseSchema = z.object({
 
 export const mappedBook = z.object({
   id: z.number(),
-  author: z.string(),
-  title: z.string(),
+  author: z.string().optional(),
+  title: z.string().optional(),
 });
 
 export const mappedBooks = z.array(mappedBook).nullable();
