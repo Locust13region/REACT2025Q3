@@ -53,7 +53,7 @@ describe('Api response', () => {
       data: {},
     });
 
-    expect(dataFetch()).rejects.toThrow('Incorrect server response!');
+    await expect(dataFetch()).rejects.toThrow('Incorrect server response!');
   });
 
   test('Response is empty', async () => {
@@ -71,7 +71,7 @@ describe('Api response', () => {
       data: mockResponse,
     });
 
-    expect(dataFetch()).rejects.toThrow(`Book(s) not found!`);
+    await expect(dataFetch()).rejects.toThrow(`Book(s) not found!`);
   });
 
   test('Response !ok', async () => {
@@ -80,12 +80,12 @@ describe('Api response', () => {
       json: () => ({}),
     });
 
-    expect(dataFetch()).rejects.toThrow(/HTTP error! Status:/);
+    await expect(dataFetch()).rejects.toThrow(/HTTP error! Status:/);
   });
 
   test('Network error', async () => {
     (fetch as Mock).mockRejectedValue(new Error('Network error'));
 
-    expect(dataFetch()).rejects.toThrow('Network error');
+    await expect(dataFetch()).rejects.toThrow('Network error');
   });
 });
