@@ -1,15 +1,25 @@
 import { useNavigate } from 'react-router';
+import logo from '@/assets/react.svg';
 
 export default function About() {
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="about">
       <h2>About</h2>
+      <h3>RS School REACT 2025 Q3</h3>
       <a
-        href="https://github.com/your-repo"
+        href="https://rs.school/courses/reactjs"
         target="_blank"
         rel="noopener noreferrer"
-        style={{ display: 'block', gap: '0.5rem' }}
+        className="logo"
+      >
+        <img src={logo} alt="logo" />
+      </a>
+      <h3>Andrey Maslennikov</h3>
+      <a
+        href="https://github.com/locust13region"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
