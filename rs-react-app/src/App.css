@@ -12,11 +12,20 @@
 .header {
   padding: 0.5rem 1rem;
   gap: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & a {
+    margin-right: auto;
+  }
   & form {
     display: flex;
     justify-content: center;
     place-items: center;
-    gap: 2rem;
+    gap: 2em;
+  }
+  & button {
+    margin-left: auto;
   }
 }
 

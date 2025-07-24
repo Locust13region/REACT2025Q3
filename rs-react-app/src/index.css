@@ -24,7 +24,8 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: inherit;
+  /* color: #646cff; */
   text-decoration: inherit;
 }
 a:hover {
@@ -32,6 +33,7 @@ a:hover {
 }
 
 body,
+ul,
 p {
   margin: 0;
   padding: 0;

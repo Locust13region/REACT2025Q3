@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import type { HeaderProps } from '@/types/types';
+import ErrorButton from './error-button';
+import { Link } from 'react-router';
 
 export default class Header extends Component<HeaderProps> {
   state = {
@@ -25,9 +27,16 @@ export default class Header extends Component<HeaderProps> {
     this.props.setSearchSubstring(this.state.inputValue.trim());
   };
 
+  setError = () => {
+    this.setState({
+      fetchError: new Error('Test ErrorBoundary'),
+    });
+  };
+
   render() {
     return (
       <header className="header">
+        <Link to={'/about'}>About</Link>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="searchInput">Find book</label>
           <input
@@ -39,6 +48,7 @@ export default class Header extends Component<HeaderProps> {
           />
           <button type="submit">Search</button>
         </form>
+        <ErrorButton setError={this.setError} />
       </header>
     );
   }
