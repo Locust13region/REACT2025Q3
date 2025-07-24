@@ -1,30 +1,21 @@
-import { Component } from 'react';
 import Header from '@/components/header';
 import Content from '@/components/content';
 import './App.css';
 import ErrorBoundary from './components/error-boundary';
+import useLocalStorage from './hooks/use-local-storage';
 
-export default class App extends Component {
-  state = {
-    searchSubstring: localStorage.getItem('rs-react-app') ?? '',
-  };
+export default function App() {
+  const [storageValue, setStorageValue] = useLocalStorage();
 
-  setSearchSubstring = (value: string): void => {
-    this.setState({ searchSubstring: value });
-    localStorage.setItem('rs-react-app', value);
-  };
-
-  render() {
-    return (
-      <>
-        <Header
-          searchSubstring={this.state.searchSubstring}
-          setSearchSubstring={this.setSearchSubstring}
-        ></Header>
-        <ErrorBoundary searchSubstring={this.state.searchSubstring}>
-          <Content searchSubstring={this.state.searchSubstring} />
-        </ErrorBoundary>
-      </>
-    );
-  }
+  return (
+    <>
+      <Header
+        searchSubstring={storageValue}
+        setSearchSubstring={setStorageValue}
+      ></Header>
+      <ErrorBoundary searchSubstring={storageValue}>
+        <Content searchSubstring={storageValue} />
+      </ErrorBoundary>
+    </>
+  );
 }
