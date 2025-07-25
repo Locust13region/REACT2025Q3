@@ -1,5 +1,5 @@
 import dataFetch from '@/api/api-request';
-import Content from '@/components/content';
+import Content from '@/pages/content';
 import ErrorBoundary from '@/components/error-boundary';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

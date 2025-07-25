@@ -11,19 +11,20 @@ export default async function dataFetch(searchSubstring: string = '') {
     const parsedResponseData = responseSchema.safeParse(responseData);
 
     if (!parsedResponseData.success) {
-      throw new Error(`Incorrect server response!`);
+      throw new Error(`Incorrect server response.`);
     }
 
     if (parsedResponseData.data.results.length === 0) {
       throw new Error(`Book(s) not found!`);
     }
 
-    const mappedResponse = parsedResponseData.data.results.map((item) => ({
-      id: item.id,
-      author: item.authors[0].name,
-      title: item.title,
-    }));
-    return mappedResponse;
+    return parsedResponseData.data;
+    // const mappedResponse = parsedResponseData.data.results.map((item) => ({
+    //   id: item.id,
+    //   author: item.authors[0].name,
+    //   title: item.title,
+    // }));
+    // return mappedResponse;
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error(error.message);

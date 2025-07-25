@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { z } from 'zod';
-import type { mappedBook, mappedBooks } from './zod-schemas';
+import type { bookSchema, mappedBook, responseSchema } from './zod-schemas';
 
 export type HeaderProps = {
   searchSubstring: string;
@@ -13,19 +13,13 @@ export type ContentProps = {
   generatedError: Error | null;
 };
 
-export type ContentState = {
-  loading: boolean;
-  fetchResult: z.infer<typeof mappedBooks> | null;
-  fetchError: Error | null;
-};
+export type FetchResult = z.infer<typeof responseSchema>;
+
+export type Book = z.infer<typeof bookSchema>;
 
 export type ErrorBoundaryProps = {
   searchSubstring: string;
   children: ReactNode;
-};
-
-export type BooksListProps = {
-  books: z.infer<typeof mappedBooks>;
 };
 
 export type ItemViewProps = MappedBook;

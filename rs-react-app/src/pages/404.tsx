@@ -1,6 +1,6 @@
 export default function NotFound() {
   return (
-    <div>
+    <div className="wrapper">
       <h2>404</h2>
       <h3>Page not found</h3>
     </div>

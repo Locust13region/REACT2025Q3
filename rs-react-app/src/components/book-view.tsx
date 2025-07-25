@@ -1,17 +1,16 @@
-import type { ItemViewProps } from '@/types/types';
-import { Component, type ReactNode } from 'react';
+import type { Book } from '@/types/types';
+import type { FC } from 'react';
 
-export default class BookView extends Component<ItemViewProps> {
-  render(): ReactNode {
-    return (
-      <li className="book">
-        <p>
-          <span>{this.props.author ?? 'no data available'}</span>
-        </p>
-        <p>
-          <span>{this.props.title ?? 'no data available'}</span>
-        </p>
-      </li>
-    );
-  }
-}
+const BookView: FC<Book> = ({ authors, title }) => {
+  return (
+    <li className="book">
+      <p>
+        <span>{authors[0]?.name ?? 'no data available'}</span>
+      </p>
+      <p>
+        <span>{title ?? 'no data available'}</span>
+      </p>
+    </li>
+  );
+};
+export default BookView;

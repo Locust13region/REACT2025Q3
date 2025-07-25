@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const bookSchema = z.object({
+export const bookSchema = z.object({
   id: z.number(),
   title: z.string(),
   authors: z.array(

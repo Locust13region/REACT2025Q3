@@ -53,7 +53,7 @@ describe('Api response', () => {
       data: {},
     });
 
-    await expect(dataFetch()).rejects.toThrow('Incorrect server response!');
+    await expect(dataFetch()).rejects.toThrow('Incorrect server response.');
   });
 
   test('Response is empty', async () => {
