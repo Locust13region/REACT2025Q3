@@ -40,12 +40,6 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
     setFetchError(generatedError);
   }, [generatedError]);
 
-  const handleSetRequestUrl = (url: string) => {
-    const newUrl = new URL(url);
-    const pageParam = newUrl.searchParams.get('page') ?? '1';
-    setSearchParams({ page: pageParam });
-  };
-
   if (fetchError) {
     throw fetchError;
   }
@@ -57,7 +51,7 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
   return (
     <main className="content">
       {fetchResult && (
-        <BooksList {...fetchResult} setRequestUrl={handleSetRequestUrl} />
+        <BooksList {...fetchResult} setSearchParams={setSearchParams} />
       )}
       <Outlet />
     </main>

@@ -10,7 +10,6 @@ import { Link, useNavigate } from 'react-router';
 
 const Header: FC<HeaderProps> = ({
   searchSubstring,
-  setSearchParams,
   setSearchSubstring,
   setGeneratedError,
 }) => {
@@ -26,14 +25,10 @@ const Header: FC<HeaderProps> = ({
     const inputTrimmed = inputValue.trim();
     setSearchSubstring(inputTrimmed);
     setGeneratedError(null);
-    setSearchParams((prev) => {
-      const newParams = new URLSearchParams(prev);
-      newParams.set('search', inputTrimmed);
-      newParams.delete('page');
-      return newParams;
+    navigate({
+      pathname: '/',
+      search: inputTrimmed.length ? `?search=${inputTrimmed}` : '',
     });
-
-    navigate('/');
   };
 
   useEffect(() => {

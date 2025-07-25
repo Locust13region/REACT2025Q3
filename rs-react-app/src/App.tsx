@@ -11,7 +11,7 @@ const NotFound = lazy(() => import('@/pages/404'));
 
 export default function App() {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [storageValue, setStorageValue] = useLocalStorage();
   const [generatedError, setGeneratedError] = useState<Error | null>(null);
 
@@ -22,7 +22,6 @@ export default function App() {
     <>
       <Header
         searchSubstring={searchSubstring}
-        setSearchParams={setSearchParams}
         setSearchSubstring={setStorageValue}
         setGeneratedError={setGeneratedError}
       ></Header>

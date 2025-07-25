@@ -8,7 +8,7 @@ const BooksList: FC<BooksListProps> = ({
   next,
   previous,
   results: books,
-  setRequestUrl,
+  setSearchParams,
 }) => {
   return (
     <>
@@ -19,7 +19,7 @@ const BooksList: FC<BooksListProps> = ({
         </li>
         {books && books.map((book) => <BookView key={book.id} {...book} />)}
       </ul>
-      <Pagination {...{ count, next, previous, setRequestUrl }} />
+      <Pagination {...{ count, next, previous, setSearchParams }} />
     </>
   );
 };

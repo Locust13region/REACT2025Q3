@@ -1,37 +1,41 @@
-import { useState, type FC } from 'react';
+import type { PaginationProps } from '@/types/types';
+import { type FC } from 'react';
 
-const Pagination: FC<{
-  count: number;
-  next: string | null;
-  previous: string | null;
-  setRequestUrl: (url: string) => void;
-}> = ({ count, next, previous, setRequestUrl }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const Pagination: FC<PaginationProps> = ({
+  count,
+  next,
+  previous,
+  setSearchParams,
+}) => {
   const booksPerPage = 32;
-  const pageNumber = Math.ceil(count / booksPerPage);
+  const pagesTotal = Math.ceil(count / booksPerPage);
+
+  const getPageParams = (url: string) => {
+    const page = new URL(url).searchParams.get('page') ?? '1';
+    const search = new URL(url).searchParams.get('search') ?? '';
+    return { search, page };
+  };
 
   const previousPage = () => {
-    setCurrentPage(currentPage - 1);
-    if (previous) setRequestUrl(previous);
-    console.log('previous', !!previous, previous);
+    if (previous) setSearchParams({ ...getPageParams(previous) });
   };
 
   const nextPage = () => {
-    setCurrentPage(currentPage + 1);
-    if (next) setRequestUrl(next);
-    console.log('next', !!next, next);
+    if (next) setSearchParams({ ...getPageParams(next) });
   };
+
+  const currentPage = previous ? Number(getPageParams(previous).page) + 1 : '1';
 
   return (
     <section className="pagination">
       <button
         className="pagination__arrow"
-        disabled={currentPage === 1}
+        disabled={!previous}
         onClick={previousPage}
       >
         {'<'}
       </button>
-      <div>{`Page ${currentPage} of Pages ${pageNumber}`}</div>
+      <div>{`Page ${currentPage} of Pages ${pagesTotal}`}</div>
       <button className="pagination__arrow" disabled={!next} onClick={nextPage}>
         {'>'}
       </button>

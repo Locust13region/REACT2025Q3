@@ -5,7 +5,6 @@ import type { useSearchParams } from 'react-router';
 
 export type HeaderProps = {
   searchSubstring: string;
-  setSearchParams: ReturnType<typeof useSearchParams>[1];
   setSearchSubstring: (value: string) => void;
   setGeneratedError: (value: Error | null) => void;
 };
@@ -18,8 +17,13 @@ export type ContentProps = {
 export type FetchResult = z.infer<typeof responseSchema>;
 
 export type BooksListProps = FetchResult & {
-  setRequestUrl: (url: string) => void;
+  setSearchParams: ReturnType<typeof useSearchParams>[1];
 };
+
+export type PaginationProps = Pick<
+  BooksListProps,
+  'count' | 'next' | 'previous' | 'setSearchParams'
+>;
 
 export type Book = z.infer<typeof bookSchema>;
 
