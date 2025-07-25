@@ -1,9 +1,16 @@
-import { useState, type ChangeEvent, type FC, type FormEvent } from 'react';
+import {
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type FC,
+  type FormEvent,
+} from 'react';
 import type { HeaderProps } from '@/types/types';
 import { Link, useNavigate } from 'react-router';
 
 const Header: FC<HeaderProps> = ({
   searchSubstring,
+  setSearchParams,
   setSearchSubstring,
   setGeneratedError,
 }) => {
@@ -16,10 +23,22 @@ const Header: FC<HeaderProps> = ({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchSubstring(inputValue.trim());
+    const inputTrimmed = inputValue.trim();
+    setSearchSubstring(inputTrimmed);
     setGeneratedError(null);
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('search', inputTrimmed);
+      newParams.delete('page');
+      return newParams;
+    });
+
     navigate('/');
   };
+
+  useEffect(() => {
+    setInputValue(searchSubstring);
+  }, [searchSubstring]);
 
   const setError = () => {
     setGeneratedError(new Error('Test ErrorBoundary'));

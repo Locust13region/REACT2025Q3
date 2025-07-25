@@ -1,9 +1,11 @@
 import type { ReactNode } from 'react';
 import { z } from 'zod';
-import type { bookSchema, mappedBook, responseSchema } from './zod-schemas';
+import type { bookSchema, responseSchema } from './zod-schemas';
+import type { useSearchParams } from 'react-router';
 
 export type HeaderProps = {
   searchSubstring: string;
+  setSearchParams: ReturnType<typeof useSearchParams>[1];
   setSearchSubstring: (value: string) => void;
   setGeneratedError: (value: Error | null) => void;
 };
@@ -15,16 +17,16 @@ export type ContentProps = {
 
 export type FetchResult = z.infer<typeof responseSchema>;
 
+export type BooksListProps = FetchResult & {
+  setRequestUrl: (url: string) => void;
+};
+
 export type Book = z.infer<typeof bookSchema>;
 
 export type ErrorBoundaryProps = {
   searchSubstring: string;
   children: ReactNode;
 };
-
-export type ItemViewProps = MappedBook;
-
-export type MappedBook = z.infer<typeof mappedBook>;
 
 export type ErrorButtonProps = {
   setError: () => void;

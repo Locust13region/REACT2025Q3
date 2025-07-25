@@ -8,6 +8,7 @@ export const bookSchema = z.object({
       name: z.string(),
     })
   ),
+  summaries: z.array(z.string()),
 });
 
 export const responseSchema = z.object({
@@ -16,11 +17,3 @@ export const responseSchema = z.object({
   previous: z.string().nullable(),
   results: z.array(bookSchema),
 });
-
-export const mappedBook = z.object({
-  id: z.number(),
-  author: z.string().optional(),
-  title: z.string().optional(),
-});
-
-export const mappedBooks = z.array(mappedBook).nullable();

@@ -1,13 +1,13 @@
 import { responseSchema } from '@/types/zod-schemas';
-import { baseUrl } from './api-base-url';
 
-export default async function dataFetch(searchSubstring: string = '') {
+export default async function dataFetch(url: string) {
   try {
-    const response = await fetch(baseUrl + '?search=' + searchSubstring);
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const responseData: unknown = await response.json();
+    console.log(responseData);
     const parsedResponseData = responseSchema.safeParse(responseData);
 
     if (!parsedResponseData.success) {
@@ -19,12 +19,6 @@ export default async function dataFetch(searchSubstring: string = '') {
     }
 
     return parsedResponseData.data;
-    // const mappedResponse = parsedResponseData.data.results.map((item) => ({
-    //   id: item.id,
-    //   author: item.authors[0].name,
-    //   title: item.title,
-    // }));
-    // return mappedResponse;
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error(error.message);

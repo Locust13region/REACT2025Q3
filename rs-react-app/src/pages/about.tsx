@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router';
 import logo from '@/assets/react.svg';
+import type { FC } from 'react';
 
-export default function About() {
+const About: FC<{ generatedError: Error | null }> = ({ generatedError }) => {
   const navigate = useNavigate();
+  if (generatedError) throw generatedError;
   return (
     <div className="about">
       <h2>About</h2>
@@ -35,4 +37,5 @@ export default function About() {
       <button onClick={() => navigate(-1)}>Back</button>
     </div>
   );
-}
+};
+export default About;

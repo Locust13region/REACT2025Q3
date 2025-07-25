@@ -61,6 +61,20 @@
   font-size: 1.1rem;
 }
 
+.pagination {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  font-size: 1.2em;
+}
+
+.pagination__arrow {
+  line-height: 1;
+  vertical-align: middle;
+}
+
 .book {
   display: contents;
   text-align: left;
