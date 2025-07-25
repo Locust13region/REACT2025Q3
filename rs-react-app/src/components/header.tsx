@@ -1,55 +1,49 @@
-import { Component } from 'react';
-import type { ChangeEvent, FormEvent } from 'react';
+import { useState, type ChangeEvent, type FC, type FormEvent } from 'react';
 import type { HeaderProps } from '@/types/types';
-import ErrorButton from './error-button';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
-export default class Header extends Component<HeaderProps> {
-  state = {
-    inputValue: this.props.searchSubstring,
+const Header: FC<HeaderProps> = ({
+  searchSubstring,
+  setSearchSubstring,
+  setGeneratedError,
+}) => {
+  const [inputValue, setInputValue] = useState(searchSubstring);
+  const navigate = useNavigate();
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
-  componentDidUpdate(prevProps: Readonly<HeaderProps>) {
-    if (
-      prevProps.searchSubstring !== this.props.searchSubstring &&
-      this.state.inputValue !== this.props.searchSubstring
-    ) {
-      this.setState({ inputValue: this.props.searchSubstring });
-    }
-  }
-
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value });
-  };
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.setSearchSubstring(this.state.inputValue.trim());
+    setSearchSubstring(inputValue.trim());
+    setGeneratedError(null);
+    navigate('/');
   };
 
-  setError = () => {
-    this.setState({
-      fetchError: new Error('Test ErrorBoundary'),
-    });
+  const setError = () => {
+    setGeneratedError(new Error('Test ErrorBoundary'));
   };
 
-  render() {
-    return (
-      <header className="header">
-        <Link to={'/about'}>About</Link>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="searchInput">Find book</label>
-          <input
-            type="search"
-            id="searchInput"
-            name="searchInput"
-            value={this.state.inputValue}
-            onInput={this.handleInputChange}
-          />
-          <button type="submit">Search</button>
-        </form>
-        <ErrorButton setError={this.setError} />
-      </header>
-    );
-  }
-}
+  return (
+    <header className="header">
+      <Link to={'/about'}>About</Link>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="searchInput">Find book</label>
+        <input
+          type="search"
+          id="searchInput"
+          name="searchInput"
+          value={inputValue}
+          onInput={handleInputChange}
+        />
+        <button type="submit">Search</button>
+      </form>
+      <button type="button" onClick={setError}>
+        Error
+      </button>
+    </header>
+  );
+};
+
+export default Header;

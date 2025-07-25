@@ -5,10 +5,12 @@ import type { mappedBook, mappedBooks } from './zod-schemas';
 export type HeaderProps = {
   searchSubstring: string;
   setSearchSubstring: (value: string) => void;
+  setGeneratedError: (value: Error | null) => void;
 };
 
 export type ContentProps = {
   searchSubstring: string;
+  generatedError: Error | null;
 };
 
 export type ContentState = {

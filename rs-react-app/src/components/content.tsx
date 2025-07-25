@@ -2,12 +2,13 @@ import { Component } from 'react';
 import type { ContentProps, ContentState } from '@/types/types';
 import dataFetch from '@/api/api-request';
 import BooksList from './books-list';
+import { Outlet } from 'react-router';
 
 export default class Content extends Component<ContentProps, ContentState> {
   state = {
     loading: false,
     fetchResult: null,
-    fetchError: null,
+    fetchError: this.props.generatedError,
   };
 
   async dataRequest(): Promise<void> {
@@ -44,6 +45,7 @@ export default class Content extends Component<ContentProps, ContentState> {
     return (
       <main className="content">
         <BooksList books={this.state.fetchResult} />
+        <Outlet />
       </main>
     );
   }

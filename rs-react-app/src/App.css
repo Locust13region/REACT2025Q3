@@ -24,8 +24,9 @@
     place-items: center;
     gap: 2em;
   }
-  & button {
+  & > button {
     margin-left: auto;
+    color: red;
   }
 }
 
@@ -33,12 +34,6 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-.content__error-button {
-  color: red;
-  margin-top: 0.5em;
-  place-self: end;
 }
 
 .books-list {
@@ -76,6 +71,9 @@
     align-items: center;
     border-bottom: 1px solid dimgray;
     padding: 1em 0.5em 0.5em 2em;
+    &:active {
+      background-color: dimgray;
+    }
 
     & span {
       display: block;
@@ -85,6 +83,10 @@
       text-overflow: ellipsis;
     }
   }
+}
+
+.book-description {
+  flex-shrink: 1;
 }
 
 .about {
