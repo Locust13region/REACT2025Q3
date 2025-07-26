@@ -22,7 +22,7 @@ export type BooksListProps = FetchResult & {
 
 export type PaginationProps = Pick<FetchResult, 'count' | 'next' | 'previous'>;
 
-export type Book = z.infer<typeof bookSchema>;
+export type BookType = z.infer<typeof bookSchema>;
 
 export type ErrorBoundaryProps = {
   searchSubstring: string;

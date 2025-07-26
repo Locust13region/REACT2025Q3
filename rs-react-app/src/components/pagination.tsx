@@ -10,7 +10,7 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
   const getPageParams = (url: string) => {
     const page = new URL(url).searchParams.get('page') ?? '1';
     const search = new URL(url).searchParams.get('search') ?? '';
-    return { search, page };
+    return { page, search };
   };
 
   const previousPage = () => {

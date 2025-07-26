@@ -18,7 +18,7 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
   const requestUrl = buildSearchUrl(searchSubstring, page);
 
   useEffect(() => {
-    setRequestUrl(requestUrl);
+    setRequestUrl((prev) => (prev !== requestUrl ? requestUrl : prev));
   }, [requestUrl, setRequestUrl]);
 
   useEffect(() => {

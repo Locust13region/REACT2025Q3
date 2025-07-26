@@ -1,8 +1,29 @@
-import { type FC } from 'react';
-// import { useParams } from 'react-router';
+import { baseUrl } from '@/api/api-base-url';
+import useApi from '@/hooks/use-api';
+import { useEffect, type FC } from 'react';
+import { useParams } from 'react-router';
 
 const BookDescription: FC = () => {
-  // const { bookId } = useParams();
+  const { loading, fetchError, setRequestUrl } = useApi(null);
+  const { bookId } = useParams();
+
+  useEffect(() => {
+    if (bookId) {
+      const url = `${baseUrl}?ids=${bookId}`;
+      setRequestUrl((prev) => (prev !== url ? url : prev));
+    }
+  }, [bookId, setRequestUrl]);
+
+  if (!bookId) return null;
+
+  if (fetchError) {
+    return <h2>Error {fetchError.message}</h2>;
+  }
+
+  if (loading) {
+    return <h2>Loading data...</h2>;
+  }
+
   return (
     <article className="book-description">
       <button>X</button>
