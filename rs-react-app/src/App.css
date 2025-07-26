@@ -79,15 +79,21 @@
 .book-description {
   height: 100%;
   width: 50%;
+  flex-shrink: 0;
   padding-right: 1em;
   display: flex;
   flex-direction: column;
 
-  & > h3 {
+  & > h2,
+  h3 {
     margin-top: 0;
   }
 
   & > button {
+    background-color: light-dark(
+      var(--background-color-light),
+      var(--background-color-dark)
+    );
     align-self: flex-end;
   }
 

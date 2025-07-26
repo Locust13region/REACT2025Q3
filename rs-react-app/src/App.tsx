@@ -35,8 +35,11 @@ export default function App() {
       <ErrorBoundary key={location.pathname} searchSubstring={searchSubstring}>
         <Suspense fallback={<h2>Loading page...</h2>}>
           <Routes>
+            <Route path="/" element={<Navigate to="/books/1" replace />} />
+            <Route path="/books" element={<Navigate to="/books/1" replace />} />
+
             <Route
-              path="/books"
+              path="/books/:page"
               element={
                 <Content
                   searchSubstring={searchSubstring}
@@ -46,11 +49,11 @@ export default function App() {
             >
               <Route path=":bookId" element={<BookDescription />} />
             </Route>
+
             <Route
               path="about"
               element={<About generatedError={generatedError} />}
             />
-            <Route path="/" element={<Navigate to="/books" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

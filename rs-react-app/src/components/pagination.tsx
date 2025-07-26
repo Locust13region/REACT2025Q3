@@ -1,27 +1,29 @@
 import type { PaginationProps } from '@/types/types';
 import { type FC } from 'react';
-import { useSearchParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
-  const [, setSearchParams] = useSearchParams();
+  const { page } = useParams();
+  const navigate = useNavigate();
   const booksPerPage = 32;
   const pagesTotal = Math.ceil(count / booksPerPage);
 
   const getPageParams = (url: string) => {
-    const page = new URL(url).searchParams.get('page') ?? '1';
-    const search = new URL(url).searchParams.get('search') ?? '';
-    return { page, search };
+    const urlObj = new URL(url);
+    const page = urlObj.searchParams.get('page') ?? '1';
+    const search = urlObj.searchParams.get('search') ?? '';
+    return `/books/${page}?search=${search}`;
   };
 
   const previousPage = () => {
-    if (previous) setSearchParams({ ...getPageParams(previous) });
+    if (previous) navigate(getPageParams(previous));
   };
 
   const nextPage = () => {
-    if (next) setSearchParams({ ...getPageParams(next) });
+    if (next) navigate(getPageParams(next));
   };
 
-  const currentPage = previous ? Number(getPageParams(previous).page) + 1 : '1';
+  const currentPage = page;
 
   return (
     <section className="pagination">

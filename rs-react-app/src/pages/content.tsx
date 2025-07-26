@@ -1,6 +1,6 @@
 import type { ContentProps } from '@/types/types';
 import BooksList from '../components/books-list';
-import { Outlet, useSearchParams } from 'react-router';
+import { useParams } from 'react-router';
 import { useEffect, type FC } from 'react';
 import { baseUrl } from '@/api/api-base-url';
 import useApi from '@/hooks/use-api';
@@ -8,18 +8,11 @@ import useApi from '@/hooks/use-api';
 const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
   const { loading, fetchResult, fetchError, setRequestUrl, setFetchError } =
     useApi(generatedError);
-
-  const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') ?? '1';
-
-  const buildSearchUrl = (search: string, page: string) =>
-    `${baseUrl}?search=${search}&page=${page}`;
-
-  const requestUrl = buildSearchUrl(searchSubstring, page);
+  const page = useParams().page ?? '1';
 
   useEffect(() => {
-    setRequestUrl((prev) => (prev !== requestUrl ? requestUrl : prev));
-  }, [requestUrl, setRequestUrl]);
+    setRequestUrl(`${baseUrl}?search=${searchSubstring}&page=${page}`);
+  }, [page, searchSubstring, setRequestUrl]);
 
   useEffect(() => {
     setFetchError(generatedError);
@@ -35,8 +28,9 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
 
   return (
     <main className="content">
-      {fetchResult && <BooksList {...fetchResult} />}
-      <Outlet />
+      {fetchResult && (
+        <BooksList {...fetchResult} searchSubstring={searchSubstring} />
+      )}
     </main>
   );
 };

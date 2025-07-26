@@ -1,15 +1,18 @@
 import type { BookType } from '@/types/types';
 import type { FC } from 'react';
-import { NavLink, useSearchParams } from 'react-router';
+import { NavLink, useParams } from 'react-router';
 
-const Book: FC<BookType> = ({ id, authors, title }) => {
-  const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') ?? '1';
-  const searchSubstring = searchParams.get('search');
+const Book: FC<
+  BookType & {
+    searchSubstring: string;
+  }
+> = ({ id, authors, title, searchSubstring }) => {
+  const { page } = useParams();
+  console.log('searchSubstring', searchSubstring, 'id', id);
   return (
     <li className="book">
       <NavLink
-        to={`/books/${id}?page=${page}&search=${searchSubstring}`}
+        to={`/books/${page}/${id}?search=${searchSubstring}`}
         className={({ isActive }) =>
           `book__link ${isActive ? 'book__link--active' : ''}`
         }

@@ -32,3 +32,8 @@ export type ErrorBoundaryProps = {
 export type ErrorButtonProps = {
   setError: () => void;
 };
+
+export type OutletContext = {
+  searchSubstring: string;
+  page: string;
+};

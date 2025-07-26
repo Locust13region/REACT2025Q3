@@ -17,7 +17,6 @@ export default async function dataFetch(url: string) {
       throw new Error(`Book(s) not found!`);
     }
 
-    console.log(parsedResponseData.data);
     return parsedResponseData.data;
   } catch (error: unknown) {
     if (error instanceof Error) {
