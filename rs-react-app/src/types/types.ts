@@ -20,10 +20,7 @@ export type BooksListProps = FetchResult & {
   setSearchParams: ReturnType<typeof useSearchParams>[1];
 };
 
-export type PaginationProps = Pick<
-  BooksListProps,
-  'count' | 'next' | 'previous' | 'setSearchParams'
->;
+export type PaginationProps = Pick<FetchResult, 'count' | 'next' | 'previous'>;
 
 export type Book = z.infer<typeof bookSchema>;
 

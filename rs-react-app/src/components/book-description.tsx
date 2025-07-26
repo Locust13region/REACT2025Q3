@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 
-const BookDescription: FC<number> = () => {
-  return <article className="book-description"></article>;
+const BookDescription: FC = () => {
+  return <article className="book-description">ARTICLE</article>;
 };
 
 export default BookDescription;

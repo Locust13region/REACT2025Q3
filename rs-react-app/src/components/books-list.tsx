@@ -1,17 +1,16 @@
 import type { FC } from 'react';
 import BookView from './book-view';
-import type { BooksListProps } from '@/types/types';
+import type { FetchResult } from '@/types/types';
 import Pagination from './pagination';
 
-const BooksList: FC<BooksListProps> = ({
+const BooksList: FC<FetchResult> = ({
   count,
   next,
   previous,
   results: books,
-  setSearchParams,
 }) => {
   return (
-    <>
+    <div className="books-list__wrapper">
       <ul className="books-list">
         <li className="books-list__header">
           <div className="books-list__title">Author</div>
@@ -19,8 +18,8 @@ const BooksList: FC<BooksListProps> = ({
         </li>
         {books && books.map((book) => <BookView key={book.id} {...book} />)}
       </ul>
-      <Pagination {...{ count, next, previous, setSearchParams }} />
-    </>
+      <Pagination {...{ count, next, previous }} />
+    </div>
   );
 };
 export default BooksList;

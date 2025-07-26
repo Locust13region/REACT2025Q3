@@ -1,12 +1,9 @@
 import type { PaginationProps } from '@/types/types';
 import { type FC } from 'react';
+import { useSearchParams } from 'react-router';
 
-const Pagination: FC<PaginationProps> = ({
-  count,
-  next,
-  previous,
-  setSearchParams,
-}) => {
+const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
+  const [, setSearchParams] = useSearchParams();
   const booksPerPage = 32;
   const pagesTotal = Math.ceil(count / booksPerPage);
 

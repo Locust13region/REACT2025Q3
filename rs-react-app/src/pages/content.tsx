@@ -1,15 +1,16 @@
 import type { ContentProps, FetchResult } from '@/types/types';
 import dataFetch from '@/api/api-request';
 import BooksList from '../components/books-list';
-import { Outlet, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { useCallback, useEffect, useState, type FC } from 'react';
 import { baseUrl } from '@/api/api-base-url';
+import BookDescription from '@/components/book-description';
 
 const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [fetchResult, setFetchResult] = useState<FetchResult>();
   const [fetchError, setFetchError] = useState<Error | null>(generatedError);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const page = searchParams.get('page') ?? '1';
 
   const buildSearchUrl = (search: string, page: string) =>
@@ -50,10 +51,8 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
 
   return (
     <main className="content">
-      {fetchResult && (
-        <BooksList {...fetchResult} setSearchParams={setSearchParams} />
-      )}
-      <Outlet />
+      {fetchResult && <BooksList {...fetchResult} />}
+      <BookDescription />
     </main>
   );
 };
