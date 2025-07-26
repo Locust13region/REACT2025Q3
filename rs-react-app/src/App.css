@@ -51,12 +51,6 @@
   align-content: start;
 }
 
-.book-description {
-  height: 100%;
-  width: 50%;
-  display: block;
-}
-
 .books-list__header {
   display: contents;
 }
@@ -72,6 +66,30 @@
   );
   border-bottom: 3px solid gray;
   font-size: 1.1rem;
+}
+
+.book-description {
+  height: 100%;
+  width: 50%;
+  padding-right: 1em;
+  display: flex;
+  flex-direction: column;
+  & > h3 {
+    margin-top: 0;
+  }
+  & > button {
+    align-self: flex-end;
+  }
+  & > p:last-of-type {
+    overflow-y: auto;
+    padding: 1em 0 0 2em;
+    text-align: left;
+    scrollbar-gutter: stable;
+    text-wrap: balance;
+  }
+}
+.book-description show {
+  display: flex;
 }
 
 .pagination {
