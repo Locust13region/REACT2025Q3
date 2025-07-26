@@ -7,7 +7,6 @@ export default async function dataFetch(url: string) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const responseData: unknown = await response.json();
-    console.log(responseData);
     const parsedResponseData = responseSchema.safeParse(responseData);
 
     if (!parsedResponseData.success) {
@@ -18,6 +17,7 @@ export default async function dataFetch(url: string) {
       throw new Error(`Book(s) not found!`);
     }
 
+    console.log(parsedResponseData.data);
     return parsedResponseData.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

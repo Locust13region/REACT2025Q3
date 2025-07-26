@@ -26,7 +26,7 @@ const Header: FC<HeaderProps> = ({
     setSearchSubstring(inputTrimmed);
     setGeneratedError(null);
     navigate({
-      pathname: '/',
+      pathname: '/books',
       search: inputTrimmed.length ? `?search=${inputTrimmed}` : '',
     });
   };

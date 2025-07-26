@@ -1,6 +1,8 @@
 import { type FC } from 'react';
+// import { useParams } from 'react-router';
 
 const BookDescription: FC = () => {
+  // const { bookId } = useParams();
   return (
     <article className="book-description">
       <button>X</button>

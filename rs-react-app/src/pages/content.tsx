@@ -1,15 +1,14 @@
-import type { ContentProps, FetchResult } from '@/types/types';
-import dataFetch from '@/api/api-request';
+import type { ContentProps } from '@/types/types';
 import BooksList from '../components/books-list';
-import { useSearchParams } from 'react-router';
-import { useCallback, useEffect, useState, type FC } from 'react';
+import { Outlet, useSearchParams } from 'react-router';
+import { useEffect, type FC } from 'react';
 import { baseUrl } from '@/api/api-base-url';
-import BookDescription from '@/components/book-description';
+import useApi from '@/hooks/use-api';
 
 const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [fetchResult, setFetchResult] = useState<FetchResult>();
-  const [fetchError, setFetchError] = useState<Error | null>(generatedError);
+  const { loading, fetchResult, fetchError, setRequestUrl, setFetchError } =
+    useApi(generatedError);
+
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') ?? '1';
 
@@ -18,28 +17,13 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
 
   const requestUrl = buildSearchUrl(searchSubstring, page);
 
-  const dataRequest = useCallback(async () => {
-    try {
-      setLoading(true);
-      setFetchError(null);
-      const result = await dataFetch(requestUrl);
-      setFetchResult(result);
-    } catch (error) {
-      if (error instanceof Error) {
-        setFetchError(error);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [requestUrl]);
-
   useEffect(() => {
-    dataRequest();
-  }, [dataRequest]);
+    setRequestUrl(requestUrl);
+  }, [requestUrl, setRequestUrl]);
 
   useEffect(() => {
     setFetchError(generatedError);
-  }, [generatedError]);
+  }, [generatedError, setFetchError]);
 
   if (fetchError) {
     throw fetchError;
@@ -52,7 +36,7 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
   return (
     <main className="content">
       {fetchResult && <BooksList {...fetchResult} />}
-      <BookDescription />
+      <Outlet />
     </main>
   );
 };

@@ -15,15 +15,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   & a {
     margin-right: auto;
+    transition: background-color 0.3s ease;
+    &:hover {
+      color: #535bf2;
+    }
   }
+
   & form {
     display: flex;
     justify-content: center;
     place-items: center;
     gap: 2em;
   }
+
   & > button {
     margin-left: auto;
     color: red;
@@ -45,7 +52,8 @@
 
 .books-list {
   height: 90%;
-  overflow-y: scroll;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
   display: grid;
   grid-template-columns: 30% 70%;
   align-content: start;
@@ -74,12 +82,15 @@
   padding-right: 1em;
   display: flex;
   flex-direction: column;
+
   & > h3 {
     margin-top: 0;
   }
+
   & > button {
     align-self: flex-end;
   }
+
   & > p:last-of-type {
     overflow-y: auto;
     padding: 1em 0 0 2em;
@@ -87,9 +98,6 @@
     scrollbar-gutter: stable;
     text-wrap: balance;
   }
-}
-.book-description show {
-  display: flex;
 }
 
 .pagination {
@@ -118,9 +126,7 @@
     align-items: center;
     border-bottom: 1px solid dimgray;
     padding: 1em 0.5em 0.5em 2em;
-    &:active {
-      background-color: dimgray;
-    }
+    background-color: inherit;
 
     & span {
       display: block;
@@ -132,14 +138,35 @@
   }
 }
 
+.book__link {
+  display: contents;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: light-dark(
+      var(--background-color-light),
+      var(--background-color-dark)
+    );
+  }
+}
+
+.book__link--active {
+  background-color: light-dark(
+    var(--background-color-light),
+    var(--background-color-dark)
+  );
+}
+
 .about {
   & h3 {
     margin-top: 3em;
   }
+
   & a:last-of-type {
     display: inline-flex;
     gap: 1em;
   }
+
   & button {
     display: block;
     margin: 3em auto;
@@ -152,6 +179,7 @@
   height: 9rem;
   overflow: hidden;
   background: hsl(50, 100%, 56%);
+
   & img {
     width: 100%;
     height: 100%;
