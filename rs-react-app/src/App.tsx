@@ -1,10 +1,4 @@
-import {
-  Routes,
-  Route,
-  useLocation,
-  useSearchParams,
-  Navigate,
-} from 'react-router';
+import { Routes, Route, useSearchParams, Navigate } from 'react-router';
 import Header from '@/components/header';
 import './App.css';
 import ErrorBoundary from './components/error-boundary';
@@ -17,7 +11,7 @@ const About = lazy(() => import('@/pages/about'));
 const NotFound = lazy(() => import('@/pages/404'));
 
 export default function App() {
-  const location = useLocation();
+  console.log('App render');
   const [searchParams] = useSearchParams();
   const [storageValue, setStorageValue] = useLocalStorage();
   const [generatedError, setGeneratedError] = useState<Error | null>(null);
@@ -32,7 +26,7 @@ export default function App() {
         setSearchSubstring={setStorageValue}
         setGeneratedError={setGeneratedError}
       ></Header>
-      <ErrorBoundary key={location.pathname} searchSubstring={searchSubstring}>
+      <ErrorBoundary searchSubstring={searchSubstring}>
         <Suspense fallback={<h2>Loading page...</h2>}>
           <Routes>
             <Route path="/" element={<Navigate to="/books/1" replace />} />

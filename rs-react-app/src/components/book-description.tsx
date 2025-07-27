@@ -17,11 +17,11 @@ const BookDescription: FC = () => {
   if (!bookId) return null;
 
   if (fetchError) {
-    return <h2>Error {fetchError.message}</h2>;
+    return <h2 className="book-description">Error {fetchError.message}</h2>;
   }
 
   if (loading) {
-    return <h2>Loading data...</h2>;
+    return <h2 className="book-description">Loading data...</h2>;
   }
   return fetchResult?.results[0].id ? (
     <article className="book-description">
@@ -29,7 +29,11 @@ const BookDescription: FC = () => {
       <h2>{fetchResult.results[0].title}</h2>
       <h3>{fetchResult.results[0].authors[0].name}</h3>
       <p>book description</p>
-      <p>{fetchResult.results[0].summaries}</p>
+      <p>
+        {fetchResult.results[0].summaries.length
+          ? fetchResult.results[0].summaries
+          : 'no data available'}
+      </p>
     </article>
   ) : null;
 };

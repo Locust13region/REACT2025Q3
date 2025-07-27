@@ -27,6 +27,5 @@ const BooksList = ({
     </div>
   );
 };
-BooksList.displayName = 'BooksList';
 
 export default BooksList;

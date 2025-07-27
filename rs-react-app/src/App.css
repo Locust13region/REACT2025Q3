@@ -45,9 +45,8 @@
 
 .books-list__wrapper {
   overflow: hidden;
-  width: 50%;
   height: 100%;
-  flex-grow: 1;
+  flex: 1 0 50%;
 }
 
 .books-list {
@@ -78,8 +77,7 @@
 
 .book-description {
   height: 100%;
-  width: 50%;
-  flex-shrink: 0;
+  flex: 0 0 50%;
   padding-right: 1em;
   display: flex;
   flex-direction: column;
