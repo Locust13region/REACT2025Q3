@@ -1,6 +1,6 @@
 import type { ContentProps } from '@/types/types';
 import BooksList from '../components/books-list';
-import { useParams } from 'react-router';
+import { Outlet, useParams } from 'react-router';
 import { useEffect, type FC } from 'react';
 import { baseUrl } from '@/api/api-base-url';
 import useApi from '@/hooks/use-api';
@@ -31,6 +31,7 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
       {fetchResult && (
         <BooksList {...fetchResult} searchSubstring={searchSubstring} />
       )}
+      <Outlet />
     </main>
   );
 };

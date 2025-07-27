@@ -1,5 +1,5 @@
 import dataFetch from '@/api/api-request';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FetchResult } from '@/types/types';
 
 const useApi = (generatedError: Error | null) => {
@@ -8,26 +8,26 @@ const useApi = (generatedError: Error | null) => {
   const [fetchError, setFetchError] = useState<Error | null>(generatedError);
   const [requestUrl, setRequestUrl] = useState('');
 
-  const dataRequest = useCallback(async () => {
-    try {
-      setLoading(true);
-      setFetchError(null);
-      const result = await dataFetch(requestUrl);
-      setFetchResult(result);
-    } catch (error) {
-      if (error instanceof Error) {
-        setFetchError(error);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [requestUrl]);
-
   useEffect(() => {
+    const dataRequest = async () => {
+      try {
+        setLoading(true);
+        setFetchError(null);
+        const result = await dataFetch(requestUrl);
+        setFetchResult(result);
+      } catch (error) {
+        if (error instanceof Error) {
+          setFetchError(error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (requestUrl) {
       dataRequest();
     }
-  }, [dataRequest, requestUrl]);
+  }, [requestUrl]);
 
   useEffect(() => {
     setFetchError(generatedError);

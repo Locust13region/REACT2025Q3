@@ -8,7 +8,6 @@ const Book: FC<
   }
 > = ({ id, authors, title, searchSubstring }) => {
   const { page } = useParams();
-  console.log('searchSubstring', searchSubstring, 'id', id);
   return (
     <li className="book">
       <NavLink
