@@ -1,12 +1,14 @@
 import { baseUrl } from '@/api/api-base-url';
 import useApi from '@/hooks/use-api';
 import { useEffect, type FC } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 const BookDescription: FC = () => {
   const navigate = useNavigate();
   const { loading, fetchError, fetchResult, setRequestUrl } = useApi(null);
-  const { bookId } = useParams();
+  const { bookId, page } = useParams();
+  const [searchParams] = useSearchParams();
+  const searchSubstring = searchParams.get('search') ?? '';
 
   useEffect(() => {
     if (bookId) {
@@ -26,7 +28,11 @@ const BookDescription: FC = () => {
   }
   return fetchResult?.results[0].id ? (
     <article className="book-description">
-      <button onClick={() => navigate(-1)}>X</button>
+      <button
+        onClick={() => navigate(`/books/${page}?search=${searchSubstring}`)}
+      >
+        X
+      </button>
       <h2>{fetchResult.results[0].title}</h2>
       <h3>{fetchResult.results[0].authors[0].name}</h3>
       <p>book description</p>
