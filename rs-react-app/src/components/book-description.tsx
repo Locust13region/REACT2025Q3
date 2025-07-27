@@ -1,9 +1,10 @@
 import { baseUrl } from '@/api/api-base-url';
 import useApi from '@/hooks/use-api';
 import { useEffect, type FC } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 const BookDescription: FC = () => {
+  const navigate = useNavigate();
   const { loading, fetchError, fetchResult, setRequestUrl } = useApi(null);
   const { bookId } = useParams();
 
@@ -25,7 +26,7 @@ const BookDescription: FC = () => {
   }
   return fetchResult?.results[0].id ? (
     <article className="book-description">
-      <button onClick={() => console.log('close')}>X</button>
+      <button onClick={() => navigate(-1)}>X</button>
       <h2>{fetchResult.results[0].title}</h2>
       <h3>{fetchResult.results[0].authors[0].name}</h3>
       <p>book description</p>

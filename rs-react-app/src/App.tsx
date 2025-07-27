@@ -11,7 +11,6 @@ const About = lazy(() => import('@/pages/about'));
 const NotFound = lazy(() => import('@/pages/404'));
 
 export default function App() {
-  console.log('App render');
   const [searchParams] = useSearchParams();
   const [storageValue, setStorageValue] = useLocalStorage();
   const [generatedError, setGeneratedError] = useState<Error | null>(null);
