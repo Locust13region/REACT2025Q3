@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const bookSchema = z.object({
   id: z.number(),
-  title: z.string(),
+  title: z.string().optional(),
   authors: z.array(
     z.object({
       name: z.string(),
