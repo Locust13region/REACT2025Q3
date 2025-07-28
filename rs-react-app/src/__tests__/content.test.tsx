@@ -1,21 +1,35 @@
-// import dataFetch from '@/api/api-request';
-import Content from '@/pages/content';
 import ErrorBoundary from '@/components/error-boundary';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test, vi, type Mock } from 'vitest';
 import { MemoryRouter } from 'react-router';
-
-const mockUseApi = {};
+import useApi from '@/hooks/use-api';
+import Content from '@/pages/content';
 
 vi.mock('@/hooks/use-api', () => ({
-  default: () => mockUseApi,
+  default: vi.fn(),
 }));
 
-// (setRequestUrl as Mock).mockReturnValue(mockSetRequestUrl);
+describe('Content component', () => {
+  test('should renders Loading before fetch books', async () => {
+    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
+    mockedUseApi.mockReturnValue({
+      loading: true,
+      setRequestUrl: vi.fn(),
+      setFetchError: vi.fn(),
+    });
 
-describe.todo('Content component', () => {
+    render(
+      <MemoryRouter>
+        <Content searchSubstring={''} generatedError={null} />
+      </MemoryRouter>
+    );
+    const heading = await screen.findByText(/loading/i);
+    expect(heading).toBeInTheDocument();
+  });
+
   test('should renders fetched mock books', async () => {
-    const mockUseApi = {
+    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
+    mockedUseApi.mockReturnValue({
       loading: false,
       fetchResult: {
         results: [
@@ -27,31 +41,31 @@ describe.todo('Content component', () => {
       fetchError: null,
       setRequestUrl: vi.fn(),
       setFetchError: vi.fn(),
-    };
+    });
 
     render(
       <MemoryRouter>
         <Content searchSubstring={''} generatedError={null} />
       </MemoryRouter>
     );
-    screen.debug();
-    expect(mockUseApi.setRequestUrl as Mock).toBeCalled();
+    expect(useApi as Mock).toBeCalled();
 
-    const heading = screen.getByText('Author');
+    const heading = await screen.findByText('Author');
     expect(heading).toBeInTheDocument();
 
-    const mockBooks = screen.getAllByText(/Dickens` book/);
-    expect(mockBooks.length).toEqual(3);
+    const mockBooks = await screen.findAllByText(/Dickens` book/);
+    expect(mockBooks).toHaveLength(3);
   });
 
   test('Renders fetch error', async () => {
+    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
+    mockedUseApi.mockReturnValue({
+      fetchError: new Error('Mock Error'),
+    });
     render(
       <ErrorBoundary searchSubstring={''}>
         <MemoryRouter>
-          <Content
-            searchSubstring={''}
-            generatedError={new Error('Mock Error')}
-          />
+          <Content searchSubstring={''} generatedError={null} />
         </MemoryRouter>
       </ErrorBoundary>
     );
