@@ -1,52 +1,61 @@
-import dataFetch from '@/api/api-request';
+// import dataFetch from '@/api/api-request';
 import Content from '@/pages/content';
 import ErrorBoundary from '@/components/error-boundary';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test, vi, type Mock } from 'vitest';
+import { MemoryRouter } from 'react-router';
+
+const mockUseApi = {};
+
+vi.mock('@/hooks/use-api', () => ({
+  default: () => mockUseApi,
+}));
+
+// (setRequestUrl as Mock).mockReturnValue(mockSetRequestUrl);
 
 describe.todo('Content component', () => {
-  vi.mock('@/api/api-request', () => ({
-    default: vi.fn(),
-  }));
-  test('Content mounted', async () => {
-    render(<Content searchSubstring={''} generatedError={null} />);
+  test('should renders fetched mock books', async () => {
+    const mockUseApi = {
+      loading: false,
+      fetchResult: {
+        results: [
+          { id: 1, authors: [{ name: 'Dickens' }], title: 'Dickens` book 1' },
+          { id: 2, authors: [{ name: 'Dickens' }], title: 'Dickens` book 2' },
+          { id: 3, authors: [{ name: 'Dickens' }], title: 'Dickens` book 3' },
+        ],
+      },
+      fetchError: null,
+      setRequestUrl: vi.fn(),
+      setFetchError: vi.fn(),
+    };
+
+    render(
+      <MemoryRouter>
+        <Content searchSubstring={''} generatedError={null} />
+      </MemoryRouter>
+    );
     screen.debug();
-    const heading = screen.getByRole('heading', { level: 2 });
-    expect(heading).toHaveTextContent(/loading/i);
+    expect(mockUseApi.setRequestUrl as Mock).toBeCalled();
 
-    vi.mock('@/api/api-request', () => ({
-      default: vi.fn(),
-    }));
-    expect(dataFetch as Mock).toBeCalled();
-  });
+    const heading = screen.getByText('Author');
+    expect(heading).toBeInTheDocument();
 
-  test('Renders fetched mock book', async () => {
-    (dataFetch as Mock).mockResolvedValueOnce([
-      { id: 1, authors: [{ name: 'Dickens' }], title: 'Dickens` book 1' },
-      { id: 2, authors: [{ name: 'Dickens' }], title: 'Dickens` book 2' },
-      { id: 3, authors: [{ name: 'Dickens' }], title: 'Dickens` book 3' },
-    ]);
-
-    render(<Content searchSubstring={''} generatedError={null} />);
-    // const mockBooks = await screen.findAllByText(/Dickens` book/);
-    const mockBook1 = await screen.findByText('Dickens` book 1');
-    const mockBook2 = await screen.findByText('Dickens` book 2');
-    const mockBook3 = await screen.findByText('Dickens` book 3');
-    // expect(mockBooks.length).toEqual(3);
-    expect(mockBook1).toBeInTheDocument();
-    expect(mockBook2).toBeInTheDocument();
-    expect(mockBook3).toBeInTheDocument();
+    const mockBooks = screen.getAllByText(/Dickens` book/);
+    expect(mockBooks.length).toEqual(3);
   });
 
   test('Renders fetch error', async () => {
-    (dataFetch as Mock).mockRejectedValue(new Error('mock Error'));
-
     render(
       <ErrorBoundary searchSubstring={''}>
-        <Content searchSubstring={''} generatedError={null} />
+        <MemoryRouter>
+          <Content
+            searchSubstring={''}
+            generatedError={new Error('Mock Error')}
+          />
+        </MemoryRouter>
       </ErrorBoundary>
     );
-    const mockError = await screen.findByText('mock Error');
+    const mockError = await screen.findByText('Mock Error');
     expect(mockError).toBeInTheDocument();
   });
 });
