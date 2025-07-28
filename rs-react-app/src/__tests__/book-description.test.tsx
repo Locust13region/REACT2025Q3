@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, test, vi, type Mock } from 'vitest';
 import useApi from '@/hooks/use-api';
 import BookDescription from '@/components/book-description';
-import Content from '@/pages/content';
 import userEvent from '@testing-library/user-event';
 
 vi.mock('@/hooks/use-api', () => ({
@@ -13,21 +12,16 @@ vi.mock('@/hooks/use-api', () => ({
 describe('BookDescription component', () => {
   test('should renders Loading before fetch book description', async () => {
     const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
-    mockedUseApi.mockReturnValue({
+    mockedUseApi.mockImplementation(() => ({
       loading: true,
       setRequestUrl: vi.fn(),
       setFetchError: vi.fn(),
-    });
+    }));
 
     render(
       <MemoryRouter initialEntries={['/books/1/1?search=']}>
         <Routes>
-          <Route
-            path="/books/:page"
-            element={<Content searchSubstring={''} generatedError={null} />}
-          >
-            <Route path=":bookId" element={<BookDescription />} />
-          </Route>
+          <Route path="/books/:page/:bookId" element={<BookDescription />} />
         </Routes>
       </MemoryRouter>
     );
@@ -56,16 +50,10 @@ describe('BookDescription component', () => {
       setRequestUrl: vi.fn(),
       setFetchError: vi.fn(),
     });
-
     render(
       <MemoryRouter initialEntries={['/books/1/1?search=']}>
         <Routes>
-          <Route
-            path="/books/:page"
-            element={<Content searchSubstring={''} generatedError={null} />}
-          >
-            <Route path=":bookId" element={<BookDescription />} />
-          </Route>
+          <Route path="/books/:page/:bookId" element={<BookDescription />} />
         </Routes>
       </MemoryRouter>
     );
@@ -76,5 +64,23 @@ describe('BookDescription component', () => {
 
     const backButton = screen.getByRole('button', { name: /x/i });
     await user.click(backButton);
+  });
+
+  test('should renders fetch error', async () => {
+    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
+    mockedUseApi.mockReturnValue({
+      fetchError: new Error('Mock Error'),
+      setRequestUrl: vi.fn(),
+      setFetchError: vi.fn(),
+    });
+    render(
+      <MemoryRouter initialEntries={['/books/1/1?search=']}>
+        <Routes>
+          <Route path="/books/:page/:bookId" element={<BookDescription />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    const mockError = await screen.findByText(/mock error/i);
+    expect(mockError).toBeInTheDocument();
   });
 });

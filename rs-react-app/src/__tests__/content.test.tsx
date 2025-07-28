@@ -57,7 +57,7 @@ describe('Content component', () => {
     expect(mockBooks).toHaveLength(3);
   });
 
-  test('Renders fetch error', async () => {
+  test('should renders fetch error', async () => {
     const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
     mockedUseApi.mockReturnValue({
       fetchError: new Error('Mock Error'),
