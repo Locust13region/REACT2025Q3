@@ -1,4 +1,5 @@
 import {
+  use,
   useEffect,
   useState,
   type ChangeEvent,
@@ -7,12 +8,15 @@ import {
 } from 'react';
 import type { HeaderProps } from '@/types/types';
 import { Link, useNavigate } from 'react-router';
+import { ThemeContext } from './theme-context';
 
 const Header: FC<HeaderProps> = ({
   searchSubstring,
   setSearchSubstring,
   setGeneratedError,
 }) => {
+  const darkTheme = use(ThemeContext);
+  console.log('darkTheme', darkTheme);
   const [inputValue, setInputValue] = useState(searchSubstring);
   const navigate = useNavigate();
 
