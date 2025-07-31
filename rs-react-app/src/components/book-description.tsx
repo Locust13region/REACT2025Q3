@@ -33,8 +33,8 @@ const BookDescription: FC = () => {
       >
         X
       </button>
-      <h2>{fetchResult.results[0].title}</h2>
-      <h3>{fetchResult.results[0].authors[0].name}</h3>
+      <h4>{fetchResult.results[0].title}</h4>
+      <h5>{fetchResult.results[0].authors[0].name}</h5>
       <p>book description</p>
       <p>
         {fetchResult.results[0].summaries.length

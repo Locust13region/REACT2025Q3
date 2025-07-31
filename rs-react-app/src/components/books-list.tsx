@@ -15,6 +15,7 @@ const BooksList = ({
     <div className="books-list__wrapper">
       <ul className="books-list">
         <li className="books-list__header">
+          <div className="books-list__title"></div>
           <div className="books-list__title">Author</div>
           <div className="books-list__title">Title</div>
         </li>

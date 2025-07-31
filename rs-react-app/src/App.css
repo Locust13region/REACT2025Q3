@@ -1,5 +1,5 @@
 #root {
-  width: 60rem;
+  width: 80rem;
   height: 100vh;
   margin: 0 auto;
   padding: 1rem;
@@ -70,7 +70,8 @@
   height: 90%;
   overflow-y: auto;
   display: grid;
-  grid-template-columns: 30% 70%;
+  /* grid-template-columns: 30% 70%; */
+  grid-template-columns: 3% 32% 65%;
   align-content: start;
 }
 
@@ -91,12 +92,15 @@
 .book-description {
   height: 100%;
   flex: 0 0 50%;
+  padding-top: 1px;
   padding-right: 1em;
   display: flex;
   flex-direction: column;
 
   & > h2,
-  h3 {
+  h3,
+  h4,
+  h5 {
     margin-top: 0;
   }
 
@@ -104,6 +108,9 @@
     border-color: var(--border);
     background-color: transparent;
     align-self: flex-end;
+    &:hover {
+      border-color: #646cff;
+    }
   }
 
   & > p:last-of-type {
@@ -119,10 +126,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
-  font-size: 1.2em;
+  gap: 1em;
+  font-size: 1em;
   position: sticky;
   bottom: 0;
+  & > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em 0.5em;
+  }
 }
 
 .pagination__arrow {

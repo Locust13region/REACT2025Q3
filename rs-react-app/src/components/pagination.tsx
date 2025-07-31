@@ -34,7 +34,7 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
       >
         {'<'}
       </button>
-      <div>{`Page ${currentPage} of Pages ${pagesTotal}`}</div>
+      <div>{`Page ${currentPage} of ${pagesTotal}`}</div>
       <button className="pagination__arrow" disabled={!next} onClick={nextPage}>
         {'>'}
       </button>

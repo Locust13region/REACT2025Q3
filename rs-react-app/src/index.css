@@ -16,6 +16,7 @@
   --bg-accent: #808080;
   --border: #808080;
   --button-border: #808080;
+  --scrollbar-track: #ffffffde;
 }
 :root[data-theme='light'] {
   --text: #213547;
@@ -23,13 +24,14 @@
   --bg-accent: #d1d1d1;
   --border: #a1a1a1;
   --button-border: transparent;
+  --scrollbar-track: #d1d1d1;
 }
 
 * {
   box-sizing: border-box;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
-  scrollbar-color: var(--border) var(--bg-accent);
+  scrollbar-color: var(--border) var(--scrollbar-track);
 }
 
 body {

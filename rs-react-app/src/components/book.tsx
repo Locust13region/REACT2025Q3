@@ -9,21 +9,24 @@ const Book: FC<
 > = ({ id, authors, title, searchSubstring }) => {
   const { page } = useParams();
   return (
-    <li className="book">
-      <NavLink
-        to={`/books/${page}/${id}?search=${searchSubstring}`}
-        className={({ isActive }) =>
-          `book__link ${isActive ? 'book__link--active' : ''}`
-        }
-      >
-        <p>
-          <span>{authors[0]?.name ?? 'no data available'}</span>
-        </p>
-        <p>
-          <span>{title ?? 'no data available'}</span>
-        </p>
-      </NavLink>
-    </li>
+    <>
+      <li className="book">
+        <NavLink
+          to={`/books/${page}/${id}?search=${searchSubstring}`}
+          className={({ isActive }) =>
+            `book__link ${isActive ? 'book__link--active' : ''}`
+          }
+        >
+          <input type="checkbox" />
+          <p>
+            <span>{authors[0]?.name ?? 'no data available'}</span>
+          </p>
+          <p>
+            <span>{title ?? 'no data available'}</span>
+          </p>
+        </NavLink>
+      </li>
+    </>
   );
 };
 export default Book;
