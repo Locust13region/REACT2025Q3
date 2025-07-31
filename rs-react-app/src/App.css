@@ -70,8 +70,7 @@
   height: 90%;
   overflow-y: auto;
   display: grid;
-  /* grid-template-columns: 30% 70%; */
-  grid-template-columns: 3% 32% 65%;
+  grid-template-columns: 28px 32% 65%;
   align-content: start;
 }
 
@@ -146,6 +145,11 @@
 .book {
   display: contents;
   text-align: left;
+
+  & > input {
+    font-size: inherit;
+    border-bottom: 1px solid var(--border);
+  }
 
   & p {
     display: flex;

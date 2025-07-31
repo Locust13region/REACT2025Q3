@@ -11,13 +11,13 @@ const Book: FC<
   return (
     <>
       <li className="book">
+        <input type="checkbox" />
         <NavLink
           to={`/books/${page}/${id}?search=${searchSubstring}`}
           className={({ isActive }) =>
             `book__link ${isActive ? 'book__link--active' : ''}`
           }
         >
-          <input type="checkbox" />
           <p>
             <span>{authors[0]?.name ?? 'no data available'}</span>
           </p>
