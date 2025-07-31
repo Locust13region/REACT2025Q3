@@ -27,9 +27,7 @@ describe('Pagination component', () => {
       />
     );
 
-    expect(
-      screen.getByText(`Page ${page} of Pages ${page}`)
-    ).toBeInTheDocument();
+    expect(screen.getByText(`Page ${page} of ${page}`)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '<' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '>' })).toBeInTheDocument();
   });
