@@ -3,6 +3,9 @@ import { describe, expect, test, vi, type Mock } from 'vitest';
 import { useNavigate, useParams } from 'react-router';
 import userEvent from '@testing-library/user-event';
 import Pagination from '@/components/pagination';
+import { configureStore } from '@reduxjs/toolkit';
+import selectedBooks from '@/store/books-slice';
+import { Provider } from 'react-redux';
 
 const mockNavigate = vi.fn();
 
@@ -15,16 +18,26 @@ vi.mock('react-router', () => ({
 (useParams as Mock).mockReturnValue({ page: '1' });
 
 describe('Pagination component', () => {
+  const mockStore = configureStore({
+    reducer: {
+      books: selectedBooks,
+    },
+    preloadedState: {
+      books: [],
+    },
+  });
   test('should renders component', () => {
     const { page } = useParams();
     render(
-      <Pagination
-        {...{
-          count: 10,
-          next: '?page=1&search=Dickens',
-          previous: '?page=3&search=Charles',
-        }}
-      />
+      <Provider store={mockStore}>
+        <Pagination
+          {...{
+            count: 10,
+            next: '?page=1&search=Dickens',
+            previous: '?page=3&search=Charles',
+          }}
+        />
+      </Provider>
     );
 
     expect(screen.getByText(`Page ${page} of ${page}`)).toBeInTheDocument();
@@ -36,13 +49,15 @@ describe('Pagination component', () => {
     const user = userEvent.setup();
 
     render(
-      <Pagination
-        {...{
-          count: 10,
-          next: 'http://example.com/books?page=3&search=Dickens',
-          previous: 'http://example.com/books?page=1&search=Charles',
-        }}
-      />
+      <Provider store={mockStore}>
+        <Pagination
+          {...{
+            count: 10,
+            next: 'http://example.com/books?page=3&search=Dickens',
+            previous: 'http://example.com/books?page=1&search=Charles',
+          }}
+        />
+      </Provider>
     );
 
     const previousButton = screen.getByRole('button', { name: '<' });

@@ -1,9 +1,21 @@
 import Book from '@/components/book';
+import { configureStore } from '@reduxjs/toolkit';
+import selectedBooks from '@/store/books-slice';
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { describe, expect, test } from 'vitest';
 
 describe('Book component', () => {
+  const mockStore = configureStore({
+    reducer: {
+      books: selectedBooks,
+    },
+    preloadedState: {
+      books: [],
+    },
+  });
+
   test('Book renders list item with book author and description', () => {
     const mockBook = {
       id: 1,
@@ -14,14 +26,17 @@ describe('Book component', () => {
       ],
       title: 'Book description',
       summaries: [],
-      searchSubstring: 'Dickens',
     };
-
     render(
       <MemoryRouter initialEntries={['/books/1']}>
-        <Routes>
-          <Route path="/books/:page" element={<Book {...mockBook} />} />
-        </Routes>
+        <Provider store={mockStore}>
+          <Routes>
+            <Route
+              path="/books/:page"
+              element={<Book book={mockBook} searchSubstring={'Dickens'} />}
+            />
+          </Routes>
+        </Provider>
       </MemoryRouter>
     );
     const author = screen.queryByText(mockBook.authors[0].name);
@@ -40,14 +55,17 @@ describe('Book component', () => {
       ],
       title: undefined,
       summaries: [],
-      searchSubstring: 'Dickens',
     };
-
     render(
       <MemoryRouter initialEntries={['/books/1']}>
-        <Routes>
-          <Route path="/books/:page" element={<Book {...mockBook} />} />
-        </Routes>
+        <Provider store={mockStore}>
+          <Routes>
+            <Route
+              path="/books/:page"
+              element={<Book book={mockBook} searchSubstring={'Dickens'} />}
+            />
+          </Routes>
+        </Provider>
       </MemoryRouter>
     );
     const author = screen.getByText(mockBook.authors[0].name);
@@ -67,9 +85,14 @@ describe('Book component', () => {
 
     render(
       <MemoryRouter initialEntries={['/books/1']}>
-        <Routes>
-          <Route path="/books/:page" element={<Book {...mockBook} />} />
-        </Routes>
+        <Provider store={mockStore}>
+          <Routes>
+            <Route
+              path="/books/:page"
+              element={<Book book={mockBook} searchSubstring={'Dickens'} />}
+            />
+          </Routes>
+        </Provider>
       </MemoryRouter>
     );
     const author = screen.getByText('no data available');
