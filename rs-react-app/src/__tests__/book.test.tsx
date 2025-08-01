@@ -1,21 +1,11 @@
+import mockStore from '@/__mocks__/store';
 import Book from '@/components/book';
-import { configureStore } from '@reduxjs/toolkit';
-import selectedBooks from '@/store/books-slice';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { describe, expect, test } from 'vitest';
 
 describe('Book component', () => {
-  const mockStore = configureStore({
-    reducer: {
-      books: selectedBooks,
-    },
-    preloadedState: {
-      books: [],
-    },
-  });
-
   test('Book renders list item with book author and description', () => {
     const mockBook = {
       id: 1,

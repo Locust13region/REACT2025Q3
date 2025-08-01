@@ -4,6 +4,8 @@ import { describe, expect, test, vi, type Mock } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import useApi from '@/hooks/use-api';
 import Content from '@/pages/content';
+import { Provider } from 'react-redux';
+import mockStore from '@/__mocks__/store';
 
 vi.mock('@/hooks/use-api', () => ({
   default: vi.fn(),
@@ -45,7 +47,9 @@ describe('Content component', () => {
 
     render(
       <MemoryRouter>
-        <Content searchSubstring={''} generatedError={null} />
+        <Provider store={mockStore}>
+          <Content searchSubstring={''} generatedError={null} />
+        </Provider>
       </MemoryRouter>
     );
     expect(useApi as Mock).toBeCalled();
