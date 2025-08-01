@@ -1,4 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import csvBuilder from '@/sevice/csv-builder';
+import downloadFile from '@/sevice/file-handler';
 import { unSelectAllBooks } from '@/store/books-slice';
 import { selected } from '@/store/selector';
 import type { PaginationProps } from '@/types/types';
@@ -33,6 +35,11 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
     dispatch(unSelectAllBooks());
   };
 
+  const handleDownload = () => {
+    const csv = csvBuilder(checkedBooks);
+    downloadFile(csv, checkedBooks.length);
+  };
+
   return (
     <section className="pagination">
       <button
@@ -52,7 +59,9 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
         <button type="button" onClick={handleUnselect}>
           {`Unselect (${checkedBooks.length})`}
         </button>
-        <button type="button">Download</button>
+        <button type="button" onClick={handleDownload}>
+          Download
+        </button>
       </div>
     </section>
   );
