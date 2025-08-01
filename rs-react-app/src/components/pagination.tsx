@@ -1,3 +1,6 @@
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { unSelectAllBooks } from '@/store/books-slice';
+import { selected } from '@/store/selector';
 import type { PaginationProps } from '@/types/types';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router';
@@ -5,6 +8,7 @@ import { useNavigate, useParams } from 'react-router';
 const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
   const { page } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const booksPerPage = 32;
   const pagesTotal = Math.ceil(count / booksPerPage);
 
@@ -23,7 +27,11 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
     if (next) navigate(getPageParams(next));
   };
 
-  const currentPage = page;
+  const checkedBooks = useAppSelector(selected);
+
+  const handleUnselect = () => {
+    dispatch(unSelectAllBooks());
+  };
 
   return (
     <section className="pagination">
@@ -34,10 +42,18 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
       >
         {'<'}
       </button>
-      <div>{`Page ${currentPage} of ${pagesTotal}`}</div>
+      <div>{`Page ${page} of ${pagesTotal}`}</div>
       <button className="pagination__arrow" disabled={!next} onClick={nextPage}>
         {'>'}
       </button>
+      <div
+        className={`pagination__action ${checkedBooks.length ? 'pagination__action-show' : ''}`}
+      >
+        <button type="button" onClick={handleUnselect}>
+          {`Unselect (${checkedBooks.length})`}
+        </button>
+        <button type="button">Download</button>
+      </div>
     </section>
   );
 };

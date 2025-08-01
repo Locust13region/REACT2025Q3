@@ -14,15 +14,19 @@ export type ContentProps = {
   generatedError: Error | null;
 };
 
-export type FetchResult = z.infer<typeof responseSchema>;
-
 export type BooksListProps = FetchResult & {
   setSearchParams: ReturnType<typeof useSearchParams>[1];
 };
 
+export type BookProps = { book: BookType; searchSubstring: string };
+
+export type FetchResult = z.infer<typeof responseSchema>;
+
 export type PaginationProps = Pick<FetchResult, 'count' | 'next' | 'previous'>;
 
 export type BookType = z.infer<typeof bookSchema>;
+
+export type BookState = BookType[];
 
 export type ErrorBoundaryProps = {
   searchSubstring: string;

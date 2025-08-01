@@ -21,7 +21,7 @@ const BooksList = ({
         </li>
         {books &&
           books.map((book) => (
-            <Book key={book.id} {...book} searchSubstring={searchSubstring} />
+            <Book key={book.id} book={book} searchSubstring={searchSubstring} />
           ))}
       </ul>
       <Pagination {...{ count, next, previous }} />

@@ -1,18 +1,33 @@
-import type { BookType } from '@/types/types';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { toggleBook } from '@/store/books-slice';
+import { selected } from '@/store/selector';
+import type { BookProps } from '@/types/types';
 import type { FC } from 'react';
 import { NavLink, useParams } from 'react-router';
 
-const Book: FC<
-  BookType & {
-    searchSubstring: string;
-  }
-> = ({ id, authors, title, searchSubstring }) => {
+const Book: FC<BookProps> = ({ book, searchSubstring }) => {
+  const { id, authors, title } = book;
+
   const { page } = useParams();
+  const dispatch = useAppDispatch();
+
+  const checkedBooks = useAppSelector(selected);
+  const isChecked = checkedBooks.some((item) => item.id === book.id);
+
+  const handleCheckbox = () => {
+    dispatch(toggleBook(book));
+  };
+
   return (
     <>
       <li className="book">
         <div className="book__checkbox">
-          <input type="checkbox" />
+          <input
+            name={`${id}`}
+            type="checkbox"
+            checked={isChecked}
+            onChange={handleCheckbox}
+          />
         </div>
         <NavLink
           to={`/books/${page}/${id}?search=${searchSubstring}`}
