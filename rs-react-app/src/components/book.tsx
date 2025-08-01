@@ -11,7 +11,9 @@ const Book: FC<
   return (
     <>
       <li className="book">
-        <input type="checkbox" />
+        <div className="book__checkbox">
+          <input type="checkbox" />
+        </div>
         <NavLink
           to={`/books/${page}/${id}?search=${searchSubstring}`}
           className={({ isActive }) =>
