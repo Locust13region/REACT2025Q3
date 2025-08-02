@@ -66,6 +66,41 @@ describe('BookDescription component', () => {
     await user.click(backButton);
   });
 
+  test('should renders fetched mock books without book description', async () => {
+    const user = userEvent.setup();
+    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
+    mockedUseApi.mockReturnValue({
+      loading: false,
+      fetchResult: {
+        results: [
+          {
+            id: 1,
+            authors: [{ name: 'description author' }],
+            title: 'description title',
+            summaries: [],
+          },
+        ],
+      },
+      fetchError: null,
+      setRequestUrl: vi.fn(),
+      setFetchError: vi.fn(),
+    });
+    render(
+      <MemoryRouter initialEntries={['/books/1/1?search=']}>
+        <Routes>
+          <Route path="/books/:page/:bookId" element={<BookDescription />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    expect(useApi as Mock).toBeCalled();
+
+    const summaries = await screen.findByText('no data available');
+    expect(summaries).toBeInTheDocument();
+
+    const backButton = screen.getByRole('button', { name: /x/i });
+    await user.click(backButton);
+  });
+
   test('should renders fetch error', async () => {
     const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
     mockedUseApi.mockReturnValue({

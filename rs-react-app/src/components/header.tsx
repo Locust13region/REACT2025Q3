@@ -58,7 +58,7 @@ const Header: FC<HeaderProps> = ({
         />
         <button type="submit">Search</button>
       </form>
-      <button type="button" onClick={toggleTheme}>
+      <button type="button" aria-label="Toggle theme" onClick={toggleTheme}>
         {theme === 'dark' ? <Moon /> : <Sun />}
       </button>
       <button type="button" onClick={setError}>

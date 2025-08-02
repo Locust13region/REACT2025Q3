@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
-import csvBuilder from '@/sevice/csv-builder';
-import downloadFile from '@/sevice/file-handler';
+import csvBuilder from '@/service/csv-builder';
+import downloadFile from '@/service/file-handler';
 import { unSelectAllBooks } from '@/store/books-slice';
 import { selected } from '@/store/selector';
 import type { PaginationProps } from '@/types/types';
