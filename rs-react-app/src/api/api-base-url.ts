@@ -1,1 +1,1 @@
-export const baseUrl = 'https://gutendex.com/books';
+export const baseUrl = 'https://gutendex.com/books/';

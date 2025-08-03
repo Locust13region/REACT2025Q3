@@ -24,7 +24,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
       return (
         <div>
           <h2>{errorMessage}</h2>
-          <p>Try a new search query.</p>
+          <button onClick={() => window.location.reload()}>Reset error</button>
         </div>
       );
     }

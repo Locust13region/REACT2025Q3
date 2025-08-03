@@ -3,35 +3,51 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --color-dark: rgba(255, 255, 255, 0.87);
-  --background-color-dark: #242424;
-  --color-light: #213547;
-  --background-color-light: #ffffff;
-
   color-scheme: light dark;
-  color: var(--color-dark);
-  background-color: var(--background-dark);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+:root[data-theme='dark'] {
+  --text: #ffffffde;
+  --bg: #242424;
+  --bg-accent: #808080;
+  --border: #808080;
+  --button-border: #808080;
+  --scrollbar-track: #ffffffde;
+}
+:root[data-theme='light'] {
+  --text: #213547;
+  --bg: #f9f9f9;
+  --bg-accent: #d1d1d1;
+  --border: #a1a1a1;
+  --button-border: transparent;
+  --scrollbar-track: #d1d1d1;
+}
 
 * {
   box-sizing: border-box;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--scrollbar-track);
+}
+
+body {
+  color: var(--text);
+  background-color: var(--bg);
+  scrollbar-color: var(--bg-accent);
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: inherit;
   text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
 body,
+ul,
 p {
   margin: 0;
   padding: 0;
@@ -45,31 +61,28 @@ h1 {
 input,
 button {
   border-radius: 8px;
-  border: 1px solid var(--color-light);
+  border: 1px solid var(--button-border);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  color: var(--text);
+  background-color: var(--bg-accent);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: var(--color-light);
-    background-color: var(--background-color-light);
+button {
+  &:disabled {
+    background-color: transparent;
   }
-  a:hover {
-    color: #747bff;
+
+  &:hover {
+    border-color: #646cff;
   }
-  button {
-    background-color: #f9f9f9;
+
+  &:focus,
+  :focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
   }
 }

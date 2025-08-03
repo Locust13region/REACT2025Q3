@@ -2,11 +2,16 @@ import App from '@/App';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 
 describe('App component', () => {
   test('Load searchSubstring from localstorage', () => {
     localStorage.setItem('rs-react-app', 'Dickens');
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
     expect(screen.getByRole('searchbox')).toHaveValue('Dickens');
   });
 
@@ -14,7 +19,11 @@ describe('App component', () => {
     const user = userEvent.setup();
     localStorage.removeItem('rs-react-app');
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
     const searchInput = screen.getByRole('searchbox');
     const searchButton = screen.getByRole('button', { name: 'Search' });
     await user.type(searchInput, 'Dickens');

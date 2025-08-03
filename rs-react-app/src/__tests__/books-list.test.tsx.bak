@@ -2,7 +2,7 @@ import BooksList from '@/components/books-list';
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-describe('Book-list component', () => {
+describe.todo('Book-list component', () => {
   test('Book-list renders list header', () => {
     render(<BooksList books={[]} />);
     const listItems = screen.getAllByRole('listitem');

@@ -1,45 +1,71 @@
-import { Component } from 'react';
-import type { ChangeEvent, FormEvent } from 'react';
+import {
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type FC,
+  type FormEvent,
+} from 'react';
 import type { HeaderProps } from '@/types/types';
+import { Link, useNavigate } from 'react-router';
+import useTheme from '@/hooks/use-theme';
+import Moon from '@/assets/moon';
+import Sun from '@/assets/sun';
 
-export default class Header extends Component<HeaderProps> {
-  state = {
-    inputValue: this.props.searchSubstring,
+const Header: FC<HeaderProps> = ({
+  searchSubstring,
+  setSearchSubstring,
+  setGeneratedError,
+}) => {
+  const { theme, toggleTheme } = useTheme();
+
+  const [inputValue, setInputValue] = useState(searchSubstring);
+  const navigate = useNavigate();
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
-  componentDidUpdate(prevProps: Readonly<HeaderProps>) {
-    if (
-      prevProps.searchSubstring !== this.props.searchSubstring &&
-      this.state.inputValue !== this.props.searchSubstring
-    ) {
-      this.setState({ inputValue: this.props.searchSubstring });
-    }
-  }
-
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value });
-  };
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.setSearchSubstring(this.state.inputValue.trim());
+    const inputTrimmed = inputValue.trim();
+    setSearchSubstring(inputTrimmed);
+    setGeneratedError(null);
+    navigate({
+      pathname: '/books/1/',
+      search: inputTrimmed.length ? `?search=${inputTrimmed}` : '',
+    });
   };
 
-  render() {
-    return (
-      <header className="header">
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="searchInput">Find book</label>
-          <input
-            type="search"
-            id="searchInput"
-            name="searchInput"
-            value={this.state.inputValue}
-            onInput={this.handleInputChange}
-          />
-          <button type="submit">Search</button>
-        </form>
-      </header>
-    );
-  }
-}
+  useEffect(() => {
+    setInputValue(searchSubstring);
+  }, [searchSubstring]);
+
+  const setError = () => {
+    setGeneratedError(new Error('Test ErrorBoundary'));
+  };
+
+  return (
+    <header className="header">
+      <Link to={'/about'}>About</Link>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="searchInput">Find book</label>
+        <input
+          type="search"
+          id="searchInput"
+          name="searchInput"
+          value={inputValue}
+          onInput={handleInputChange}
+        />
+        <button type="submit">Search</button>
+      </form>
+      <button type="button" aria-label="Toggle theme" onClick={toggleTheme}>
+        {theme === 'dark' ? <Moon /> : <Sun />}
+      </button>
+      <button type="button" onClick={setError}>
+        Error
+      </button>
+    </header>
+  );
+};
+
+export default Header;
