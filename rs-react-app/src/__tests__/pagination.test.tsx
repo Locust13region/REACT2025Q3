@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, test, vi, type Mock } from 'vitest';
+import { beforeEach, describe, expect, test, vi, type Mock } from 'vitest';
 import { useNavigate, useParams } from 'react-router';
 import userEvent from '@testing-library/user-event';
 import Pagination from '@/components/pagination';
 import { Provider } from 'react-redux';
-import mockStore from '@/__mocks__/store';
+import createMockStore from '@/__mocks__/store';
 
 const mockNavigate = vi.fn();
 
@@ -17,10 +17,16 @@ vi.mock('react-router', () => ({
 (useParams as Mock).mockReturnValue({ page: '1' });
 
 describe('Pagination component', () => {
+  let store: ReturnType<typeof createMockStore>;
+
+  beforeEach(() => {
+    store = createMockStore();
+  });
+
   test('should renders component', () => {
     const { page } = useParams();
     render(
-      <Provider store={mockStore}>
+      <Provider store={store}>
         <Pagination
           {...{
             count: 10,
@@ -40,7 +46,7 @@ describe('Pagination component', () => {
     const user = userEvent.setup();
 
     render(
-      <Provider store={mockStore}>
+      <Provider store={store}>
         <Pagination
           {...{
             count: 10,
@@ -64,7 +70,7 @@ describe('Pagination component', () => {
   test('should clear state when click Unselect button', async () => {
     const user = userEvent.setup();
     render(
-      <Provider store={mockStore}>
+      <Provider store={store}>
         <Pagination
           {...{
             count: 10,

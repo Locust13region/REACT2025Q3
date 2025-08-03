@@ -1,11 +1,16 @@
-import mockStore from '@/__mocks__/store';
+import createMockStore from '@/__mocks__/store';
 import Book from '@/components/book';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 describe('Book component', () => {
+  let store: ReturnType<typeof createMockStore>;
+
+  beforeEach(() => {
+    store = createMockStore();
+  });
   test('Book renders list item with book author and description', () => {
     const mockBook = {
       id: 1,
@@ -19,7 +24,7 @@ describe('Book component', () => {
     };
     render(
       <MemoryRouter initialEntries={['/books/1']}>
-        <Provider store={mockStore}>
+        <Provider store={store}>
           <Routes>
             <Route
               path="/books/:page"
@@ -48,7 +53,7 @@ describe('Book component', () => {
     };
     render(
       <MemoryRouter initialEntries={['/books/1']}>
-        <Provider store={mockStore}>
+        <Provider store={store}>
           <Routes>
             <Route
               path="/books/:page"
@@ -75,7 +80,7 @@ describe('Book component', () => {
 
     render(
       <MemoryRouter initialEntries={['/books/1']}>
-        <Provider store={mockStore}>
+        <Provider store={store}>
           <Routes>
             <Route
               path="/books/:page"
