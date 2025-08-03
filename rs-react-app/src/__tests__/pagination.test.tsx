@@ -5,6 +5,11 @@ import userEvent from '@testing-library/user-event';
 import Pagination from '@/components/pagination';
 import { Provider } from 'react-redux';
 import createMockStore from '@/__mocks__/store';
+import downloadFile from '@/service/file-handler';
+
+vi.mock('@/service/file-handler', () => ({
+  default: vi.fn(),
+}));
 
 const mockNavigate = vi.fn();
 
@@ -83,5 +88,24 @@ describe('Pagination component', () => {
 
     const unselect = screen.getByRole('button', { name: /unselect/i });
     await user.click(unselect);
+  });
+
+  test('should call download file function', async () => {
+    const user = userEvent.setup();
+    render(
+      <Provider store={store}>
+        <Pagination
+          {...{
+            count: 10,
+            next: '?page=1&search=Dickens',
+            previous: '?page=3&search=Charles',
+          }}
+        />
+      </Provider>
+    );
+
+    const download = screen.getByRole('button', { name: /download/i });
+    await user.click(download);
+    expect(downloadFile).toHaveBeenCalled();
   });
 });

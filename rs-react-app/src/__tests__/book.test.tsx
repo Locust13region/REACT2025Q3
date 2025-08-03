@@ -1,6 +1,7 @@
 import createMockStore from '@/__mocks__/store';
 import Book from '@/components/book';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { beforeEach, describe, expect, test } from 'vitest';
@@ -11,7 +12,7 @@ describe('Book component', () => {
   beforeEach(() => {
     store = createMockStore();
   });
-  test('Book renders list item with book author and description', () => {
+  test('should renders book with author and description', () => {
     const mockBook = {
       id: 1,
       authors: [
@@ -40,7 +41,7 @@ describe('Book component', () => {
     expect(title).toBeInTheDocument();
   });
 
-  test('Book renders list item with book author without title', () => {
+  test('should renders book without title', () => {
     const mockBook = {
       id: 1,
       authors: [
@@ -69,7 +70,7 @@ describe('Book component', () => {
     expect(title).toBeInTheDocument();
   });
 
-  test('Book renders list item with book title without author', () => {
+  test('should renders book without  author', () => {
     const mockBook = {
       id: 1,
       authors: [],
@@ -94,5 +95,35 @@ describe('Book component', () => {
     const title = screen.getByText(mockBook.title);
     expect(author).toBeInTheDocument();
     expect(title).toBeInTheDocument();
+  });
+
+  test('should add checked book to store', async () => {
+    const user = userEvent.setup();
+    const mockBook = {
+      id: 1,
+      authors: [
+        {
+          name: 'Dickens',
+        },
+      ],
+      title: 'Book description',
+      summaries: [],
+    };
+    render(
+      <MemoryRouter initialEntries={['/books/1']}>
+        <Provider store={store}>
+          <Routes>
+            <Route
+              path="/books/:page"
+              element={<Book book={mockBook} searchSubstring={'Dickens'} />}
+            />
+          </Routes>
+        </Provider>
+      </MemoryRouter>
+    );
+    const checkbox = screen.getByRole('checkbox', { name: '' });
+    expect(checkbox).toBeChecked();
+    await user.click(checkbox);
+    expect(checkbox).not.toBeChecked();
   });
 });
