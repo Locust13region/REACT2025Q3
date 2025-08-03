@@ -32,6 +32,7 @@ export default defineConfig({
         functions: 50,
         lines: 50,
       },
+      skipFull: true,
     },
   },
 });

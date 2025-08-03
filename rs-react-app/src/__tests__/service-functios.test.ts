@@ -7,4 +7,6 @@ describe('Service functions', () => {
   test('should make a csv raw', () => {
     expect(csvBuilder(mockBooks)).toBe(csvExpected);
   });
+
+  test('should init download file', () => {});
 });

@@ -1,17 +1,22 @@
 import ErrorBoundary from '@/components/error-boundary';
 import { render, screen } from '@testing-library/react';
-import { describe, expect, test, vi, type Mock } from 'vitest';
+import { beforeEach, describe, expect, test, vi, type Mock } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import useApi from '@/hooks/use-api';
 import Content from '@/pages/content';
 import { Provider } from 'react-redux';
-import mockStore from '@/__mocks__/store';
+import createMockStore from '@/__mocks__/store';
 
 vi.mock('@/hooks/use-api', () => ({
   default: vi.fn(),
 }));
 
 describe('Content component', () => {
+  let store: ReturnType<typeof createMockStore>;
+
+  beforeEach(() => {
+    store = createMockStore();
+  });
   test('should renders Loading before fetch books', async () => {
     const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
     mockedUseApi.mockReturnValue({
@@ -47,7 +52,7 @@ describe('Content component', () => {
 
     render(
       <MemoryRouter>
-        <Provider store={mockStore}>
+        <Provider store={store}>
           <Content searchSubstring={''} generatedError={null} />
         </Provider>
       </MemoryRouter>

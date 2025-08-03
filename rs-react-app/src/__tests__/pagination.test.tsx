@@ -1,10 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, test, vi, type Mock } from 'vitest';
+import { beforeEach, describe, expect, test, vi, type Mock } from 'vitest';
 import { useNavigate, useParams } from 'react-router';
 import userEvent from '@testing-library/user-event';
 import Pagination from '@/components/pagination';
 import { Provider } from 'react-redux';
-import mockStore from '@/__mocks__/store';
+import createMockStore from '@/__mocks__/store';
+import downloadFile from '@/service/file-handler';
+
+vi.mock('@/service/file-handler', () => ({
+  default: vi.fn(),
+}));
 
 const mockNavigate = vi.fn();
 
@@ -17,10 +22,16 @@ vi.mock('react-router', () => ({
 (useParams as Mock).mockReturnValue({ page: '1' });
 
 describe('Pagination component', () => {
+  let store: ReturnType<typeof createMockStore>;
+
+  beforeEach(() => {
+    store = createMockStore();
+  });
+
   test('should renders component', () => {
     const { page } = useParams();
     render(
-      <Provider store={mockStore}>
+      <Provider store={store}>
         <Pagination
           {...{
             count: 10,
@@ -40,7 +51,7 @@ describe('Pagination component', () => {
     const user = userEvent.setup();
 
     render(
-      <Provider store={mockStore}>
+      <Provider store={store}>
         <Pagination
           {...{
             count: 10,
@@ -64,7 +75,7 @@ describe('Pagination component', () => {
   test('should clear state when click Unselect button', async () => {
     const user = userEvent.setup();
     render(
-      <Provider store={mockStore}>
+      <Provider store={store}>
         <Pagination
           {...{
             count: 10,
@@ -77,5 +88,24 @@ describe('Pagination component', () => {
 
     const unselect = screen.getByRole('button', { name: /unselect/i });
     await user.click(unselect);
+  });
+
+  test('should call download file function', async () => {
+    const user = userEvent.setup();
+    render(
+      <Provider store={store}>
+        <Pagination
+          {...{
+            count: 10,
+            next: '?page=1&search=Dickens',
+            previous: '?page=3&search=Charles',
+          }}
+        />
+      </Provider>
+    );
+
+    const download = screen.getByRole('button', { name: /download/i });
+    await user.click(download);
+    expect(downloadFile).toHaveBeenCalled();
   });
 });
