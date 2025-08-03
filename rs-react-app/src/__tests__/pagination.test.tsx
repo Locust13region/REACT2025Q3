@@ -3,9 +3,8 @@ import { describe, expect, test, vi, type Mock } from 'vitest';
 import { useNavigate, useParams } from 'react-router';
 import userEvent from '@testing-library/user-event';
 import Pagination from '@/components/pagination';
-import { configureStore } from '@reduxjs/toolkit';
-import selectedBooks from '@/store/books-slice';
 import { Provider } from 'react-redux';
+import mockStore from '@/__mocks__/store';
 
 const mockNavigate = vi.fn();
 
@@ -18,14 +17,6 @@ vi.mock('react-router', () => ({
 (useParams as Mock).mockReturnValue({ page: '1' });
 
 describe('Pagination component', () => {
-  const mockStore = configureStore({
-    reducer: {
-      books: selectedBooks,
-    },
-    preloadedState: {
-      books: [],
-    },
-  });
   test('should renders component', () => {
     const { page } = useParams();
     render(
@@ -68,5 +59,23 @@ describe('Pagination component', () => {
     const nextButton = screen.getByRole('button', { name: '>' });
     await user.click(nextButton);
     expect(mockNavigate).toHaveBeenCalledWith('/books/3?search=Dickens');
+  });
+
+  test('should clear state when click Unselect button', async () => {
+    const user = userEvent.setup();
+    render(
+      <Provider store={mockStore}>
+        <Pagination
+          {...{
+            count: 10,
+            next: '?page=1&search=Dickens',
+            previous: '?page=3&search=Charles',
+          }}
+        />
+      </Provider>
+    );
+
+    const unselect = screen.getByRole('button', { name: /unselect/i });
+    await user.click(unselect);
   });
 });
