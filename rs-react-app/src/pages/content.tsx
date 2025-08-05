@@ -19,6 +19,7 @@ const Content: FC<ContentProps> = ({ searchSubstring, generatedError }) => {
   }, [generatedError, setFetchError]);
 
   if (fetchError) {
+    console.log('error in content');
     throw fetchError;
   }
 

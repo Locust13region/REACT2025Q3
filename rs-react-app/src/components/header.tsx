@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useState,
-  type ChangeEvent,
-  type FC,
-  type FormEvent,
-} from 'react';
+import { useState, type ChangeEvent, type FC, type FormEvent } from 'react';
 import type { HeaderProps } from '@/types/types';
 import { Link, useNavigate } from 'react-router';
 import useTheme from '@/hooks/use-theme';
@@ -35,10 +29,6 @@ const Header: FC<HeaderProps> = ({
       search: inputTrimmed.length ? `?search=${inputTrimmed}` : '',
     });
   };
-
-  useEffect(() => {
-    setInputValue(searchSubstring);
-  }, [searchSubstring]);
 
   const setError = () => {
     setGeneratedError(new Error('Test ErrorBoundary'));

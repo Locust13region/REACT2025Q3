@@ -38,10 +38,6 @@ const useApi = (generatedError: Error | null) => {
     }
   }, [requestUrl]);
 
-  useEffect(() => {
-    setFetchError(generatedError);
-  }, [generatedError]);
-
   return { loading, fetchResult, fetchError, setRequestUrl, setFetchError };
 };
 

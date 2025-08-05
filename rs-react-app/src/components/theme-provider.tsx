@@ -1,4 +1,4 @@
-import { useEffect, useState, type JSX } from 'react';
+import { useState, type JSX } from 'react';
 import ThemeContext from './theme-context';
 
 const ThemeProvider = ({ children }: { children: JSX.Element }) => {
@@ -10,9 +10,7 @@ const ThemeProvider = ({ children }: { children: JSX.Element }) => {
       : 'light';
   }
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+  document.documentElement.setAttribute('data-theme', theme);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));

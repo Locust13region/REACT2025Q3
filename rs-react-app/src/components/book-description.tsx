@@ -1,6 +1,6 @@
 import { baseUrl } from '@/api/api-base-url';
 import useApi from '@/hooks/use-api';
-import { useEffect, type FC } from 'react';
+import { useRef, type FC } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 const BookDescription: FC = () => {
@@ -10,14 +10,12 @@ const BookDescription: FC = () => {
   const [searchParams] = useSearchParams();
   const searchSubstring = searchParams.get('search') ?? '';
 
-  useEffect(() => {
-    if (bookId) {
-      const url = `${baseUrl}?ids=${bookId}`;
-      setRequestUrl((prev) => (prev !== url ? url : prev));
-    }
-  }, [bookId, setRequestUrl]);
-
-  if (!bookId) return null;
+  const prevUrl = useRef<string | null>(null);
+  const url = `${baseUrl}?ids=${bookId}`;
+  if (prevUrl.current !== url) {
+    prevUrl.current = url;
+    setRequestUrl((prev) => (prev !== url ? url : prev));
+  }
 
   if (fetchError) {
     return <h2 className="book-description">Error {fetchError.message}</h2>;
