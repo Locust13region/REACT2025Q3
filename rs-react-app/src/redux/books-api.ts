@@ -6,7 +6,9 @@ export const booksApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseApiUrl }),
   endpoints: (build) => ({
     getBooks: build.query({
-      query: () => 'books',
+      query: (searchSubstring: string) => `books?${searchSubstring}`,
     }),
   }),
 });
+
+export const { useGetBooksQuery } = booksApi;
