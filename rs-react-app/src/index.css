@@ -11,33 +11,44 @@
   -moz-osx-font-smoothing: grayscale;
 }
 :root[data-theme='dark'] {
-  --text: #ffffffde;
-  --bg: #242424;
-  --bg-accent: #808080;
-  --border: #808080;
-  --button-border: #808080;
-  --scrollbar-track: #ffffffde;
+  --text: #f2f2f3;
+  --text-secondary: #a0a0a5;
+  --text-error: #ff6b6b;
+  --link: #66b2ff;
+  --link-hover: #3399ff;
+  --bg: #121214;
+  --bg-accent: #1e1e21;
+  --border: #2a2a2d;
+  --button-border: #2a2a2d;
+  --button--focus-ring: #88c3ff;
+  --scrollbar-track: #1a1a1c;
+  --scrollbar-thumb: #3a3a3e;
 }
 :root[data-theme='light'] {
-  --text: #213547;
-  --bg: #f9f9f9;
-  --bg-accent: #d1d1d1;
-  --border: #a1a1a1;
+  --text: #1c1c1e;
+  --text-secondary: #6e6e73;
+  --text-error: #d93025;
+  --link: #0066cc;
+  --link-hover: #004a99;
+  --bg: #f9f9fb;
+  --bg-accent: #ebebf0;
+  --border: #d4d4d7;
   --button-border: transparent;
-  --scrollbar-track: #d1d1d1;
+  --button-focus-ring: #5b9dd9;
+  --scrollbar-track: #f0f0f3;
+  --scrollbar-thumb: #c0c0c5;
 }
 
 * {
   box-sizing: border-box;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
-  scrollbar-color: var(--border) var(--scrollbar-track);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 body {
   color: var(--text);
   background-color: var(--bg);
-  scrollbar-color: var(--bg-accent);
 }
 
 a {
@@ -73,16 +84,22 @@ button {
 }
 
 button {
-  &:disabled {
-    background-color: transparent;
+  &:hover {
+    border-color: var(--link-hover);
   }
 
-  &:hover {
-    border-color: #646cff;
+  &:disabled {
+    border-color: transparent;
+    background-color: transparent;
+    &:hover {
+      border-color: transparent;
+      cursor: default;
+    }
   }
 
   &:focus,
   :focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto var(--button-focus-ring);
+    outline-offset: 2px;
   }
 }
