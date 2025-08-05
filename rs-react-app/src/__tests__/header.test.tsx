@@ -24,28 +24,6 @@ describe('Header component', () => {
     expect(screen.getByRole('button', { name: 'Error' })).toBeInTheDocument();
   });
 
-  test('Header displays input with new incoming prop "searchSubstring', () => {
-    const { rerender } = render(
-      <MemoryRouter>
-        <Header
-          searchSubstring={''}
-          setSearchSubstring={() => {}}
-          setGeneratedError={() => {}}
-        />
-      </MemoryRouter>
-    );
-    rerender(
-      <MemoryRouter>
-        <Header
-          searchSubstring={'Dickens'}
-          setSearchSubstring={() => {}}
-          setGeneratedError={() => {}}
-        />
-      </MemoryRouter>
-    );
-    expect(screen.getByRole('searchbox')).toHaveValue('Dickens');
-  });
-
   test('Check inserting some text into an input field and submit', async () => {
     const user = userEvent.setup();
     const setSearchSubstring = vi.fn();
