@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import selectedBooks from '@/store/books-slice';
+import selectedBooks from '@/redux/books-slice';
 import mockBooks from './books';
 
 const createMockStore = () =>

@@ -5,8 +5,7 @@ import './index.css';
 import App from '@/App.tsx';
 import ThemeProvider from '@/components/theme-provider.tsx';
 import { Provider } from 'react-redux';
-import { store } from '@/store/store';
-// import { store } from './redux/store';
+import { store } from './redux/store';
 
 const rootElement = document.getElementById('root');
 

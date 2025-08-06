@@ -11,11 +11,11 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
     return { hasError: true, errorMessage: error.message };
   }
 
-  componentDidUpdate(prevProps: Readonly<ErrorBoundaryProps>): void {
-    if (prevProps.searchSubstring !== this.props.searchSubstring) {
-      this.setState({ hasError: false });
-    }
-  }
+  // componentDidUpdate(prevProps: Readonly<ErrorBoundaryProps>): void {
+  //   if (prevProps.searchSubstring !== this.props.searchSubstring) {
+  //     this.setState({ hasError: false });
+  //   }
+  // }
 
   render() {
     const { hasError, errorMessage } = this.state;
