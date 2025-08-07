@@ -23,6 +23,12 @@ export const booksApi = createApi({
           page: page,
         },
       }),
+      transformResponse: (response: FetchResult) => {
+        if (!response.results.length) {
+          throw new Error('not found');
+        }
+        return response;
+      },
       responseSchema: responseSchema,
       providesTags: (result) =>
         result?.results
@@ -43,7 +49,12 @@ export const booksApi = createApi({
           ids: bookId,
         },
       }),
-      transformResponse: (response: FetchResult) => response.results[0],
+      transformResponse: (response: FetchResult) => {
+        if (!response.results.length) {
+          throw new Error('not found');
+        }
+        return response.results[0];
+      },
       responseSchema: bookSchema,
       providesTags: (result) =>
         result

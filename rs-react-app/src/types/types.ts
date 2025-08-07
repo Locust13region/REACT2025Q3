@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { z } from 'zod';
-import type { bookSchema, responseSchema } from './zod-schemas';
+import { type bookSchema, type responseSchema } from './zod-schemas';
 
 export type HeaderProps = {
   setGeneratedError: (value: Error | null) => void;

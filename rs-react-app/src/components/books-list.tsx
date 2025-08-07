@@ -5,11 +5,12 @@ import { useParams } from 'react-router';
 import type { FC } from 'react';
 import { useAppSelector } from '@/hooks/redux-hooks';
 import { search } from '@/redux/selector';
+import errorParser from '@/service/error-parser';
 
 const BooksList: FC = () => {
   const searchSubstring = useAppSelector(search);
   const page = useParams().page ?? '1';
-  const { data, isFetching, isSuccess } = useGetAllBooksQuery({
+  const { data, isFetching, isSuccess, isError, error } = useGetAllBooksQuery({
     searchSubstring,
     page,
   });
@@ -23,6 +24,9 @@ const BooksList: FC = () => {
   return (
     <>
       {isFetching && <h2 className="books-list__wrapper">Loading data...</h2>}
+      {isError && (
+        <h2 className="book-description">Page error: {errorParser(error)}</h2>
+      )}
       {!isFetching && isSuccess && (
         <div className="books-list__wrapper">
           <ul className="books-list">

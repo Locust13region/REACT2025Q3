@@ -1,6 +1,7 @@
 import { useAppSelector } from '@/hooks/redux-hooks';
 import { useGetSingleBookQuery } from '@/redux/books-api';
 import { search } from '@/redux/selector';
+import errorParser from '@/service/error-parser';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router';
@@ -20,7 +21,7 @@ const BookDescription: FC = () => {
     <>
       {isFetching && <h2 className="book-description">Loading data...</h2>}
       {isError && (
-        <h2 className="book-description">{`Loading book error ${error}`}</h2>
+        <h2 className="book-description">Book error: {errorParser(error)}</h2>
       )}
       {!isFetching && !isError && data?.id && (
         <article className="book-description">
