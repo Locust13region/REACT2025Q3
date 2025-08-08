@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router';
 const BookDescription: FC = () => {
   const navigate = useNavigate();
   const { bookId, page } = useParams();
+  console.log(bookId, page);
   const searchSubstring = useAppSelector(search);
   const { data, isFetching, isError, error, refetch } = useGetSingleBookQuery(
     bookId ?? skipToken,
@@ -16,7 +17,7 @@ const BookDescription: FC = () => {
       refetchOnFocus: true,
     }
   );
-
+  console.log(isFetching, data, isError);
   return (
     <>
       {isFetching && <h2 className="book-description">Loading data...</h2>}

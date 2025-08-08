@@ -117,6 +117,7 @@
   justify-content: center;
   align-items: center;
   & input[type='checkbox'] {
+    accent-color: var(--link);
     width: 20px;
     height: 20px;
   }

@@ -1,30 +1,39 @@
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test, vi, type Mock } from 'vitest';
-import useApi from '@/hooks/use-api';
+import { useGetSingleBookQuery } from '@/redux/books-api';
 import BookDescription from '@/components/book-description';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import createMockStore from '@/__mocks__/store';
 
-vi.mock('@/hooks/use-api', () => ({
-  default: vi.fn(),
-}));
-
+vi.mock('@/redux/books-api', async () => {
+  const actual = await vi.importActual('@/redux/books-api');
+  return {
+    ...actual,
+    useGetSingleBookQuery: vi.fn(),
+  };
+});
 describe('BookDescription component', () => {
-  test('should renders Loading before fetch book description', async () => {
-    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
-    mockedUseApi.mockImplementation(() => ({
-      loading: true,
-      setRequestUrl: vi.fn(),
-      setFetchError: vi.fn(),
-    }));
+  test('should renders Loading while fetch book description', async () => {
+    (useGetSingleBookQuery as Mock).mockReturnValue({
+      data: undefined,
+      error: undefined,
+      isFetching: true,
+      isError: false,
+      refetch: vi.fn(),
+    });
 
     render(
-      <MemoryRouter initialEntries={['/books/1/1?search=']}>
-        <Routes>
-          <Route path="/books/:page/:bookId" element={<BookDescription />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={createMockStore()}>
+        <MemoryRouter initialEntries={['/books/1/1?search=']}>
+          <Routes>
+            <Route path="/books/:page/:bookId" element={<BookDescription />} />
+          </Routes>
+        </MemoryRouter>
+      </Provider>
     );
+    screen.debug();
     const heading = await screen.findByRole('heading', {
       name: /loading data/i,
     });
