@@ -1,84 +1,147 @@
 import ErrorBoundary from '@/components/error-boundary';
-import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, test, vi, type Mock } from 'vitest';
-import { MemoryRouter } from 'react-router';
-import useApi from '@/hooks/use-api';
+import { render, screen, within } from '@testing-library/react';
+import { describe, expect, test, vi, type Mock } from 'vitest';
+import { MemoryRouter, Route, Routes } from 'react-router';
 import Content from '@/pages/content';
 import { Provider } from 'react-redux';
 import createMockStore from '@/__mocks__/store';
+import { useGetAllBooksQuery } from '@/redux/books-api';
+import mockBooksList from '@/__mocks__/books-list';
+import userEvent from '@testing-library/user-event';
 
-vi.mock('@/hooks/use-api', () => ({
-  default: vi.fn(),
-}));
+vi.mock('@/redux/books-api', async () => {
+  const actual = await vi.importActual('@/redux/books-api');
+  return {
+    ...actual,
+    useGetAllBooksQuery: vi.fn(),
+  };
+});
 
 describe('Content component', () => {
-  let store: ReturnType<typeof createMockStore>;
-
-  beforeEach(() => {
-    store = createMockStore();
-  });
-  test('should renders Loading before fetch books', async () => {
-    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
-    mockedUseApi.mockReturnValue({
-      loading: true,
-      setRequestUrl: vi.fn(),
-      setFetchError: vi.fn(),
+  test('should renders Loading while fetch books list', async () => {
+    (useGetAllBooksQuery as Mock).mockReturnValue({
+      isFetching: true,
     });
 
     render(
-      <MemoryRouter>
-        <Content searchSubstring={''} generatedError={null} />
-      </MemoryRouter>
+      <Provider store={createMockStore()}>
+        <MemoryRouter initialEntries={['/books/1?search=']}>
+          <Routes>
+            <Route
+              path="/books/:page"
+              element={<Content generatedError={null} />}
+            />
+          </Routes>
+        </MemoryRouter>
+      </Provider>
     );
-    const heading = await screen.findByText(/loading/i);
+
+    const heading = await screen.findByRole('heading', {
+      name: /loading data/i,
+    });
     expect(heading).toBeInTheDocument();
   });
 
-  test('should renders fetched mock books', async () => {
-    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
-    mockedUseApi.mockReturnValue({
-      loading: false,
-      fetchResult: {
-        results: [
-          { id: 1, authors: [{ name: 'Dickens' }], title: 'Dickens` book 1' },
-          { id: 2, authors: [{ name: 'Dickens' }], title: 'Dickens` book 2' },
-          { id: 3, authors: [{ name: 'Dickens' }], title: 'Dickens` book 3' },
-        ],
-      },
-      fetchError: null,
-      setRequestUrl: vi.fn(),
-      setFetchError: vi.fn(),
+  test('should renders fetched mock books list', async () => {
+    (useGetAllBooksQuery as Mock).mockReturnValue({
+      data: mockBooksList,
+      isFetching: false,
+      isSuccess: true,
     });
 
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <Content searchSubstring={''} generatedError={null} />
-        </Provider>
-      </MemoryRouter>
+      <Provider store={createMockStore()}>
+        <MemoryRouter initialEntries={['/books/1?search=']}>
+          <Routes>
+            <Route
+              path="/books/:page"
+              element={<Content generatedError={null}></Content>}
+            ></Route>
+          </Routes>
+        </MemoryRouter>
+      </Provider>
     );
-    expect(useApi as Mock).toBeCalled();
 
-    const heading = await screen.findByText('Author');
-    expect(heading).toBeInTheDocument();
+    const listItems = await screen.findAllByRole('listitem');
+    const headerItem = listItems[0];
+    const columnHeading = within(headerItem);
+    expect(columnHeading.getByText('Author')).toBeInTheDocument();
+    expect(columnHeading.getByText('Title')).toBeInTheDocument();
 
-    const mockBooks = await screen.findAllByText(/Dickens` book/);
-    expect(mockBooks).toHaveLength(3);
+    const booksInList = await screen.findAllByText(/Dickens` book/);
+    expect(booksInList).toHaveLength(2);
   });
 
   test('should renders fetch error', async () => {
-    const mockedUseApi = useApi as ReturnType<typeof vi.fn>;
-    mockedUseApi.mockReturnValue({
-      fetchError: new Error('Mock Error'),
+    (useGetAllBooksQuery as Mock).mockReturnValue({
+      error: new Error('mock error'),
+      isError: true,
     });
+
     render(
-      <ErrorBoundary searchSubstring={''}>
-        <MemoryRouter>
-          <Content searchSubstring={''} generatedError={null} />
+      <Provider store={createMockStore()}>
+        <MemoryRouter initialEntries={['/books/1?search=']}>
+          <Routes>
+            <Route
+              path="/books/:page"
+              element={<Content generatedError={null}></Content>}
+            ></Route>
+          </Routes>
         </MemoryRouter>
-      </ErrorBoundary>
+      </Provider>
     );
-    const mockError = await screen.findByText('Mock Error');
+
+    const mockError = await screen.findByText(/mock error/i);
+    expect(mockError).toBeInTheDocument();
+  });
+
+  test('should add checked book to store', async () => {
+    const user = userEvent.setup();
+    (useGetAllBooksQuery as Mock).mockReturnValue({
+      data: mockBooksList,
+      isFetching: false,
+      isSuccess: true,
+    });
+
+    render(
+      <Provider store={createMockStore()}>
+        <MemoryRouter initialEntries={['/books/1?search=']}>
+          <Routes>
+            <Route
+              path="/books/:page"
+              element={<Content generatedError={null}></Content>}
+            ></Route>
+          </Routes>
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const checkbox = screen.getAllByRole('checkbox', { name: '' });
+    expect(checkbox[0]).toBeChecked();
+
+    await user.click(checkbox[0]);
+    expect(checkbox[0]).not.toBeChecked();
+  });
+
+  test('should renders ErrorBoundary error', async () => {
+    render(
+      <Provider store={createMockStore()}>
+        <MemoryRouter initialEntries={['/books/1?search=']}>
+          <ErrorBoundary>
+            <Routes>
+              <Route
+                path="/books/:page"
+                element={
+                  <Content generatedError={new Error('mock error')}></Content>
+                }
+              ></Route>
+            </Routes>
+          </ErrorBoundary>
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const mockError = await screen.findByText(/mock error/i);
     expect(mockError).toBeInTheDocument();
   });
 });

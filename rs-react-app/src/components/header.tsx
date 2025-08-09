@@ -23,6 +23,7 @@ const Header: FC<HeaderProps> = ({ setGeneratedError }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputTrimmed = inputValue.trim();
+    setInputValue(inputTrimmed);
     dispatch(setSearch(inputTrimmed));
     setGeneratedError(null);
     navigate({

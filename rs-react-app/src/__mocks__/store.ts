@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { booksApi } from '@/redux/books-api';
 import selectedBooksSlice from '@/redux/books-slice';
 import searchSubstringSlice from '@/redux/search-slice';
+import mockBooks from './books';
 
 const createMockStore = () =>
   configureStore({
@@ -12,7 +13,9 @@ const createMockStore = () =>
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(booksApi.middleware),
-    preloadedState: {},
+    preloadedState: {
+      selectedBooks: mockBooks,
+    },
   });
 
 export default createMockStore;

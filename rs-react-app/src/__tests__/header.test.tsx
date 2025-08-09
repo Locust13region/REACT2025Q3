@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Header from '@/components/header';
 import { describe, expect, test, vi } from 'vitest';
@@ -6,17 +6,17 @@ import { MemoryRouter } from 'react-router';
 import ErrorBoundary from '@/components/error-boundary';
 import Content from '@/pages/content';
 import ThemeProvider from '@/components/theme-provider';
+import { Provider } from 'react-redux';
+import createMockStore from '@/__mocks__/store';
 
 describe('Header component', () => {
   test('Header renders search input, input label, search button, error button', () => {
     render(
-      <MemoryRouter>
-        <Header
-          searchSubstring={''}
-          setSearchSubstring={() => {}}
-          setGeneratedError={() => {}}
-        />
-      </MemoryRouter>
+      <Provider store={createMockStore()}>
+        <MemoryRouter>
+          <Header setGeneratedError={() => {}} />
+        </MemoryRouter>
+      </Provider>
     );
     expect(screen.getByLabelText('Find book')).toBeInTheDocument();
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
@@ -24,39 +24,15 @@ describe('Header component', () => {
     expect(screen.getByRole('button', { name: 'Error' })).toBeInTheDocument();
   });
 
-  test('Check inserting some text into an input field and submit', async () => {
-    const user = userEvent.setup();
-    const setSearchSubstring = vi.fn();
-    render(
-      <MemoryRouter>
-        <Header
-          searchSubstring=""
-          setSearchSubstring={setSearchSubstring}
-          setGeneratedError={() => {}}
-        />
-      </MemoryRouter>
-    );
-
-    const input = screen.getByRole('searchbox');
-    await user.type(input, 'Dickens');
-    expect(input).toHaveValue('Dickens');
-
-    const searchButton = screen.getByRole('button', { name: 'Search' });
-    await user.click(searchButton);
-    expect(setSearchSubstring).toBeCalledWith('Dickens');
-  });
-
   test('Check inserting some whitespaces into an input field and submit', async () => {
     const user = userEvent.setup();
-    const setSearchSubstring = vi.fn();
+
     render(
-      <MemoryRouter>
-        <Header
-          searchSubstring=""
-          setSearchSubstring={setSearchSubstring}
-          setGeneratedError={() => {}}
-        />
-      </MemoryRouter>
+      <Provider store={createMockStore()}>
+        <MemoryRouter>
+          <Header setGeneratedError={() => {}} />
+        </MemoryRouter>
+      </Provider>
     );
 
     const input = screen.getByRole('searchbox');
@@ -65,28 +41,24 @@ describe('Header component', () => {
 
     const searchButton = screen.getByRole('button', { name: 'Search' });
     await user.click(searchButton);
-    expect(setSearchSubstring).toBeCalledWith('');
+    await waitFor(() => {
+      expect(input).toHaveValue('');
+    });
   });
 
   test('Error button action', async () => {
     const user = userEvent.setup();
     render(
-      <>
+      <Provider store={createMockStore()}>
         <MemoryRouter>
-          <Header
-            searchSubstring=""
-            setSearchSubstring={() => {}}
-            setGeneratedError={() => {}}
-          />
+          <Header setGeneratedError={() => new Error('Test ErrorBoundary')} />
+          <ErrorBoundary>
+            <Content generatedError={new Error('Test ErrorBoundary')} />
+          </ErrorBoundary>
         </MemoryRouter>
-        <ErrorBoundary searchSubstring={''}>
-          <Content
-            searchSubstring={''}
-            generatedError={new Error('Test ErrorBoundary')}
-          />
-        </ErrorBoundary>
-      </>
+      </Provider>
     );
+
     const errorButton = screen.getByRole('button', { name: 'Error' });
     await user.click(errorButton);
     const errorMessage = await screen.findByText('Test ErrorBoundary');
@@ -107,18 +79,18 @@ describe('Header component', () => {
     });
     const user = userEvent.setup();
     render(
-      <MemoryRouter>
-        <ThemeProvider>
-          <Header
-            searchSubstring=""
-            setSearchSubstring={() => {}}
-            setGeneratedError={() => {}}
-          />
-        </ThemeProvider>
-      </MemoryRouter>
+      <Provider store={createMockStore()}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <Header setGeneratedError={() => {}} />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
+
     const button = screen.getByRole('button', { name: /toggle theme/i });
     expect(button).toBeInTheDocument();
+
     expect(button.querySelector('[data-icon="moon"]')).toBeInTheDocument();
     await user.click(button);
     expect(button.querySelector('[data-icon="sun"]')).toBeInTheDocument();

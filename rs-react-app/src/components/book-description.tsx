@@ -27,7 +27,9 @@ const BookDescription: FC = () => {
       {!isFetching && !isError && data?.id && (
         <article className="book-description">
           <div className="book-description__actions">
-            <button onClick={() => refetch()}>⟳</button>
+            <button data-testid="refresh-button" onClick={() => refetch()}>
+              ⟳
+            </button>
             <button
               onClick={() =>
                 navigate(`/books/${page}?search=${searchSubstring}`)
