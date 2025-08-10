@@ -1,22 +1,17 @@
-import {
-  useEffect,
-  useState,
-  type ChangeEvent,
-  type FC,
-  type FormEvent,
-} from 'react';
+import { useState, type ChangeEvent, type FC, type FormEvent } from 'react';
 import type { HeaderProps } from '@/types/types';
 import { Link, useNavigate } from 'react-router';
 import useTheme from '@/hooks/use-theme';
 import Moon from '@/assets/moon';
 import Sun from '@/assets/sun';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { search } from '@/redux/selector';
+import { setSearch } from '@/redux/search-slice';
 
-const Header: FC<HeaderProps> = ({
-  searchSubstring,
-  setSearchSubstring,
-  setGeneratedError,
-}) => {
+const Header: FC<HeaderProps> = ({ setGeneratedError }) => {
   const { theme, toggleTheme } = useTheme();
+  const dispatch = useAppDispatch();
+  const searchSubstring = useAppSelector(search);
 
   const [inputValue, setInputValue] = useState(searchSubstring);
   const navigate = useNavigate();
@@ -28,17 +23,14 @@ const Header: FC<HeaderProps> = ({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputTrimmed = inputValue.trim();
-    setSearchSubstring(inputTrimmed);
+    setInputValue(inputTrimmed);
+    dispatch(setSearch(inputTrimmed));
     setGeneratedError(null);
     navigate({
       pathname: '/books/1/',
       search: inputTrimmed.length ? `?search=${inputTrimmed}` : '',
     });
   };
-
-  useEffect(() => {
-    setInputValue(searchSubstring);
-  }, [searchSubstring]);
 
   const setError = () => {
     setGeneratedError(new Error('Test ErrorBoundary'));

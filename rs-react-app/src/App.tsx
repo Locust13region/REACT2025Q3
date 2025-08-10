@@ -1,8 +1,7 @@
-import { Routes, Route, useSearchParams, Navigate } from 'react-router';
+import { Routes, Route, Navigate } from 'react-router';
 import Header from '@/components/header';
 import './App.css';
 import ErrorBoundary from './components/error-boundary';
-import useLocalStorage from './hooks/use-local-storage';
 import { lazy, Suspense, useState } from 'react';
 import BookDescription from './components/book-description';
 
@@ -11,21 +10,12 @@ const About = lazy(() => import('@/pages/about'));
 const NotFound = lazy(() => import('@/pages/404'));
 
 export default function App() {
-  const [searchParams] = useSearchParams();
-  const [storageValue, setStorageValue] = useLocalStorage();
   const [generatedError, setGeneratedError] = useState<Error | null>(null);
-
-  const urlSearch = searchParams.get('search');
-  const searchSubstring = urlSearch ?? storageValue;
 
   return (
     <>
-      <Header
-        searchSubstring={searchSubstring}
-        setSearchSubstring={setStorageValue}
-        setGeneratedError={setGeneratedError}
-      ></Header>
-      <ErrorBoundary searchSubstring={searchSubstring}>
+      <Header setGeneratedError={setGeneratedError}></Header>
+      <ErrorBoundary>
         <Suspense fallback={<h2>Loading page...</h2>}>
           <Routes>
             <Route path="/" element={<Navigate to="/books/1" replace />} />
@@ -33,12 +23,7 @@ export default function App() {
 
             <Route
               path="/books/:page"
-              element={
-                <Content
-                  searchSubstring={searchSubstring}
-                  generatedError={generatedError}
-                />
-              }
+              element={<Content generatedError={generatedError} />}
             >
               <Route path=":bookId" element={<BookDescription />} />
             </Route>

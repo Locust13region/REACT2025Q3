@@ -4,7 +4,7 @@ import type { BookState, BookType } from '@/types/types';
 
 const initialState: BookState = [];
 
-export const selectedBooksSlice = createSlice({
+const selectedBooksSlice = createSlice({
   name: 'selectedBooks',
   initialState,
   reducers: {

@@ -4,8 +4,8 @@ import { BrowserRouter } from 'react-router';
 import './index.css';
 import App from '@/App.tsx';
 import ThemeProvider from '@/components/theme-provider.tsx';
-import { store } from '@/store/store';
 import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const rootElement = document.getElementById('root');
 

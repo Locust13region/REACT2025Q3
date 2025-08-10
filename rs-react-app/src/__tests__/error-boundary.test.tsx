@@ -5,7 +5,7 @@ import { describe, expect, test } from 'vitest';
 describe('Error-boundary Component', () => {
   test('Without errors in children, renders children.', () => {
     render(
-      <ErrorBoundary searchSubstring={''}>
+      <ErrorBoundary>
         <div>Child</div>
       </ErrorBoundary>
     );
@@ -16,18 +16,11 @@ describe('Error-boundary Component', () => {
     const ChildWithError = () => {
       throw new Error('Test Error!');
     };
-    const { rerender } = render(
-      <ErrorBoundary searchSubstring={''}>
+    render(
+      <ErrorBoundary>
         <ChildWithError />
       </ErrorBoundary>
     );
     expect(screen.getByText('Test Error!')).toBeInTheDocument();
-
-    rerender(
-      <ErrorBoundary searchSubstring={'Dickens'}>
-        <div>Child</div>
-      </ErrorBoundary>
-    );
-    expect(screen.getByText('Child')).toBeInTheDocument();
   });
 });

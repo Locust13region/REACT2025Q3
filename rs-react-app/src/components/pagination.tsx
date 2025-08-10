@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import csvBuilder from '@/service/csv-builder';
 import downloadFile from '@/service/file-handler';
-import { unSelectAllBooks } from '@/store/books-slice';
-import { selected } from '@/store/selector';
+import { unSelectAllBooks } from '@/redux/books-slice';
+import { selected } from '@/redux/selector';
 import type { PaginationProps } from '@/types/types';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router';

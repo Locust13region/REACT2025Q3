@@ -1,48 +1,49 @@
-import { baseUrl } from '@/api/api-base-url';
-import useApi from '@/hooks/use-api';
-import { useEffect, type FC } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { useGetSingleBookQuery } from '@/redux/books-api';
+import { search } from '@/redux/selector';
+import errorParser from '@/service/error-parser';
+import { skipToken } from '@reduxjs/toolkit/query/react';
+import { type FC } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 const BookDescription: FC = () => {
   const navigate = useNavigate();
-  const { loading, fetchError, fetchResult, setRequestUrl } = useApi(null);
   const { bookId, page } = useParams();
-  const [searchParams] = useSearchParams();
-  const searchSubstring = searchParams.get('search') ?? '';
-
-  useEffect(() => {
-    if (bookId) {
-      const url = `${baseUrl}?ids=${bookId}`;
-      setRequestUrl((prev) => (prev !== url ? url : prev));
+  const searchSubstring = useAppSelector(search);
+  const { data, isFetching, isError, error, refetch } = useGetSingleBookQuery(
+    bookId ?? skipToken,
+    {
+      refetchOnFocus: true,
     }
-  }, [bookId, setRequestUrl]);
-
-  if (!bookId) return null;
-
-  if (fetchError) {
-    return <h2 className="book-description">Error {fetchError.message}</h2>;
-  }
-
-  if (loading) {
-    return <h2 className="book-description">Loading data...</h2>;
-  }
-  return fetchResult?.results[0].id ? (
-    <article className="book-description">
-      <button
-        onClick={() => navigate(`/books/${page}?search=${searchSubstring}`)}
-      >
-        X
-      </button>
-      <h4>{fetchResult.results[0].title}</h4>
-      <h5>{fetchResult.results[0].authors[0].name}</h5>
-      <p>book description</p>
-      <p>
-        {fetchResult.results[0].summaries.length
-          ? fetchResult.results[0].summaries
-          : 'no data available'}
-      </p>
-    </article>
-  ) : null;
+  );
+  return (
+    <>
+      {isFetching && <h2 className="book-description">Loading data...</h2>}
+      {isError && (
+        <h2 className="book-description">Book error: {errorParser(error)}</h2>
+      )}
+      {!isFetching && !isError && data?.id && (
+        <article className="book-description">
+          <div className="book-description__actions">
+            <button data-testid="refresh-button" onClick={() => refetch()}>
+              ⟳
+            </button>
+            <button
+              onClick={() =>
+                navigate(`/books/${page}?search=${searchSubstring}`)
+              }
+            >
+              X
+            </button>
+          </div>
+          <h4>{data.title}</h4>
+          <h5>{data.authors[0].name}</h5>
+          <p>book description</p>
+          <p>{data.summaries.length ? data.summaries : 'no data available'}</p>
+        </article>
+      )}
+    </>
+  );
 };
 
 export default BookDescription;

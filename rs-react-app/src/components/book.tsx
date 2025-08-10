@@ -1,14 +1,15 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
-import { toggleBook } from '@/store/books-slice';
-import { selected } from '@/store/selector';
+import { toggleBook } from '@/redux/books-slice';
+import { search, selected } from '@/redux/selector';
 import type { BookProps } from '@/types/types';
 import type { FC } from 'react';
 import { NavLink, useParams } from 'react-router';
 
-const Book: FC<BookProps> = ({ book, searchSubstring }) => {
+const Book: FC<BookProps> = ({ book }) => {
   const { id, authors, title } = book;
 
   const { page } = useParams();
+  const searchSubstring = useAppSelector(search);
   const dispatch = useAppDispatch();
 
   const checkedBooks = useAppSelector(selected);

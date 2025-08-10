@@ -64,7 +64,6 @@ describe('Pagination component', () => {
 
     const previousButton = screen.getByRole('button', { name: '<' });
     await user.click(previousButton);
-    console.log('navigate called with:', mockNavigate);
     expect(mockNavigate).toHaveBeenCalledWith('/books/1?search=Charles');
 
     const nextButton = screen.getByRole('button', { name: '>' });

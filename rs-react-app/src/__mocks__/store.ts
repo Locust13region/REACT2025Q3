@@ -1,14 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
-import selectedBooks from '@/store/books-slice';
+import { booksApi } from '@/redux/books-api';
+import selectedBooksSlice from '@/redux/books-slice';
+import searchSubstringSlice from '@/redux/search-slice';
 import mockBooks from './books';
 
 const createMockStore = () =>
   configureStore({
     reducer: {
-      books: selectedBooks,
+      [booksApi.reducerPath]: booksApi.reducer,
+      selectedBooks: selectedBooksSlice,
+      searchBooks: searchSubstringSlice,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(booksApi.middleware),
     preloadedState: {
-      books: mockBooks,
+      selectedBooks: mockBooks,
     },
   });
 
