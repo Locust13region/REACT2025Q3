@@ -4,8 +4,8 @@ import type { FC } from 'react';
 
 const About: FC<{ generatedError: Error | null }> = ({ generatedError }) => {
   const navigate = useNavigate();
+  console.log('render About');
   if (generatedError) {
-    console.log('error in About');
     throw generatedError;
   }
   return (

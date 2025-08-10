@@ -11,7 +11,7 @@ const NotFound = lazy(() => import('@/pages/404'));
 
 export default function App() {
   const [generatedError, setGeneratedError] = useState<Error | null>(null);
-
+  console.log('render App');
   return (
     <>
       <Header setGeneratedError={setGeneratedError}></Header>

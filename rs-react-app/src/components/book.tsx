@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { toggleBook } from '@/redux/books-slice';
 import { search, selected } from '@/redux/selector';
 import type { BookProps } from '@/types/types';
-import type { FC } from 'react';
+import { memo, type FC } from 'react';
 import { NavLink, useParams } from 'react-router';
 
 const Book: FC<BookProps> = ({ book }) => {
@@ -12,8 +12,8 @@ const Book: FC<BookProps> = ({ book }) => {
   const searchSubstring = useAppSelector(search);
   const dispatch = useAppDispatch();
 
-  const checkedBook = useAppSelector(selected(book.id));
-  const isChecked = book === checkedBook;
+  const checkedBooks = useAppSelector(selected);
+  const isChecked = !!checkedBooks[book.id];
 
   const handleCheckbox = () => {
     dispatch(toggleBook(book));
@@ -47,4 +47,4 @@ const Book: FC<BookProps> = ({ book }) => {
     </>
   );
 };
-export default Book;
+export default memo(Book);

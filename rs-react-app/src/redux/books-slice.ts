@@ -5,7 +5,7 @@ import type { BookType } from '@/types/types';
 type SelectedBookId = number;
 type SelectedBook = BookType;
 
-const initialState: Record<SelectedBookId, SelectedBook | undefined> = {};
+const initialState: Record<SelectedBookId, SelectedBook> = {};
 
 const selectedBooksSlice = createSlice({
   name: 'selectedBooks',

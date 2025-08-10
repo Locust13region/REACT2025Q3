@@ -36,7 +36,6 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
   };
 
   const handleDownload = () => {
-    const raw = 
     const csv = csvBuilder(checkedBooks);
     downloadFile(csv, checkedBooks.length);
   };
