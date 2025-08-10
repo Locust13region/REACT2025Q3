@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import csvBuilder from '@/service/csv-builder';
 import downloadFile from '@/service/file-handler';
 import { unSelectAllBooks } from '@/redux/books-slice';
-import { selected } from '@/redux/selector';
+import { selectedAll } from '@/redux/selector';
 import type { PaginationProps } from '@/types/types';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router';
@@ -29,13 +29,14 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
     if (next) navigate(getPageParams(next));
   };
 
-  const checkedBooks = useAppSelector(selected);
+  const checkedBooks = useAppSelector(selectedAll);
 
   const handleUnselect = () => {
     dispatch(unSelectAllBooks());
   };
 
   const handleDownload = () => {
+    const raw = 
     const csv = csvBuilder(checkedBooks);
     downloadFile(csv, checkedBooks.length);
   };

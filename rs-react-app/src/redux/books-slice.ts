@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { BookState, BookType } from '@/types/types';
+import type { BookType } from '@/types/types';
 
-const initialState: BookState = [];
+type SelectedBookId = number;
+type SelectedBook = BookType;
+
+const initialState: Record<SelectedBookId, SelectedBook | undefined> = {};
 
 const selectedBooksSlice = createSlice({
   name: 'selectedBooks',
@@ -10,16 +13,20 @@ const selectedBooksSlice = createSlice({
   reducers: {
     toggleBook: (state, action: PayloadAction<BookType>) => {
       const toggledBook = action.payload;
-      const bookExist = state.some((book) => book.id === toggledBook.id);
+      const id = toggledBook.id;
+      const bookExist = id in state;
 
       if (bookExist) {
-        return state.filter((book) => book.id !== toggledBook.id);
+        const rest = Object.fromEntries(
+          Object.entries(state).filter(([key]) => key !== String(id))
+        );
+        return rest;
       } else {
-        return [...state, toggledBook];
+        return { ...state, [id]: toggledBook };
       }
     },
     unSelectAllBooks: () => {
-      return [];
+      return {};
     },
   },
 });

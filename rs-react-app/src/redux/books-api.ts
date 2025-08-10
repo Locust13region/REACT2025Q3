@@ -5,7 +5,7 @@ import { bookSchema, responseSchema } from '@/types/zod-schemas';
 
 export const booksApi = createApi({
   reducerPath: 'booksApi',
-  tagTypes: ['Books'],
+  tagTypes: ['Books', 'Book'],
   baseQuery: fetchBaseQuery({ baseUrl: baseApiUrl }),
   refetchOnReconnect: true,
   endpoints: (build) => ({
@@ -34,7 +34,7 @@ export const booksApi = createApi({
         result?.results
           ? [
               ...result.results.map(({ id }: { id: number }) => ({
-                type: 'Books' as const,
+                type: 'Book' as const,
                 id,
               })),
               { type: 'Books', id: 'LIST' },
@@ -58,7 +58,7 @@ export const booksApi = createApi({
       responseSchema: bookSchema,
       providesTags: (result) =>
         result
-          ? [{ type: 'Books', id: result.id }]
+          ? [{ type: 'Book', id: result.id }]
           : [{ type: 'Books', id: 'LIST' }],
     }),
   }),
