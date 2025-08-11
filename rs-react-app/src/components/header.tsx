@@ -35,7 +35,6 @@ const Header: FC<HeaderProps> = ({ setGeneratedError }) => {
   const setError = () => {
     setGeneratedError(new Error('Test ErrorBoundary'));
   };
-  console.log('render header');
   return (
     <header className="header">
       <Link to={'/about'}>About</Link>

@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router';
 import logo from '@/assets/react.svg';
-import type { FC } from 'react';
+import { type FC } from 'react';
 
 const About: FC<{ generatedError: Error | null }> = ({ generatedError }) => {
   const navigate = useNavigate();
-  console.log('render About');
   if (generatedError) {
     throw generatedError;
   }

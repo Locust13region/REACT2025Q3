@@ -12,8 +12,8 @@ const Book: FC<BookProps> = ({ book }) => {
   const searchSubstring = useAppSelector(search);
   const dispatch = useAppDispatch();
 
-  const checkedBooks = useAppSelector(selected);
-  const isChecked = !!checkedBooks[book.id];
+  const checkedBook = useAppSelector((state) => selected(state, book.id));
+  const isChecked = !!checkedBook;
 
   const handleCheckbox = () => {
     dispatch(toggleBook(book));
