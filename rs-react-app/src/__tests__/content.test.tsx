@@ -1,4 +1,3 @@
-import ErrorBoundary from '@/components/error-boundary';
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, test, vi, type Mock } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router';
@@ -27,10 +26,7 @@ describe('Content component', () => {
       <Provider store={createMockStore()}>
         <MemoryRouter initialEntries={['/books/1?search=']}>
           <Routes>
-            <Route
-              path="/books/:page"
-              element={<Content generatedError={null} />}
-            />
+            <Route path="/books/:page" element={<Content />} />
           </Routes>
         </MemoryRouter>
       </Provider>
@@ -53,10 +49,7 @@ describe('Content component', () => {
       <Provider store={createMockStore()}>
         <MemoryRouter initialEntries={['/books/1?search=']}>
           <Routes>
-            <Route
-              path="/books/:page"
-              element={<Content generatedError={null}></Content>}
-            ></Route>
+            <Route path="/books/:page" element={<Content />} />
           </Routes>
         </MemoryRouter>
       </Provider>
@@ -82,10 +75,7 @@ describe('Content component', () => {
       <Provider store={createMockStore()}>
         <MemoryRouter initialEntries={['/books/1?search=']}>
           <Routes>
-            <Route
-              path="/books/:page"
-              element={<Content generatedError={null}></Content>}
-            ></Route>
+            <Route path="/books/:page" element={<Content />} />
           </Routes>
         </MemoryRouter>
       </Provider>
@@ -107,10 +97,7 @@ describe('Content component', () => {
       <Provider store={createMockStore()}>
         <MemoryRouter initialEntries={['/books/1?search=']}>
           <Routes>
-            <Route
-              path="/books/:page"
-              element={<Content generatedError={null}></Content>}
-            ></Route>
+            <Route path="/books/:page" element={<Content />} />
           </Routes>
         </MemoryRouter>
       </Provider>
@@ -121,27 +108,5 @@ describe('Content component', () => {
 
     await user.click(checkbox[0]);
     expect(checkbox[0]).not.toBeChecked();
-  });
-
-  test('should renders ErrorBoundary error', async () => {
-    render(
-      <Provider store={createMockStore()}>
-        <MemoryRouter initialEntries={['/books/1?search=']}>
-          <ErrorBoundary>
-            <Routes>
-              <Route
-                path="/books/:page"
-                element={
-                  <Content generatedError={new Error('mock error')}></Content>
-                }
-              ></Route>
-            </Routes>
-          </ErrorBoundary>
-        </MemoryRouter>
-      </Provider>
-    );
-
-    const mockError = await screen.findByText(/mock error/i);
-    expect(mockError).toBeInTheDocument();
   });
 });

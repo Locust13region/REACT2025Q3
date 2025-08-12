@@ -3,8 +3,6 @@ import userEvent from '@testing-library/user-event';
 import Header from '@/components/header';
 import { describe, expect, test, vi } from 'vitest';
 import { MemoryRouter } from 'react-router';
-import ErrorBoundary from '@/components/error-boundary';
-import Content from '@/pages/content';
 import ThemeProvider from '@/components/theme-provider';
 import { Provider } from 'react-redux';
 import createMockStore from '@/__mocks__/store';
@@ -14,14 +12,13 @@ describe('Header component', () => {
     render(
       <Provider store={createMockStore()}>
         <MemoryRouter>
-          <Header setGeneratedError={() => {}} />
+          <Header />
         </MemoryRouter>
       </Provider>
     );
     expect(screen.getByLabelText('Find book')).toBeInTheDocument();
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Error' })).toBeInTheDocument();
   });
 
   test('Check inserting some whitespaces into an input field and submit', async () => {
@@ -30,7 +27,7 @@ describe('Header component', () => {
     render(
       <Provider store={createMockStore()}>
         <MemoryRouter>
-          <Header setGeneratedError={() => {}} />
+          <Header />
         </MemoryRouter>
       </Provider>
     );
@@ -44,25 +41,6 @@ describe('Header component', () => {
     await waitFor(() => {
       expect(input).toHaveValue('');
     });
-  });
-
-  test('Error button action', async () => {
-    const user = userEvent.setup();
-    render(
-      <Provider store={createMockStore()}>
-        <MemoryRouter>
-          <Header setGeneratedError={() => new Error('Test ErrorBoundary')} />
-          <ErrorBoundary>
-            <Content generatedError={new Error('Test ErrorBoundary')} />
-          </ErrorBoundary>
-        </MemoryRouter>
-      </Provider>
-    );
-
-    const errorButton = screen.getByRole('button', { name: 'Error' });
-    await user.click(errorButton);
-    const errorMessage = await screen.findByText('Test ErrorBoundary');
-    expect(errorMessage).toBeInTheDocument();
   });
 
   test('should change app theme & moon/sun icon', async () => {
@@ -82,7 +60,7 @@ describe('Header component', () => {
       <Provider store={createMockStore()}>
         <MemoryRouter>
           <ThemeProvider>
-            <Header setGeneratedError={() => {}} />
+            <Header />
           </ThemeProvider>
         </MemoryRouter>
       </Provider>

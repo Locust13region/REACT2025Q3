@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 
 describe('About component', () => {
   test('renders page', () => {
-    render(<About generatedError={null} />);
+    render(<About />);
 
     expect(screen.getByText(/about/i)).toBeInTheDocument();
     expect(screen.getByText(/RS School/)).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe('About component', () => {
     }));
     (useNavigate as Mock).mockReturnValue(mockNavigate);
 
-    render(<About generatedError={null} />);
+    render(<About />);
 
     expect(screen.getByRole('heading', { name: /about/i })).toBeInTheDocument();
     expect(screen.getByText(/view on github/i)).toBeInTheDocument();

@@ -2,14 +2,6 @@ import type { ReactNode } from 'react';
 import { z } from 'zod';
 import { type bookSchema, type responseSchema } from './zod-schemas';
 
-export type HeaderProps = {
-  setGeneratedError: (value: Error | null) => void;
-};
-
-export type ContentProps = {
-  generatedError: Error | null;
-};
-
 export type BookProps = { book: BookType };
 
 export type FetchResult = z.infer<typeof responseSchema>;

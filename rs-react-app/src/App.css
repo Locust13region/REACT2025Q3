@@ -10,7 +10,7 @@
 }
 
 .header {
-  padding: 0.5rem 1rem;
+  padding: 0.5em 2em;
   gap: 0.5rem;
   display: flex;
   justify-content: center;
@@ -47,10 +47,6 @@
     :focus-visible {
       outline: none;
     }
-  }
-
-  & > button:last-of-type {
-    color: var(--text-error);
   }
 }
 

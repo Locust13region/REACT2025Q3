@@ -2,11 +2,9 @@ import { useNavigate } from 'react-router';
 import logo from '@/assets/react.svg';
 import { type FC } from 'react';
 
-const About: FC<{ generatedError: Error | null }> = ({ generatedError }) => {
+const About: FC = () => {
   const navigate = useNavigate();
-  if (generatedError) {
-    throw generatedError;
-  }
+
   return (
     <div className="about">
       <h2>About</h2>
