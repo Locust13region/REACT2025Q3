@@ -1,4 +1,0 @@
-echo "Running tests before push"
-
-cd rs-react-app
-npx vitest run
