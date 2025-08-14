@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query/react';
 import { booksApi } from './books-api';
 import selectedBooksSlice from './books-slice';
 import searchSubstringSlice from './search-slice';
-import { setupListeners } from '@reduxjs/toolkit/query/react';
 
 export const store = configureStore({
   reducer: {

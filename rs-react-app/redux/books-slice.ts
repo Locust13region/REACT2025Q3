@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { BookType } from '@/types/types';
+import type { BookType } from '../types/types';
 
 type SelectedBookId = number;
 type SelectedBook = BookType;

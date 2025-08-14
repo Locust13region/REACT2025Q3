@@ -1,5 +1,5 @@
-import type { RootState } from '@/redux/store';
 import { createSelector } from '@reduxjs/toolkit';
+import type { RootState } from './store';
 
 export const selected = (state: RootState, bookId?: number) => {
   if (bookId) {
@@ -7,8 +7,7 @@ export const selected = (state: RootState, bookId?: number) => {
   }
   return state.selectedBooks;
 };
-// export const selected = (bookId: number) => (state: RootState) =>
-//   state.selectedBooks[bookId];
+
 export const selectedAll = createSelector(selected, (selectedBooks) =>
   Object.values(selectedBooks)
 );

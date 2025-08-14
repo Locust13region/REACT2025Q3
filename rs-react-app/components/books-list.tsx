@@ -1,15 +1,15 @@
-import Book from '@/components/book';
-import Pagination from './pagination';
-import { useGetAllBooksQuery } from '@/redux/books-api';
-import { useParams } from 'react-router';
-import type { FC } from 'react';
-import { useAppSelector } from '@/hooks/redux-hooks';
-import { search } from '@/redux/selector';
-import errorParser from '@/service/error-parser';
+'use client';
 
-const BooksList: FC = () => {
+import Book from './book';
+// import Pagination from './pagination';
+import { useGetAllBooksQuery } from '../redux/books-api';
+import { useAppSelector } from '../redux/redux-hooks';
+import { search } from '../redux/selector';
+import errorParser from '../service/error-parser';
+
+const BooksList = ({ page }: { page: string }) => {
   const searchSubstring = useAppSelector(search);
-  const page = useParams().page ?? '1';
+  console.log('searchSubstring', searchSubstring);
   const { data, isFetching, isSuccess, isError, error } = useGetAllBooksQuery({
     searchSubstring,
     page,
@@ -37,7 +37,7 @@ const BooksList: FC = () => {
             </li>
             {books && books.map((book) => <Book key={book.id} book={book} />)}
           </ul>
-          <Pagination {...{ count, next, previous }} />
+          {/* <Pagination {...{ count, next, previous }} /> */}
         </div>
       )}
     </>

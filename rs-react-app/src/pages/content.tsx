@@ -1,4 +1,4 @@
-import BooksList from '../components/books-list';
+import BooksList from '../../components/books-list';
 import { Outlet, useParams, useSearchParams } from 'react-router';
 import { type FC } from 'react';
 

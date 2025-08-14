@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseApiUrl } from './base-url';
-import type { BookType, FetchResult } from '@/types/types';
-import { bookSchema, responseSchema } from '@/types/zod-schemas';
+import type { BookType, FetchResult } from '../types/types';
+import { bookSchema, responseSchema } from '../types/zod-schemas';
 
 export const booksApi = createApi({
   reducerPath: 'booksApi',

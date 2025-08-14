@@ -1,10 +1,5 @@
-import { useNavigate } from 'react-router';
-import logo from '@/assets/react.svg';
-import { type FC } from 'react';
-
-const About: FC = () => {
-  const navigate = useNavigate();
-
+import BackButton from '../../components/back-button';
+const About = () => {
   return (
     <div className="about">
       <h2>About</h2>
@@ -15,7 +10,7 @@ const About: FC = () => {
         rel="noopener noreferrer"
         className="logo"
       >
-        <img src={logo} alt="logo" />
+        <img src="/react.svg" alt="logo" />
       </a>
       <h3>Andrey Maslennikov</h3>
       <a
@@ -34,7 +29,7 @@ const About: FC = () => {
         </svg>
         View on GitHub
       </a>
-      <button onClick={() => navigate(-1)}>Back</button>
+      <BackButton />
     </div>
   );
 };

@@ -1,14 +1,14 @@
-import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
-import { toggleBook } from '@/redux/books-slice';
-import { search, selected } from '@/redux/selector';
-import type { BookProps } from '@/types/types';
-import { memo, type FC } from 'react';
-import { NavLink, useParams } from 'react-router';
+import { memo } from 'react';
+import { useParams } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from '../redux/redux-hooks';
+import { toggleBook } from '../redux/books-slice';
+import { search, selected } from '../redux/selector';
+import type { BookProps } from '../types/types';
 
-const Book: FC<BookProps> = ({ book }) => {
+const Book = ({ book }: BookProps) => {
   const { id, authors, title } = book;
 
-  const { page } = useParams();
+  const { page } = useParams<{ page: string }>()!;
   const searchSubstring = useAppSelector(search);
   const dispatch = useAppDispatch();
 
