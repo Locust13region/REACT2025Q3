@@ -1,15 +1,14 @@
-import { memo } from 'react';
-import { useParams } from 'next/navigation';
+'use client';
+
 import { useAppDispatch, useAppSelector } from '../redux/redux-hooks';
 import { toggleBook } from '../redux/books-slice';
-import { search, selected } from '../redux/selector';
+import { selected } from '../redux/selector';
 import type { BookProps } from '../types/types';
 
-const Book = ({ book }: BookProps) => {
+const Book = ({ book, isActive }: BookProps) => {
+  console.log(isActive);
   const { id, authors, title } = book;
 
-  const { page } = useParams<{ page: string }>()!;
-  const searchSubstring = useAppSelector(search);
   const dispatch = useAppDispatch();
 
   const checkedBook = useAppSelector((state) => selected(state, book.id));
@@ -30,11 +29,9 @@ const Book = ({ book }: BookProps) => {
             onChange={handleCheckbox}
           />
         </div>
-        <NavLink
-          to={`/books/${page}/${id}?search=${searchSubstring}`}
-          className={({ isActive }) =>
-            `book__link ${isActive ? 'book__link--active' : ''}`
-          }
+        <div
+          data-book-id={id}
+          className={`book__link ${isActive ? 'book__link--active' : ''}`}
         >
           <p>
             <span>{authors[0]?.name ?? 'no data available'}</span>
@@ -42,9 +39,9 @@ const Book = ({ book }: BookProps) => {
           <p>
             <span>{title ?? 'no data available'}</span>
           </p>
-        </NavLink>
+        </div>
       </li>
     </>
   );
 };
-export default memo(Book);
+export default Book;

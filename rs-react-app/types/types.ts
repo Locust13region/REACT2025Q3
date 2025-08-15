@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { z } from 'zod';
 import { type bookSchema, type responseSchema } from './zod-schemas';
 
-export type BookProps = { book: BookType };
+export type BookProps = { book: BookType; isActive: string | undefined };
 
 export type FetchResult = z.infer<typeof responseSchema>;
 

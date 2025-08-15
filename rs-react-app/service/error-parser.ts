@@ -1,7 +1,7 @@
 import {
   fetchBaseQueryErrorSchema,
   serializedErrorSchema,
-} from '@/types/zod-schemas';
+} from '../types/zod-schemas';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import type { SerializedError } from '@reduxjs/toolkit/react';
 

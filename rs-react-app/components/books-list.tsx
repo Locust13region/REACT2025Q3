@@ -5,11 +5,14 @@ import Book from './book';
 import { useGetAllBooksQuery } from '../redux/books-api';
 import { useAppSelector } from '../redux/redux-hooks';
 import { search } from '../redux/selector';
+import { useParams } from 'next/navigation';
 import errorParser from '../service/error-parser';
+import { MouseEvent, MouseEventHandler } from 'react';
 
-const BooksList = ({ page }: { page: string }) => {
+const BooksList = () => {
+  const page = useParams<{ page: string }>()?.page ?? '1';
+  const activeBook = useParams<{ id: string }>()?.id;
   const searchSubstring = useAppSelector(search);
-  console.log('searchSubstring', searchSubstring);
   const { data, isFetching, isSuccess, isError, error } = useGetAllBooksQuery({
     searchSubstring,
     page,
@@ -21,6 +24,17 @@ const BooksList = ({ page }: { page: string }) => {
     results: books = [],
   } = data ?? {};
 
+  const handleOnBookClick: MouseEventHandler<HTMLUListElement> = (e) => {
+    const bookListItem = (e.target as HTMLElement).closest<HTMLDivElement>(
+      '.book__link'
+    );
+    if (bookListItem) {
+      const id = bookListItem.dataset.bookId;
+      console.log(id);
+    }
+    // to={`/books/${page}/${id}?search=${searchSubstring}`}
+  };
+
   return (
     <>
       {isFetching && <h2 className="books-list__wrapper">Loading data...</h2>}
@@ -29,13 +43,16 @@ const BooksList = ({ page }: { page: string }) => {
       )}
       {!isFetching && isSuccess && (
         <div className="books-list__wrapper">
-          <ul className="books-list">
+          <ul className="books-list" onClick={handleOnBookClick}>
             <li className="books-list__header">
               <div className="books-list__title"></div>
               <div className="books-list__title">Author</div>
               <div className="books-list__title">Title</div>
             </li>
-            {books && books.map((book) => <Book key={book.id} book={book} />)}
+            {books &&
+              books.map((book) => (
+                <Book key={book.id} book={book} isActive={activeBook} />
+              ))}
           </ul>
           {/* <Pagination {...{ count, next, previous }} /> */}
         </div>
