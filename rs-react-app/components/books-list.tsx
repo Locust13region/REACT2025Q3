@@ -1,15 +1,16 @@
 'use client';
 
 import Book from './book';
-// import Pagination from './pagination';
+import Pagination from './pagination';
 import { useGetAllBooksQuery } from '../redux/books-api';
 import { useAppSelector } from '../redux/redux-hooks';
 import { search } from '../redux/selector';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import errorParser from '../service/error-parser';
-import { MouseEvent, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
 const BooksList = () => {
+  const router = useRouter();
   const page = useParams<{ page: string }>()?.page ?? '1';
   const activeBook = useParams<{ id: string }>()?.id;
   const searchSubstring = useAppSelector(search);
@@ -31,8 +32,8 @@ const BooksList = () => {
     if (bookListItem) {
       const id = bookListItem.dataset.bookId;
       console.log(id);
+      router.push(`/books/${page}/${id}?search=${searchSubstring}`);
     }
-    // to={`/books/${page}/${id}?search=${searchSubstring}`}
   };
 
   return (
@@ -54,7 +55,7 @@ const BooksList = () => {
                 <Book key={book.id} book={book} isActive={activeBook} />
               ))}
           </ul>
-          {/* <Pagination {...{ count, next, previous }} /> */}
+          <Pagination {...{ count, next, previous, page }} />
         </div>
       )}
     </>

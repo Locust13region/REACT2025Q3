@@ -6,7 +6,10 @@ export type BookProps = { book: BookType; isActive: string | undefined };
 
 export type FetchResult = z.infer<typeof responseSchema>;
 
-export type PaginationProps = Pick<FetchResult, 'count' | 'next' | 'previous'>;
+export type PaginationProps = Pick<
+  FetchResult,
+  'count' | 'next' | 'previous'
+> & { page: string };
 
 export type BookType = z.infer<typeof bookSchema>;
 

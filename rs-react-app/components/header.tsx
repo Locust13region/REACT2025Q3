@@ -3,7 +3,7 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useAppDispatch } from '../redux/redux-hooks';
 import { setSearch } from '../redux/search-slice';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import ThemeButton from './theme-button';
 import { localStorageKey } from 'service/local-storage-key';
@@ -11,15 +11,22 @@ import { localStorageKey } from 'service/local-storage-key';
 const Header = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const searchParam = useSearchParams();
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    const stored = localStorage.getItem(localStorageKey);
-    if (stored) {
-      setInputValue(stored);
-      dispatch(setSearch(stored));
+    const stored = localStorage.getItem(localStorageKey) ?? '';
+    const search = searchParam?.get('search');
+
+    const finalValue = search || stored;
+
+    console.log('search', search, 'stored', stored, 'finalValue', finalValue);
+
+    if (finalValue) {
+      setInputValue(finalValue);
+      dispatch(setSearch(finalValue));
     }
-  }, [dispatch]);
+  }, [dispatch, searchParam]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);

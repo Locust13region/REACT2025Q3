@@ -6,7 +6,6 @@ import { selected } from '../redux/selector';
 import type { BookProps } from '../types/types';
 
 const Book = ({ book, isActive }: BookProps) => {
-  console.log(isActive);
   const { id, authors, title } = book;
 
   const dispatch = useAppDispatch();

@@ -1,14 +1,22 @@
-import { useAppSelector } from '@/hooks/redux-hooks';
-import { useGetSingleBookQuery } from '@/redux/books-api';
-import { search } from '@/redux/selector';
-import errorParser from '@/service/error-parser';
-import { skipToken } from '@reduxjs/toolkit/query/react';
-import { type FC } from 'react';
-import { useNavigate, useParams } from 'react-router';
+'use client';
 
-const BookDescription: FC = () => {
-  const navigate = useNavigate();
-  const { bookId, page } = useParams();
+import { useAppSelector } from '@redux/redux-hooks';
+import { useGetSingleBookQuery } from '@redux/books-api';
+import { search } from '@redux/selector';
+import errorParser from '@service/error-parser';
+import { skipToken } from '@reduxjs/toolkit/query/react';
+import { useRouter } from 'next/navigation';
+
+type Params = {
+  params: {
+    page: string;
+    id: string;
+  };
+};
+
+const BookDescription = ({ params: { page, id: bookId } }: Params) => {
+  const router = useRouter();
+  // const { page, id: bookId } = useParams();
   const searchSubstring = useAppSelector(search);
   const { data, isFetching, isError, error, refetch } = useGetSingleBookQuery(
     bookId ?? skipToken,
@@ -16,6 +24,7 @@ const BookDescription: FC = () => {
       refetchOnFocus: true,
     }
   );
+  // router.push(`/books/${page}?search=${searchSubstring}`)
   return (
     <>
       {isFetching && <h2 className="book-description">Loading data...</h2>}
@@ -28,13 +37,7 @@ const BookDescription: FC = () => {
             <button data-testid="refresh-button" onClick={() => refetch()}>
               ⟳
             </button>
-            <button
-              onClick={() =>
-                navigate(`/books/${page}?search=${searchSubstring}`)
-              }
-            >
-              X
-            </button>
+            <button onClick={() => router.back()}>X</button>
           </div>
           <h4>{data.title}</h4>
           <h5>{data.authors[0].name}</h5>

@@ -1,16 +1,16 @@
-import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
-import csvBuilder from '@/service/csv-builder';
-import downloadFile from '@/service/file-handler';
-import { unSelectAllBooks } from '@/redux/books-slice';
-import { selectedAll } from '@/redux/selector';
-import type { PaginationProps } from '@/types/types';
-import { type FC } from 'react';
-import { useNavigate, useParams } from 'react-router';
+'use client';
 
-const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
-  const { page } = useParams();
-  const navigate = useNavigate();
+import { useAppDispatch, useAppSelector } from '../redux/redux-hooks';
+import csvBuilder from '../service/csv-builder';
+import downloadFile from '../service/file-handler';
+import { unSelectAllBooks } from '../redux/books-slice';
+import { selectedAll } from '../redux/selector';
+import type { PaginationProps } from '../types/types';
+import { useRouter } from 'next/navigation';
+
+const Pagination = ({ count, next, previous, page }: PaginationProps) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const booksPerPage = 32;
   const pagesTotal = Math.ceil(count / booksPerPage);
 
@@ -22,11 +22,11 @@ const Pagination: FC<PaginationProps> = ({ count, next, previous }) => {
   };
 
   const previousPage = () => {
-    if (previous) navigate(getPageParams(previous));
+    if (previous) router.push(getPageParams(previous));
   };
 
   const nextPage = () => {
-    if (next) navigate(getPageParams(next));
+    if (next) router.push(getPageParams(next));
   };
 
   const checkedBooks = useAppSelector(selectedAll);
