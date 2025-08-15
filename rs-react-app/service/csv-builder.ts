@@ -1,4 +1,4 @@
-import type { BookType } from '@/types/types';
+import type { BookType } from '../types/types';
 
 export default function csvBuilder(data: BookType[]) {
   const csvRows = [];

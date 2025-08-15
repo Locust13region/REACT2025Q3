@@ -1,13 +1,13 @@
 'use client';
 
+import { MouseEventHandler } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Book from './book';
 import Pagination from './pagination';
-import { useGetAllBooksQuery } from '../redux/books-api';
-import { useAppSelector } from '../redux/redux-hooks';
-import { search } from '../redux/selector';
-import { useParams, useRouter } from 'next/navigation';
-import errorParser from '../service/error-parser';
-import { MouseEventHandler } from 'react';
+import { useGetAllBooksQuery } from '@redux/books-api';
+import { useAppSelector } from '@redux/redux-hooks';
+import { search } from '@redux/selector';
+import errorParser from '@service/error-parser';
 
 const BooksList = () => {
   const router = useRouter();
@@ -31,7 +31,6 @@ const BooksList = () => {
     );
     if (bookListItem) {
       const id = bookListItem.dataset.bookId;
-      console.log(id);
       router.push(`/books/${page}/${id}?search=${searchSubstring}`);
     }
   };

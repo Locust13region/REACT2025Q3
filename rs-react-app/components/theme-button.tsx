@@ -1,6 +1,6 @@
 'use client';
 
-import useTheme from 'hooks/use-theme';
+import useTheme from '@hooks/use-theme';
 import Moon from './moon';
 import Sun from './sun';
 

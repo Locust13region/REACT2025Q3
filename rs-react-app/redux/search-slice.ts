@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { localStorageKey } from 'service/local-storage-key';
+import { localStorageKey } from '@service/local-storage-key';
 
 const searchSubstringSlice = createSlice({
   name: 'searchSubstring',

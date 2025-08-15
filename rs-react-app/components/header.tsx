@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
-import { useAppDispatch } from '../redux/redux-hooks';
-import { setSearch } from '../redux/search-slice';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useAppDispatch } from '@redux/redux-hooks';
+import { setSearch } from '@redux/search-slice';
+import { localStorageKey } from '@service/local-storage-key';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import ThemeButton from './theme-button';
-import { localStorageKey } from 'service/local-storage-key';
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -19,8 +19,6 @@ const Header = () => {
     const search = searchParam?.get('search');
 
     const finalValue = search || stored;
-
-    console.log('search', search, 'stored', stored, 'finalValue', finalValue);
 
     if (finalValue) {
       setInputValue(finalValue);

@@ -28,7 +28,9 @@
     "paths": {
       "@redux/*": ["redux/*"],
       "@service/*": ["service/*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@theme/*": ["theme/*"]
     }
   },
   "include": [

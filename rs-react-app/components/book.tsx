@@ -1,9 +1,9 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '../redux/redux-hooks';
-import { toggleBook } from '../redux/books-slice';
-import { selected } from '../redux/selector';
-import type { BookProps } from '../types/types';
+import { useAppDispatch, useAppSelector } from '@redux/redux-hooks';
+import { toggleBook } from '@redux/books-slice';
+import { selected } from '@redux/selector';
+import { BookProps } from 'types/types';
 
 const Book = ({ book, isActive }: BookProps) => {
   const { id, authors, title } = book;

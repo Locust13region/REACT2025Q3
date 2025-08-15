@@ -1,10 +1,10 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '../redux/redux-hooks';
-import csvBuilder from '../service/csv-builder';
-import downloadFile from '../service/file-handler';
-import { unSelectAllBooks } from '../redux/books-slice';
-import { selectedAll } from '../redux/selector';
+import { useAppDispatch, useAppSelector } from '@redux/redux-hooks';
+import csvBuilder from '@service/csv-builder';
+import downloadFile from '@service/file-handler';
+import { unSelectAllBooks } from '@redux/books-slice';
+import { selectedAll } from '@redux/selector';
 import type { PaginationProps } from '../types/types';
 import { useRouter } from 'next/navigation';
 
