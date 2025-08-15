@@ -30,7 +30,7 @@ const Book = ({ book, isActive }: BookProps) => {
         </div>
         <div
           data-book-id={id}
-          className={`book__link ${isActive ? 'book__link--active' : ''}`}
+          className={`book__link ${isActive === id.toString() ? 'book__link--active' : ''}`}
         >
           <p>
             <span>{authors[0]?.name ?? 'no data available'}</span>
