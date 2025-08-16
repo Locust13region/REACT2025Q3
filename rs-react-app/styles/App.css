@@ -18,6 +18,8 @@
 
   & a {
     margin-right: auto;
+    border: none;
+    background-color: transparent;
     transition: background-color 0.3s ease;
     &:hover {
       color: var(--link-hover);
@@ -122,6 +124,7 @@
 .book__link {
   display: contents;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     & p {
@@ -164,18 +167,15 @@
   display: flex;
   justify-content: flex-end;
   gap: 1em;
-  & > button {
-    border-color: var(--border);
+  & button {
+    color: var(--link);
+    font-size: 1.8em;
+    padding: 0 0.4em;
+  }
+  & > a,
+  button {
     background-color: transparent;
     align-self: flex-end;
-    &:hover {
-      border-color: var(--link-hover);
-    }
-    &:first-of-type {
-      color: var(--link-hover);
-      padding: 0 0.4em;
-      font-size: 1.8em;
-    }
   }
 }
 

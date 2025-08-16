@@ -35,8 +35,8 @@ const Pagination = ({ count, next, previous, page }: PaginationProps) => {
     dispatch(unSelectAllBooks());
   };
 
-  const handleDownload = () => {
-    const csv = csvBuilder(checkedBooks);
+  const handleDownload = async () => {
+    const csv = await csvBuilder(checkedBooks);
     downloadFile(csv, checkedBooks.length);
   };
 

@@ -5,10 +5,10 @@ import { useAppSelector } from '@redux/redux-hooks';
 import { search } from '@redux/selector';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import errorParser from '@service/error-parser';
-import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 const BookDescription = () => {
-  const router = useRouter();
   const { page, id: bookId } = useParams<{ page: string; id: string }>();
   const searchSubstring = useAppSelector(search);
   const { data, isFetching, isError, error, refetch } = useGetSingleBookQuery(
@@ -30,13 +30,7 @@ const BookDescription = () => {
             <button data-testid="refresh-button" onClick={() => refetch()}>
               ⟳
             </button>
-            <button
-              onClick={() =>
-                router.push(`/books/${page}?search=${searchSubstring}`)
-              }
-            >
-              X
-            </button>
+            <Link href={`/books/${page}?search=${searchSubstring}`}>X</Link>
           </div>
           <h4>{data.title}</h4>
           <h5>{data.authors[0].name}</h5>

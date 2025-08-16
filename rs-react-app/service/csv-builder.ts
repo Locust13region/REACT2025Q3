@@ -1,6 +1,8 @@
+'use server';
+
 import type { BookType } from '../types/types';
 
-export default function csvBuilder(data: BookType[]) {
+export default async function csvBuilder(data: BookType[]) {
   const csvRows = [];
 
   const headers = Object.keys(data[0]) as (keyof BookType)[];

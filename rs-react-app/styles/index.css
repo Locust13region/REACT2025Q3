@@ -69,6 +69,7 @@ h1 {
   line-height: 1.1;
 }
 
+a,
 input,
 button {
   border-radius: 8px;
@@ -83,6 +84,7 @@ button {
   background-color: var(--bg-accent);
 }
 
+a,
 button {
   &:hover {
     border-color: var(--link-hover);
