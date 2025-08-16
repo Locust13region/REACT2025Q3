@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import ThemeButton from './theme-button';
+import LocaleSwitch from './locale-switch';
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -54,6 +55,7 @@ const Header = () => {
         />
         <button type="submit">Search</button>
       </form>
+      <LocaleSwitch />
       <ThemeButton />
     </header>
   );
