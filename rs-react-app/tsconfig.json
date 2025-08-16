@@ -30,7 +30,8 @@
       "@service/*": ["service/*"],
       "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
-      "@theme/*": ["theme/*"]
+      "@theme/*": ["theme/*"],
+      "@i18n/*": ["i18n/*"]
     }
   },
   "include": [
