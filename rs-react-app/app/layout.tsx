@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Header from '@components/header';
 import ReduxProvider from '@redux/redux-provider';
 import ThemeProvider from '@theme/theme-provider';
 import '../styles/App.css';
@@ -20,10 +19,7 @@ export default function RootLayout({
       <body>
         <div id="root">
           <ThemeProvider>
-            <ReduxProvider>
-              <Header />
-              {children}
-            </ReduxProvider>
+            <ReduxProvider>{children}</ReduxProvider>
           </ThemeProvider>
         </div>
       </body>
