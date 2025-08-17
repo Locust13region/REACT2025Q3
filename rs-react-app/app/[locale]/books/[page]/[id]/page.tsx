@@ -37,7 +37,7 @@ const BookDescription = () => {
             <Link href={`/books/${page}?search=${searchSubstring}`}>X</Link>
           </div>
           <h4>{data.title}</h4>
-          <h5>{data.authors[0].name}</h5>
+          <h5>{data.authors.length ? data.authors[0].name : t('no data')}</h5>
           <p>{t('description')}</p>
           <p>{data.summaries.length ? data.summaries : t('no data')}</p>
         </article>

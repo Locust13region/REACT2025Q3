@@ -24,6 +24,9 @@
     "unselect": "Очистить",
     "download": "Загрузить"
   },
+  "Book": {
+    "no data": "Нет данных"
+  },
   "Description": {
     "description": "краткое содержание",
     "loading": "Загрузка данных...",

@@ -24,6 +24,9 @@
     "unselect": "Unselect",
     "download": "Download"
   },
+  "Book": {
+    "no data": "no data available"
+  },
   "Description": {
     "description": "book description",
     "loading": "Loading data...",
