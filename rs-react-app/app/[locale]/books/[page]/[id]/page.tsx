@@ -1,14 +1,16 @@
 'use client';
 
+import { Link } from '@i18n/navigation';
 import { useGetSingleBookQuery } from '@redux/books-api';
 import { useAppSelector } from '@redux/redux-hooks';
 import { search } from '@redux/selector';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import errorParser from '@service/error-parser';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 const BookDescription = () => {
+  const t = useTranslations('Description');
   const { page, id: bookId } = useParams<{ page: string; id: string }>();
   const searchSubstring = useAppSelector(search);
   const { data, isFetching, isError, error, refetch } = useGetSingleBookQuery(
@@ -20,9 +22,11 @@ const BookDescription = () => {
 
   return (
     <>
-      {isFetching && <h2 className="book-description">Loading data...</h2>}
+      {isFetching && <h2 className="book-description">{t('loading')}</h2>}
       {isError && (
-        <h2 className="book-description">Book error: {errorParser(error)}</h2>
+        <h2 className="book-description">
+          {t('error')} {errorParser(error)}
+        </h2>
       )}
       {!isFetching && !isError && data?.id && (
         <article className="book-description">
@@ -34,8 +38,8 @@ const BookDescription = () => {
           </div>
           <h4>{data.title}</h4>
           <h5>{data.authors[0].name}</h5>
-          <p>book description</p>
-          <p>{data.summaries.length ? data.summaries : 'no data available'}</p>
+          <p>{t('description')}</p>
+          <p>{data.summaries.length ? data.summaries : t('no data')}</p>
         </article>
       )}
     </>

@@ -7,8 +7,10 @@ import { unSelectAllBooks } from '@redux/books-slice';
 import { selectedAll } from '@redux/selector';
 import type { PaginationProps } from '../types/types';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 const Pagination = ({ count, next, previous, page }: PaginationProps) => {
+  const t = useTranslations('Pagination');
   const dispatch = useAppDispatch();
   const router = useRouter();
   const booksPerPage = 32;
@@ -49,7 +51,7 @@ const Pagination = ({ count, next, previous, page }: PaginationProps) => {
       >
         {'<'}
       </button>
-      <div>{`Page ${page} of ${pagesTotal}`}</div>
+      <div>{`${t('page')} ${page} ${t('of')} ${pagesTotal}`}</div>
       <button className="pagination__arrow" disabled={!next} onClick={nextPage}>
         {'>'}
       </button>
@@ -57,10 +59,10 @@ const Pagination = ({ count, next, previous, page }: PaginationProps) => {
         className={`pagination__action ${checkedBooks.length ? 'pagination__action-show' : ''}`}
       >
         <button type="button" onClick={handleUnselect}>
-          {`Unselect (${checkedBooks.length})`}
+          {`${t('unselect')} (${checkedBooks.length})`}
         </button>
         <button type="button" onClick={handleDownload}>
-          Download
+          {t('download')}
         </button>
       </div>
     </section>

@@ -8,8 +8,10 @@ import { useGetAllBooksQuery } from '@redux/books-api';
 import { useAppSelector } from '@redux/redux-hooks';
 import { search } from '@redux/selector';
 import errorParser from '@service/error-parser';
+import { useTranslations } from 'next-intl';
 
 const BooksList = () => {
+  const t = useTranslations('BooksList');
   const router = useRouter();
   const page = useParams<{ page: string }>()?.page ?? '1';
   const activeBook = useParams<{ id: string }>()?.id;
@@ -37,17 +39,19 @@ const BooksList = () => {
 
   return (
     <>
-      {isFetching && <h2 className="books-list__wrapper">Loading data...</h2>}
+      {isFetching && <h2 className="books-list__wrapper">{t('loading')}</h2>}
       {isError && (
-        <h2 className="book-description">Page error: {errorParser(error)}</h2>
+        <h2 className="book-description">
+          {t('error')} {errorParser(error)}
+        </h2>
       )}
       {!isFetching && isSuccess && (
         <div className="books-list__wrapper">
           <ul className="books-list" onClick={handleOnBookClick}>
             <li className="books-list__header">
               <div className="books-list__title"></div>
-              <div className="books-list__title">Author</div>
-              <div className="books-list__title">Title</div>
+              <div className="books-list__title">{t('author')}</div>
+              <div className="books-list__title">{t('title')}</div>
             </li>
             {books &&
               books.map((book) => (

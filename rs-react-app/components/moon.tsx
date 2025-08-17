@@ -4,8 +4,8 @@ const Moon = () => (
     viewBox="64 64 896 896"
     focusable="false"
     data-icon="moon"
-    width="1.2em"
-    height="1.2em"
+    width="24"
+    height="24"
     fill="currentColor"
     aria-hidden="true"
   >

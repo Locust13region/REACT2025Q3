@@ -3,13 +3,15 @@
 import { useAppDispatch } from '@redux/redux-hooks';
 import { setSearch } from '@redux/search-slice';
 import { localStorageKey } from '@service/local-storage-key';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import ThemeButton from './theme-button';
 import LocaleSwitch from './locale-switch';
+import { useTranslations } from 'next-intl';
+import { Link } from '@i18n/navigation';
 
 const Header = () => {
+  const t = useTranslations('Header');
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParam = useSearchParams();
@@ -43,9 +45,9 @@ const Header = () => {
 
   return (
     <header className="header">
-      <Link href="/about">About</Link>
+      <Link href="/about">{t('about')}</Link>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="searchInput">Find book</label>
+        <label htmlFor="searchInput">{t('find')}</label>
         <input
           type="search"
           id="searchInput"
@@ -53,7 +55,7 @@ const Header = () => {
           value={inputValue}
           onInput={handleInputChange}
         />
-        <button type="submit">Search</button>
+        <button type="submit">{t('search')}</button>
       </form>
       <LocaleSwitch />
       <ThemeButton />

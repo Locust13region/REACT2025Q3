@@ -1,10 +1,12 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
 const BackButton = () => {
   const router = useRouter();
-  return <button onClick={() => router.back()}>Back</button>;
+  const t = useTranslations('BackButton');
+  return <button onClick={() => router.back()}>{t('back')}</button>;
 };
 
 export default BackButton;

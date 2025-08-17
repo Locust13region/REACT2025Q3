@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 
 export default function Home() {
-  redirect('/books/1');
+  const defaultLocale = 'en';
+  redirect(`/${defaultLocale}/books/1`);
 }
