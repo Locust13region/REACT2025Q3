@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "about": "About app",
+    "find": "Find book",
+    "search": "Search"
+  },
+  "About": {
+    "title": "About app",
+    "creator": "Andrey Maslennikov",
+    "git": "View on GitHub"
+  },
+  "BackButton": {
+    "back": "Back"
+  },
+  "BooksList": {
+    "author": "Author",
+    "title": "Title",
+    "loading": "Loading data...",
+    "error": "Book error: "
+  },
+  "Pagination": {
+    "page": "Page ",
+    "of": "of",
+    "unselect": "Unselect",
+    "download": "Download"
+  },
+  "Book": {
+    "no data": "no data available"
+  },
+  "Description": {
+    "description": "book description",
+    "loading": "Loading data...",
+    "error": "Book error: ",
+    "no data": "no data available"
+  }
+}
