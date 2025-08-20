@@ -1,7 +1,7 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  max-width: 64rem;
+  margin: auto;
+  padding: 0.5rem;
   text-align: center;
 }
 
@@ -18,13 +18,71 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.controls {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1em;
+}
+.forms {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.form {
+  max-width: 50%;
+}
+.form__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.5em 0;
+}
+.field {
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+}
+.field__label {
+  flex: 0 0 30%;
+  padding-top: 0.3em;
+  display: inline-block;
+  text-align: right;
+}
+.field__info {
+  flex: 1 0 60%;
+}
+.field__input {
+  font-size: 1em;
+  padding: 0.5em;
+  display: inline-block;
+  width: 100%;
+  border: 2px solid gray;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+.field__radio {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.5em;
+
+  & > label {
+    display: inline-block;
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+.field__error {
+  width: 100%;
+  opacity: 0;
+  min-height: auto;
+  text-align: left;
+}
+.field__error-show {
+  opacity: 1;
+  color: red;
+}
+.tiles {
+}
+.tile {
 }
 
 @media (prefers-reduced-motion: no-preference) {

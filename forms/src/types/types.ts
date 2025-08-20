@@ -1,36 +1,44 @@
 import z from 'zod';
 
-const firstUppercase = (value: string) =>
-  /^[A-Z]/.test(value) || 'Name should start with an uppercase letter';
-
-const passwordStrength = (value: string) =>
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).+$/.test(value) ||
-  'Password must contain uppercase, lowercase, number and special character';
-
 export const formSchema = z
   .object({
     name: z
       .string()
-      .min(1, { message: 'Name is required' })
-      .refine(firstUppercase),
-    age: z
-      .number()
-      .refine((value) => value >= 0, { message: 'Age cannot be negative' }),
-    email: z.email({ message: 'Invalid email' }),
+      .min(1, { error: 'Name is required' })
+      .refine((value) => /^[A-Z А-Я]/.test(value), {
+        error: 'Name should start with an uppercase letter',
+      }),
+    age: z.coerce
+      .number({ error: 'Age must be specified as a number' })
+      .refine((value) => value >= 0, {
+        message: 'Age cannot be negative or null',
+      }),
+    email: z.email({ error: 'Enter valid email' }),
     password: z
       .string()
-      .min(8, { message: 'Password must be at least 8 characters' })
-      .refine(passwordStrength),
+      .min(8, { error: 'Must be at least 8 characters' })
+      .refine((value) => /[a-z]/.test(value), {
+        error: 'Add one lowercase',
+      })
+      .refine((value) => /[A-Z]/.test(value), {
+        error: 'Add one uppercase',
+      })
+      .refine((value) => /\d/.test(value), {
+        error: 'Add one number',
+      })
+      .refine((value) => /[!@#$%^&*+-]/.test(value), {
+        error: 'Add one special character ',
+      }),
     confirmPassword: z.string(),
     gender: z
       .enum(['Male', 'Female'])
       .nullable()
       .refine((value) => value !== null, {
-        message: 'Please select a gender',
+        error: 'Please select a gender',
       }),
     acceptTerms: z
       .boolean()
-      .refine((value) => value === true, 'You must accept T&C'),
+      .refine((value) => value === true, { error: 'You must accept T&C' }),
     picture: z
       .file()
       .min(1)
@@ -40,7 +48,7 @@ export const formSchema = z
     country: z.string().min(1, 'Country is required'),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords must match',
+    error: 'Passwords do not match',
     path: ['confirmPassword'],
   });
 
