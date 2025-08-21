@@ -78,7 +78,7 @@ select,
 select {
   border: 2px solid var(--color-border);
   background: var(--color-surface);
-  padding: 10px;
+  padding: 0.5em;
   transition: 0.4s;
 }
 select:hover,
@@ -154,9 +154,6 @@ option::checkmark {
 
 @media (prefers-color-scheme: light) {
   :root {
-    /* color: #213547; */
-    /* background-color: #ffffff; */
-    /* Text */
     --color-text-primary: #1c1c1e;
     --color-text-secondary: #6e6e73;
     --color-text-error: #d93025;

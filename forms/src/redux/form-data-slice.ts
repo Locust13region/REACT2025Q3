@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Form, FormState } from '../types/types';
+import type { Form, FormState } from '@/types/types';
 
 const initialState: FormState = {
   controlled: {

@@ -45,26 +45,12 @@ export const formSchema = z
       .boolean()
       .refine((value) => value === true, { error: 'You must accept T&C' }),
     picture: z
-      .instanceof(FileList)
+      .file()
+      .min(1, { error: 'File is empty' })
+      .max(2000000, { error: 'File is too large.' })
+      .mime(['image/png', 'image/jpeg'], { error: 'Invalid file type' })
       .nullable()
-      .refine((files) => files !== null && files.length > 0, {
-        error: 'Please select a file',
-      })
-      .refine(
-        (files) => files !== null && files[0] && files[0].size <= 2000000,
-        {
-          error: 'File is too large (max 2MB)',
-        }
-      )
-      .refine(
-        (files) =>
-          files !== null &&
-          files.length > 0 &&
-          ['image/png', 'image/jpeg'].includes(files[0].type),
-        {
-          error: 'Invalid file type (only PNG or JPEG)',
-        }
-      ),
+      .refine((value) => value !== null, { error: 'Please select file' }),
     country: z.string().min(1, 'Country is required'),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -84,3 +70,8 @@ export type UncontrolledFieldProps = {
   touchedFields: Partial<FieldNamesMarkedBoolean<Form>>;
   errors: FieldErrors<Form>;
 };
+
+export type UncontrolledFieldErrorProps = Pick<
+  UncontrolledFieldProps,
+  'fieldId' | 'touchedFields' | 'errors'
+>;

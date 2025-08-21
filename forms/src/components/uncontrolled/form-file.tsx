@@ -1,15 +1,21 @@
-import type { UseFormWatch } from 'react-hook-form';
-import type { Form, UncontrolledFieldProps } from '../../types/types';
+import { Controller, type Control, type UseFormWatch } from 'react-hook-form';
+import type { Form, UncontrolledFieldProps } from '@/types/types';
+import FieldError from './field-error';
 
 const FormFile = ({
   form,
   field,
   fieldId,
-  register,
   touchedFields,
   errors,
-  // watch,
-}: UncontrolledFieldProps & { watch: UseFormWatch<Form> }) => {
+  watch,
+  control,
+}: UncontrolledFieldProps & {
+  watch: UseFormWatch<Form>;
+  control: Control<Form>;
+}) => {
+  const file = watch(fieldId);
+
   return (
     <div className="field">
       <label htmlFor="picture" className="field__label">
@@ -17,24 +23,30 @@ const FormFile = ({
       </label>
       <div className="field__info">
         <div className="field__file">
-          <input
-            form={form}
-            type="file"
-            id="picture"
-            accept="image/png, image/jpeg"
-            {...register(fieldId, {
-              setValueAs: (files: FileList | null) => files?.[0] ?? null,
-            })}
+          <Controller
+            name={fieldId}
+            control={control}
+            render={({ field }) => (
+              <input
+                form={form}
+                type="file"
+                id="picture"
+                ref={field.ref}
+                onBlur={field.onBlur}
+                accept="image/png, image/jpeg"
+                onChange={(e) => field.onChange(e.target.files?.[0] ?? null)}
+              />
+            )}
           />
-          <label htmlFor="picture">
-            <span className="file-name"></span>
+          <label className="file-name" htmlFor="picture">
+            {(file instanceof File && file?.name) || '\u00A0'}
           </label>
         </div>
-        <p
-          className={`field__error ${touchedFields[fieldId] && errors[fieldId] ? 'field__error-show' : ''}`}
-        >
-          {errors[fieldId]?.message || '\u00A0'}
-        </p>
+        <FieldError
+          fieldId={fieldId}
+          touchedFields={touchedFields}
+          errors={errors}
+        />
       </div>
     </div>
   );

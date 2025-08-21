@@ -1,4 +1,5 @@
-import type { UncontrolledFieldProps } from '../../types/types';
+import type { UncontrolledFieldProps } from '@/types/types';
+import FieldError from './field-error';
 
 const FormCheckbox = ({
   form,
@@ -23,11 +24,11 @@ const FormCheckbox = ({
           />
           <label htmlFor="t&c">Terms and Conditions</label>
         </div>
-        <p
-          className={`field__error ${touchedFields[fieldId] && errors[fieldId] ? 'field__error-show' : ''}`}
-        >
-          {errors[fieldId]?.message || '\u00A0'}
-        </p>
+        <FieldError
+          fieldId={fieldId}
+          touchedFields={touchedFields}
+          errors={errors}
+        />
       </div>
     </div>
   );

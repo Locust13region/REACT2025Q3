@@ -1,4 +1,5 @@
-import type { UncontrolledFieldProps } from '../../types/types';
+import type { UncontrolledFieldProps } from '@/types/types';
+import FieldError from './field-error';
 
 const FormString = ({
   form,
@@ -21,11 +22,11 @@ const FormString = ({
           {...register(fieldId)}
           className="field__input"
         />
-        <p
-          className={`field__error ${touchedFields[fieldId] && errors[fieldId] ? 'field__error-show' : ''}`}
-        >
-          {errors[fieldId]?.message || '\u00A0'}
-        </p>
+        <FieldError
+          fieldId={fieldId}
+          touchedFields={touchedFields}
+          errors={errors}
+        />
       </div>
     </div>
   );

@@ -1,23 +1,32 @@
 import { useForm } from 'react-hook-form';
-import { formSchema, type Form } from '../../types/types';
+import { formSchema, type Form } from '@/types/types';
 import FormString from './form-string';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormRadio from './form-radio';
-import FormCheckbox from './form-checkbkx';
+import FormCheckbox from './form-checkbox';
 import FormFile from './form-file';
 import FormNumber from './form-number';
 import FormSelect from './form-select';
+import { useAppDispatch } from '@/redux/hooks';
+import { setUncontrolled } from '@/redux/form-data-slice';
 
 const UncontrolledForm = () => {
   const {
     register,
     handleSubmit,
+    control,
     watch,
     formState: { errors, touchedFields },
   } = useForm<Form>({
     resolver: zodResolver(formSchema),
-    mode: 'onChange',
+    mode: 'all',
   });
+
+  const dispatch = useAppDispatch();
+
+  const onSubmit = (data: Form) => {
+    dispatch(setUncontrolled(data));
+  };
 
   const commonProps = {
     form: 'uncontrolledForm',
@@ -26,7 +35,6 @@ const UncontrolledForm = () => {
     errors: errors,
   };
 
-  const onSubmit = (data: Form) => console.log(data);
   return (
     <div className="form">
       <h3>Uncontrolled</h3>
@@ -52,6 +60,7 @@ const UncontrolledForm = () => {
           field="Picture"
           fieldId={'picture'}
           watch={watch}
+          control={control}
         />
         <FormCheckbox {...commonProps} field="Accept" fieldId={'acceptTerms'} />
       </form>

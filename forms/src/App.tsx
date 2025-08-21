@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import './App.css';
-import ControlledForm from './components/uncontrolled/uncontrolled-form';
+import UncontrolledForm from './components/uncontrolled/uncontrolled-form';
 import { store } from './redux/store';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
         <button>Controlled</button>
       </section>
       <section className="forms">
-        <ControlledForm />
+        <UncontrolledForm />
       </section>
       <div className="tiles">
         <h3>Controlled</h3>

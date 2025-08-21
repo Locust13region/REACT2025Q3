@@ -13,10 +13,11 @@
 .forms {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 1em;
 }
 .form {
-  max-width: 50%;
+  max-width: 40%;
   & > h3,
   h4 {
     color: var(--color-text-secondary);
@@ -25,7 +26,7 @@
 .form__inner {
   display: flex;
   flex-direction: column;
-  padding: 0.5em 0;
+  padding: 0.5em;
 }
 .field {
   display: flex;
@@ -96,33 +97,18 @@
 }
 
 .field__file {
-  border: 2px solid red;
   overflow: hidden;
-  position: relative;
-  & > label {
-    position: absolute;
-    inset: 0;
-    background-color: grey;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-  }
-  .file-name {
-    font-size: 14px;
-    color: red;
-    /* если файла нет — скрываем текст */
-    &:empty {
-      content: '';
-    }
-  }
-
   & > input[type='file'] {
-    width: 100%;
-    overflow: hidden;
-    &::file-selector-button {
-      display: none;
-    }
+    display: none;
+  }
+  & > label {
+    display: block;
+    padding: 0.4em;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    background-color: var(--color-surface);
+    text-align: left;
+    cursor: pointer;
   }
 }
 
