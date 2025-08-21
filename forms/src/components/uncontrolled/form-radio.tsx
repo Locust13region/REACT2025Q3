@@ -1,4 +1,4 @@
-import type { ControlledFieldProps } from '../../types/types';
+import type { UncontrolledFieldProps } from '../../types/types';
 
 const FormRadio = ({
   form,
@@ -7,7 +7,7 @@ const FormRadio = ({
   register,
   touchedFields,
   errors,
-}: ControlledFieldProps) => {
+}: UncontrolledFieldProps) => {
   return (
     <div className="field">
       <label htmlFor="male" className="field__label">

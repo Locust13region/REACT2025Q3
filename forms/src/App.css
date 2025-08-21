@@ -5,19 +5,6 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
 .controls {
   display: flex;
   justify-content: space-around;
@@ -30,11 +17,14 @@
 }
 .form {
   max-width: 50%;
+  & > h3,
+  h4 {
+    color: var(--color-text-secondary);
+  }
 }
 .form__inner {
   display: flex;
   flex-direction: column;
-  /* gap: 0.5em; */
   padding: 0.5em 0;
 }
 .field {
@@ -51,19 +41,21 @@
 .field__info {
   flex: 1 0 60%;
 }
+
 .field__input {
   font-size: 1em;
   padding: 0.5em;
   display: inline-block;
   width: 100%;
-  border: 2px solid gray;
+  border: 2px solid var(--color-border);
   border-radius: 10px;
   box-sizing: border-box;
 }
+
 .field__radio {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding-top: 0.3em;
   gap: 1.5em;
 
@@ -71,14 +63,69 @@
     display: inline-block;
     line-height: 1.6;
   }
+
+  & > input[type='radio'] {
+    accent-color: var(--color-link-hover);
+    &:focus {
+      outline: none;
+    }
+  }
 }
+
 .field__checkbox {
   display: flex;
   align-items: center;
   justify-content: start;
   padding-top: 0.3em;
   gap: 1.5em;
+  & > input[type='checkbox'] {
+    accent-color: var(--color-link-hover);
+    &:focus {
+      outline: none;
+    }
+  }
 }
+
+.field__select {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  & > select {
+    width: 100%;
+  }
+}
+
+.field__file {
+  border: 2px solid red;
+  overflow: hidden;
+  position: relative;
+  & > label {
+    position: absolute;
+    inset: 0;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .file-name {
+    font-size: 14px;
+    color: red;
+    /* если файла нет — скрываем текст */
+    &:empty {
+      content: '';
+    }
+  }
+
+  & > input[type='file'] {
+    width: 100%;
+    overflow: hidden;
+    &::file-selector-button {
+      display: none;
+    }
+  }
+}
+
 .field__error {
   width: 100%;
   opacity: 0;
@@ -87,23 +134,9 @@
 }
 .field__error-show {
   opacity: 1;
-  color: red;
+  color: var(--color-text-error);
 }
 .tiles {
 }
 .tile {
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

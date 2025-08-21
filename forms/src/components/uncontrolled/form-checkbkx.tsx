@@ -1,4 +1,4 @@
-import type { ControlledFieldProps } from '../../types/types';
+import type { UncontrolledFieldProps } from '../../types/types';
 
 const FormCheckbox = ({
   form,
@@ -7,7 +7,7 @@ const FormCheckbox = ({
   register,
   touchedFields,
   errors,
-}: ControlledFieldProps) => {
+}: UncontrolledFieldProps) => {
   return (
     <div className="field">
       <label htmlFor="t&c" className="field__label">

@@ -1,4 +1,5 @@
-import type { ControlledFieldProps } from '../../types/types';
+import type { UseFormWatch } from 'react-hook-form';
+import type { Form, UncontrolledFieldProps } from '../../types/types';
 
 const FormFile = ({
   form,
@@ -7,7 +8,8 @@ const FormFile = ({
   register,
   touchedFields,
   errors,
-}: ControlledFieldProps) => {
+  // watch,
+}: UncontrolledFieldProps & { watch: UseFormWatch<Form> }) => {
   return (
     <div className="field">
       <label htmlFor="picture" className="field__label">
@@ -19,10 +21,14 @@ const FormFile = ({
             form={form}
             type="file"
             id="picture"
-            placeholder="Select file"
-            {...register(fieldId)}
+            accept="image/png, image/jpeg"
+            {...register(fieldId, {
+              setValueAs: (files: FileList | null) => files?.[0] ?? null,
+            })}
           />
-          <label htmlFor="picture"></label>
+          <label htmlFor="picture">
+            <span className="file-name"></span>
+          </label>
         </div>
         <p
           className={`field__error ${touchedFields[fieldId] && errors[fieldId] ? 'field__error-show' : ''}`}

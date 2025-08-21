@@ -1,13 +1,13 @@
-import type { ControlledFieldProps } from '../../types/types';
+import type { UncontrolledFieldProps } from '../../types/types';
 
-const FormInput = ({
+const FormString = ({
   form,
   field,
   fieldId,
   register,
   touchedFields,
   errors,
-}: ControlledFieldProps) => {
+}: UncontrolledFieldProps) => {
   return (
     <div className="field">
       <label htmlFor={fieldId} className="field__label">
@@ -31,4 +31,4 @@ const FormInput = ({
   );
 };
 
-export default FormInput;
+export default FormString;

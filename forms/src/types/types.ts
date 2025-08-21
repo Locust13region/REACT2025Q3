@@ -13,13 +13,13 @@ export const formSchema = z
       .refine((value) => /^[A-Z А-Я]/.test(value), {
         error: 'Name should start with an uppercase letter',
       }),
-    age: z.coerce
+    age: z
       .number({ error: 'Age must be specified as a number' })
       .min(1, { error: 'Age must be specified' })
       .nullable()
-      // .refine((value) => !(value === null), {
-      //   error: 'Age cannot be negative or null',
-      // })
+      .refine((value) => !(value === null), {
+        error: 'Age cannot be negative or null',
+      })
       .refine((value) => value !== null && value > 0, {
         error: 'Age cannot be negative or null',
       }),
@@ -44,21 +44,27 @@ export const formSchema = z
     acceptTerms: z
       .boolean()
       .refine((value) => value === true, { error: 'You must accept T&C' }),
-    picture: z.preprocess(
-      (value) => {
-        if (value instanceof FileList) {
-          return value.length > 0 ? value[0] : null;
+    picture: z
+      .instanceof(FileList)
+      .nullable()
+      .refine((files) => files !== null && files.length > 0, {
+        error: 'Please select a file',
+      })
+      .refine(
+        (files) => files !== null && files[0] && files[0].size <= 2000000,
+        {
+          error: 'File is too large (max 2MB)',
         }
-        return value;
-      },
-      z
-        .file()
-        .min(1, { error: 'File is empty' })
-        .max(2000000, { error: 'File is too large.' })
-        .mime(['image/png', 'image/jpeg'], { error: 'Invalid file type' })
-        .nullable()
-        .refine((value) => value !== null, { error: 'Please select file' })
-    ),
+      )
+      .refine(
+        (files) =>
+          files !== null &&
+          files.length > 0 &&
+          ['image/png', 'image/jpeg'].includes(files[0].type),
+        {
+          error: 'Invalid file type (only PNG or JPEG)',
+        }
+      ),
     country: z.string().min(1, 'Country is required'),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -70,7 +76,7 @@ export type Form = z.infer<typeof formSchema>;
 
 export type FormState = { controlled: Form; uncontrolled: Form };
 
-export type ControlledFieldProps = {
+export type UncontrolledFieldProps = {
   form: string;
   field: string;
   fieldId: keyof Form;
