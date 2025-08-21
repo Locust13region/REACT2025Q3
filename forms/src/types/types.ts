@@ -1,3 +1,8 @@
+import type {
+  FieldErrors,
+  FieldNamesMarkedBoolean,
+  UseFormRegister,
+} from 'react-hook-form';
 import z from 'zod';
 
 export const formSchema = z
@@ -10,8 +15,13 @@ export const formSchema = z
       }),
     age: z.coerce
       .number({ error: 'Age must be specified as a number' })
-      .refine((value) => value >= 0, {
-        message: 'Age cannot be negative or null',
+      .min(1, { error: 'Age must be specified' })
+      .nullable()
+      // .refine((value) => !(value === null), {
+      //   error: 'Age cannot be negative or null',
+      // })
+      .refine((value) => value !== null && value > 0, {
+        error: 'Age cannot be negative or null',
       }),
     email: z.email({ error: 'Enter valid email' }),
     password: z
@@ -30,21 +40,25 @@ export const formSchema = z
         error: 'Add one special character ',
       }),
     confirmPassword: z.string(),
-    gender: z
-      .enum(['Male', 'Female'])
-      .nullable()
-      .refine((value) => value !== null, {
-        error: 'Please select a gender',
-      }),
+    gender: z.enum(['Male', 'Female'], { error: 'Please select gender' }),
     acceptTerms: z
       .boolean()
       .refine((value) => value === true, { error: 'You must accept T&C' }),
-    picture: z
-      .file()
-      .min(1)
-      .max(2000000)
-      .mime(['image/png', 'image/jpeg'])
-      .nullable(),
+    picture: z.preprocess(
+      (value) => {
+        if (value instanceof FileList) {
+          return value.length > 0 ? value[0] : null;
+        }
+        return value;
+      },
+      z
+        .file()
+        .min(1, { error: 'File is empty' })
+        .max(2000000, { error: 'File is too large.' })
+        .mime(['image/png', 'image/jpeg'], { error: 'Invalid file type' })
+        .nullable()
+        .refine((value) => value !== null, { error: 'Please select file' })
+    ),
     country: z.string().min(1, 'Country is required'),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -53,4 +67,14 @@ export const formSchema = z
   });
 
 export type Form = z.infer<typeof formSchema>;
+
 export type FormState = { controlled: Form; uncontrolled: Form };
+
+export type ControlledFieldProps = {
+  form: string;
+  field: string;
+  fieldId: keyof Form;
+  register: UseFormRegister<Form>;
+  touchedFields: Partial<FieldNamesMarkedBoolean<Form>>;
+  errors: FieldErrors<Form>;
+};

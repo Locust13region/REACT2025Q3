@@ -5,11 +5,11 @@ import type { Form, FormState } from '../types/types';
 const initialState: FormState = {
   controlled: {
     name: '',
-    age: 0,
+    age: null,
     email: '',
     password: '',
     confirmPassword: '',
-    gender: null,
+    gender: 'Male',
     acceptTerms: false,
     picture: null,
     country: '',
@@ -20,7 +20,7 @@ const initialState: FormState = {
     email: '',
     password: '',
     confirmPassword: '',
-    gender: null,
+    gender: 'Male',
     acceptTerms: false,
     picture: null,
     country: '',

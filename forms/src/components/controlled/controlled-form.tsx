@@ -3,6 +3,8 @@ import { formSchema, type Form } from '../../types/types';
 import FormInput from './form-input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormRadio from './form-radio';
+import FormCheckbox from './form-checkbkx';
+import FormFile from './form-file';
 
 const ControlledForm = () => {
   const {
@@ -41,6 +43,9 @@ const ControlledForm = () => {
           fieldId={'confirmPassword'}
         />
         <FormRadio {...commonProps} field="Select gender" fieldId={'gender'} />
+        <FormCheckbox {...commonProps} field="Accept" fieldId={'acceptTerms'} />
+        <FormFile {...commonProps} field="Picture" fieldId={'picture'} />
+        <FormInput {...commonProps} field="Country" fieldId={'country'} />
       </form>
       <button type="submit" form="controlledForm">
         Update user

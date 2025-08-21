@@ -1,18 +1,4 @@
-import type {
-  FieldErrors,
-  FieldNamesMarkedBoolean,
-  UseFormRegister,
-} from 'react-hook-form';
-import type { Form } from '../../types/types';
-
-type FormInputProps = {
-  form: string;
-  field: string;
-  fieldId: keyof Form;
-  register: UseFormRegister<Form>;
-  touchedFields: Partial<FieldNamesMarkedBoolean<Form>>;
-  errors: FieldErrors<Form>;
-};
+import type { ControlledFieldProps } from '../../types/types';
 
 const FormInput = ({
   form,
@@ -21,7 +7,7 @@ const FormInput = ({
   register,
   touchedFields,
   errors,
-}: FormInputProps) => {
+}: ControlledFieldProps) => {
   return (
     <div className="field">
       <label htmlFor={fieldId} className="field__label">
@@ -31,6 +17,7 @@ const FormInput = ({
         <input
           form={form}
           id={fieldId}
+          autoComplete="off"
           {...register(fieldId)}
           className="field__input"
         />

@@ -1,6 +1,6 @@
 import type { ControlledFieldProps } from '../../types/types';
 
-const FormRadio = ({
+const FormFile = ({
   form,
   field,
   fieldId,
@@ -10,27 +10,19 @@ const FormRadio = ({
 }: ControlledFieldProps) => {
   return (
     <div className="field">
-      <label htmlFor="male" className="field__label">
+      <label htmlFor="picture" className="field__label">
         {field}
       </label>
       <div className="field__info">
-        <div className="field__radio">
+        <div className="field__file">
           <input
             form={form}
-            type="radio"
-            value="Male"
-            id="male"
+            type="file"
+            id="picture"
+            placeholder="Select file"
             {...register(fieldId)}
           />
-          <label htmlFor="male">Male</label>
-          <input
-            form={form}
-            type="radio"
-            value="Female"
-            id="female"
-            {...register(fieldId)}
-          />
-          <label htmlFor="female">Female</label>
+          <label htmlFor="picture"></label>
         </div>
         <p
           className={`field__error ${touchedFields[fieldId] && errors[fieldId] ? 'field__error-show' : ''}`}
@@ -42,4 +34,4 @@ const FormRadio = ({
   );
 };
 
-export default FormRadio;
+export default FormFile;

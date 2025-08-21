@@ -34,7 +34,7 @@
 .form__inner {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  /* gap: 0.5em; */
   padding: 0.5em 0;
 }
 .field {
@@ -62,13 +62,22 @@
 }
 .field__radio {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
+  padding-top: 0.3em;
   gap: 1.5em;
 
   & > label {
     display: inline-block;
+    line-height: 1.6;
   }
+}
+.field__checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-top: 0.3em;
+  gap: 1.5em;
 }
 .field__error {
   width: 100%;

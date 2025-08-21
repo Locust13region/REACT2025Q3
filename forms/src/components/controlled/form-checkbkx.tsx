@@ -1,6 +1,6 @@
 import type { ControlledFieldProps } from '../../types/types';
 
-const FormRadio = ({
+const FormCheckbox = ({
   form,
   field,
   fieldId,
@@ -10,27 +10,18 @@ const FormRadio = ({
 }: ControlledFieldProps) => {
   return (
     <div className="field">
-      <label htmlFor="male" className="field__label">
+      <label htmlFor="t&c" className="field__label">
         {field}
       </label>
       <div className="field__info">
-        <div className="field__radio">
+        <div className="field__checkbox">
           <input
             form={form}
-            type="radio"
-            value="Male"
-            id="male"
-            {...register(fieldId)}
+            type="checkbox"
+            id="t&c"
+            {...register(fieldId, { required: true })}
           />
-          <label htmlFor="male">Male</label>
-          <input
-            form={form}
-            type="radio"
-            value="Female"
-            id="female"
-            {...register(fieldId)}
-          />
-          <label htmlFor="female">Female</label>
+          <label htmlFor="t&c">Terms and Conditions</label>
         </div>
         <p
           className={`field__error ${touchedFields[fieldId] && errors[fieldId] ? 'field__error-show' : ''}`}
@@ -42,4 +33,4 @@ const FormRadio = ({
   );
 };
 
-export default FormRadio;
+export default FormCheckbox;
