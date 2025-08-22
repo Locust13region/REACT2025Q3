@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import './App.css';
 import UncontrolledForm from './components/form-uncontrolled/uncontrolled-form';
 import { store } from './redux/store';
-import FormView from './components/form-view/form-view';
+import FormsView from './components/form-view/forms-view';
 import Controls from './components/controls/controls';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <section className="forms">
         <UncontrolledForm />
       </section>
-      <FormView />
+      <FormsView />
     </Provider>
   );
 }

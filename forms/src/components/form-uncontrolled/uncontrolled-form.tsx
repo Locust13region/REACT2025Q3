@@ -8,8 +8,8 @@ import FormFile from './form-file';
 import FormNumber from './form-number';
 import FormSelect from './form-select';
 import { useAppDispatch } from '@/redux/hooks';
-import { setUncontrolled } from '@/redux/form-data-slice';
-import submitHandler from '@/utils/submit-handler';
+import toBase64String from '@/utils/picture-to-base64';
+import { submitUncontrolledThunk } from '@/redux/uncontrolled-thunk';
 
 const UncontrolledForm = () => {
   const {
@@ -26,10 +26,17 @@ const UncontrolledForm = () => {
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: Form) => {
-    submitHandler(data, setUncontrolled, dispatch);
+  const onSubmit = async (data: Form) => {
+    if (!data.picture) return;
+    const pictureBase64 = await toBase64String(data.picture);
+    const submitData = {
+      ...data,
+      picture: pictureBase64,
+    };
+    dispatch(submitUncontrolledThunk(submitData));
     reset();
   };
+
   const commonProps = {
     form: 'uncontrolledForm',
     register: register,
@@ -41,7 +48,6 @@ const UncontrolledForm = () => {
     <div className="form">
       <h3>Uncontrolled</h3>
       <form
-        autoComplete="off"
         id="uncontrolledForm"
         onSubmit={handleSubmit(onSubmit)}
         className="form__inner"

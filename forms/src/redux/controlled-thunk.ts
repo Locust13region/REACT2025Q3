@@ -1,0 +1,18 @@
+import type { DataState } from '@/types/types';
+import { createAsyncThunk } from '@reduxjs/toolkit/react';
+import type { AppDispatch, RootState } from './store';
+import { clearHighlightControlled, setControlled } from './form-data-slice';
+import { delay } from '@/utils/delay';
+
+export const submitControlledThunk = createAsyncThunk<
+  undefined,
+  DataState,
+  { dispatch: AppDispatch; state: RootState }
+>('forms/submitControlled', async (data, { dispatch }) => {
+  dispatch(setControlled(data));
+
+  await delay(800);
+
+  dispatch(clearHighlightControlled());
+  return undefined;
+});

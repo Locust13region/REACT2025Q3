@@ -61,11 +61,15 @@ export const formSchema = z
 export type Form = z.infer<typeof formSchema>;
 
 export type DataState = Omit<Form, 'picture'> & {
-  pictureName: string;
   picture: string;
 };
 
-export type FormsState = { controlled: DataState; uncontrolled: DataState };
+export type FormsState = {
+  controlled: DataState;
+  uncontrolled: DataState;
+  highlightControlled: boolean;
+  highlightUncontrolled: boolean;
+};
 
 export type UncontrolledFieldProps = {
   form: string;

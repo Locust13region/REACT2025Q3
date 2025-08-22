@@ -133,7 +133,7 @@
   border-radius: 2em;
   background-color: var(--color-surface);
 }
-.tile-renew {
+.tile-highlight {
   border: 5px solid var(--color-link-hover);
 }
 .tile__inner {

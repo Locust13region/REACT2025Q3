@@ -18,7 +18,6 @@ const FormString = ({
         <input
           form={form}
           id={fieldId}
-          autoComplete="off"
           {...register(fieldId)}
           className="field__input"
         />
