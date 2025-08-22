@@ -17,6 +17,7 @@ const FormRadio = ({
       <div className="field__info">
         <div className="field__radio">
           <input
+            defaultChecked
             form={form}
             type="radio"
             value="Male"

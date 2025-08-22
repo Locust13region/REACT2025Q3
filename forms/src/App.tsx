@@ -1,23 +1,19 @@
 import { Provider } from 'react-redux';
 import './App.css';
-import UncontrolledForm from './components/uncontrolled/uncontrolled-form';
+import UncontrolledForm from './components/form-uncontrolled/uncontrolled-form';
 import { store } from './redux/store';
+import FormView from './components/form-view/form-view';
+import Controls from './components/controls/controls';
 
 function App() {
   return (
     <Provider store={store}>
       <h1>React forms</h1>
-      <section className="controls">
-        <button>Uncontrolled</button>
-        <button>Controlled</button>
-      </section>
+      <Controls />
       <section className="forms">
         <UncontrolledForm />
       </section>
-      <div className="tiles">
-        <h3>Controlled</h3>
-        <article className="tile"></article>
-      </div>
+      <FormView />
     </Provider>
   );
 }

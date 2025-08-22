@@ -9,9 +9,11 @@ import FormNumber from './form-number';
 import FormSelect from './form-select';
 import { useAppDispatch } from '@/redux/hooks';
 import { setUncontrolled } from '@/redux/form-data-slice';
+import submitHandler from '@/utils/submit-handler';
 
 const UncontrolledForm = () => {
   const {
+    reset,
     register,
     handleSubmit,
     control,
@@ -25,9 +27,9 @@ const UncontrolledForm = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: Form) => {
-    dispatch(setUncontrolled(data));
+    submitHandler(data, setUncontrolled, dispatch);
+    reset();
   };
-
   const commonProps = {
     form: 'uncontrolledForm',
     register: register,
