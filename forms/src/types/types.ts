@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from 'react';
 import type {
   FieldErrors,
   FieldNamesMarkedBoolean,
@@ -69,6 +70,15 @@ export type FormsState = {
   uncontrolled: DataState;
   highlightControlled: boolean;
   highlightUncontrolled: boolean;
+};
+
+export type ControlledFieldProps = {
+  form: string;
+  formData: DataState;
+  setUserFormData: Dispatch<SetStateAction<keyof DataState>>;
+  field: string;
+  fieldId: keyof DataState;
+  errors: unknown;
 };
 
 export type UncontrolledFieldProps = {

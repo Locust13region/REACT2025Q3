@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { DataState, FormsState } from '@/types/types';
 
-const initialState: FormsState = {
+export const initialState: FormsState = {
   controlled: {
     name: 'Andy',
     age: 12,
