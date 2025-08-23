@@ -4,15 +4,15 @@ import type { DataState, FormsState } from '@/types/types';
 
 export const initialState: FormsState = {
   controlled: {
-    name: 'Andy',
-    age: 12,
-    email: '12@qw.qw',
-    password: 'Qweasd90-',
-    confirmPassword: 'Qweasd90-',
+    name: '',
+    age: null,
+    email: '',
+    password: '',
+    confirmPassword: '',
     gender: 'Male',
-    acceptTerms: true,
+    acceptTerms: false,
     picture: '',
-    country: 'Italy',
+    country: '',
   },
   uncontrolled: {
     name: '',
