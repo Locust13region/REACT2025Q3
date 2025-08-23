@@ -8,7 +8,8 @@ import type { AppDispatch } from '@/redux/store';
 export const handleSubmit = async (
   e: FormEvent<HTMLFormElement>,
   dispatch: AppDispatch,
-  setErrors: Dispatch<Partial<Record<keyof Form, string>>>
+  setErrors: Dispatch<Partial<Record<keyof Form, string>>>,
+  modalClose: () => void
 ) => {
   e.preventDefault();
   const form = e.currentTarget;
@@ -31,5 +32,6 @@ export const handleSubmit = async (
     dispatch(submitUncontrolledThunk(submitData));
     form.reset();
     setErrors({});
+    modalClose();
   }
 };

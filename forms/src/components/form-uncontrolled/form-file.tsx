@@ -27,7 +27,12 @@ const FormFile = ({ form, field, fieldId, errors }: UncontrolledFieldProps) => {
             accept="image/png, image/jpeg"
             onChange={handleFileChange}
           />
-          <label htmlFor="picture" ref={labelRef} className="file-name">
+          <label
+            tabIndex={0}
+            htmlFor="picture"
+            ref={labelRef}
+            className="file-name"
+          >
             {'\u00A0'}
           </label>
         </div>

@@ -9,7 +9,7 @@ import { useAppDispatch } from '@/redux/hooks';
 import { useState } from 'react';
 import { handleSubmit } from './submit-handler';
 
-const UncontrolledForm = () => {
+const UncontrolledForm = ({ modalClose }: { modalClose: () => void }) => {
   const dispatch = useAppDispatch();
 
   const [errors, setErrors] = useState<Partial<Record<keyof Form, string>>>({});
@@ -24,7 +24,7 @@ const UncontrolledForm = () => {
       <h3>Uncontrolled</h3>
       <form
         id="uncontrolledForm"
-        onSubmit={(e) => handleSubmit(e, dispatch, setErrors)}
+        onSubmit={(e) => handleSubmit(e, dispatch, setErrors, modalClose)}
         className="form__inner"
       >
         <FormString {...commonProps} field="Name" fieldId={'name'} />

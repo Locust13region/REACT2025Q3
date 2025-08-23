@@ -23,8 +23,8 @@ const Controls = () => {
       {showModal &&
         createPortal(
           <Modal modalClose={modalClose}>
-            {showControlled && <ControlledForm />}
-            {showUncontrolled && <UncontrolledForm />}
+            {showControlled && <ControlledForm modalClose={modalClose} />}
+            {showUncontrolled && <UncontrolledForm modalClose={modalClose} />}
           </Modal>,
           document.body
         )}

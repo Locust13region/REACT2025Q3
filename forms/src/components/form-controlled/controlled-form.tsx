@@ -11,7 +11,7 @@ import { useAppDispatch } from '@/redux/hooks';
 import toBase64String from '@/utils/picture-to-base64';
 import { submitControlledThunk } from '@/redux/controlled-thunk';
 
-const ControlledForm = () => {
+const ControlledForm = ({ modalClose }: { modalClose: () => void }) => {
   const {
     reset,
     register,
@@ -35,6 +35,7 @@ const ControlledForm = () => {
     };
     dispatch(submitControlledThunk(submitData));
     reset();
+    modalClose();
   };
 
   const commonProps = {
