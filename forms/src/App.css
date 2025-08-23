@@ -17,7 +17,7 @@
   gap: 1em;
 }
 .form {
-  max-width: 40%;
+  text-align: center;
   & > h3,
   h4 {
     color: var(--color-text-secondary);
@@ -26,7 +26,7 @@
 .form__inner {
   display: flex;
   flex-direction: column;
-  padding: 0.5em;
+  padding: 1em 1em 0;
 }
 .field {
   display: flex;
@@ -63,13 +63,12 @@
   & > label {
     display: inline-block;
     line-height: 1.6;
+    position: relative;
+    cursor: pointer;
   }
 
   & > input[type='radio'] {
     accent-color: var(--color-link-hover);
-    &:focus {
-      outline: none;
-    }
   }
 }
 
@@ -81,9 +80,6 @@
   gap: 1.5em;
   & > input[type='checkbox'] {
     accent-color: var(--color-link-hover);
-    &:focus {
-      outline: none;
-    }
   }
 }
 
@@ -97,18 +93,25 @@
 }
 
 .field__file {
-  overflow: hidden;
   & > input[type='file'] {
     display: none;
   }
   & > label {
+    z-index: 10;
     display: block;
+    min-width: 100%;
     padding: 0.4em;
     border: 2px solid var(--color-border);
     border-radius: 10px;
     background-color: var(--color-surface);
     text-align: left;
     cursor: pointer;
+    box-sizing: border-box;
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--color-link-hover);
+      border-radius: 8px;
+    }
   }
 }
 
@@ -172,4 +175,25 @@
     width: 100%;
     object-fit: cover;
   }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  position: relative;
+  min-width: 40%;
+  padding: 0.7em;
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 2em;
+}
+.modal__close {
+  position: absolute;
+  right: -5em;
 }

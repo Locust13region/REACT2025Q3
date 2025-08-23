@@ -38,7 +38,7 @@ const FormFile = ({
               />
             )}
           />
-          <label className="file-name" htmlFor="picture">
+          <label tabIndex={0} className="file-name" htmlFor="picture">
             {(file instanceof File && file?.name) || '\u00A0'}
           </label>
         </div>
