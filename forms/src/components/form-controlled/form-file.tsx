@@ -1,5 +1,5 @@
 import { Controller, type Control, type UseFormWatch } from 'react-hook-form';
-import type { Form, UncontrolledFieldProps } from '@/types/types';
+import type { ControlledFieldProps, Form } from '@/types/types';
 import FieldError from './field-error';
 
 const FormFile = ({
@@ -10,7 +10,7 @@ const FormFile = ({
   errors,
   watch,
   control,
-}: UncontrolledFieldProps & {
+}: ControlledFieldProps & {
   watch: UseFormWatch<Form>;
   control: Control<Form>;
 }) => {

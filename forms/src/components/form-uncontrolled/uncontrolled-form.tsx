@@ -1,46 +1,21 @@
-import { useForm } from 'react-hook-form';
-import { formSchema, type Form } from '@/types/types';
+import { type Form } from '@/types/types';
 import FormString from './form-string';
-import { zodResolver } from '@hookform/resolvers/zod';
 import FormRadio from './form-radio';
 import FormCheckbox from './form-checkbox';
 import FormFile from './form-file';
 import FormNumber from './form-number';
 import FormSelect from './form-select';
 import { useAppDispatch } from '@/redux/hooks';
-import toBase64String from '@/utils/picture-to-base64';
-import { submitUncontrolledThunk } from '@/redux/uncontrolled-thunk';
+import { useState } from 'react';
+import { handleSubmit } from './submit-handler';
 
 const UncontrolledForm = () => {
-  const {
-    reset,
-    register,
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors, touchedFields },
-  } = useForm<Form>({
-    resolver: zodResolver(formSchema),
-    mode: 'all',
-  });
-
   const dispatch = useAppDispatch();
 
-  const onSubmit = async (data: Form) => {
-    if (!data.picture) return;
-    const pictureBase64 = await toBase64String(data.picture);
-    const submitData = {
-      ...data,
-      picture: pictureBase64,
-    };
-    dispatch(submitUncontrolledThunk(submitData));
-    reset();
-  };
+  const [errors, setErrors] = useState<Partial<Record<keyof Form, string>>>({});
 
   const commonProps = {
     form: 'uncontrolledForm',
-    register: register,
-    touchedFields: touchedFields,
     errors: errors,
   };
 
@@ -49,7 +24,7 @@ const UncontrolledForm = () => {
       <h3>Uncontrolled</h3>
       <form
         id="uncontrolledForm"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(e) => handleSubmit(e, dispatch, setErrors)}
         className="form__inner"
       >
         <FormString {...commonProps} field="Name" fieldId={'name'} />
@@ -63,13 +38,7 @@ const UncontrolledForm = () => {
           field="Confirm password"
           fieldId={'confirmPassword'}
         />
-        <FormFile
-          {...commonProps}
-          field="Picture"
-          fieldId={'picture'}
-          watch={watch}
-          control={control}
-        />
+        <FormFile {...commonProps} field="Picture" fieldId={'picture'} />
         <FormCheckbox {...commonProps} field="Accept" fieldId={'acceptTerms'} />
       </form>
       <button type="submit" form="uncontrolledForm">

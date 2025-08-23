@@ -1,4 +1,4 @@
-import type { UncontrolledFieldProps } from '@/types/types';
+import type { ControlledFieldProps } from '@/types/types';
 import FieldError from './field-error';
 
 const FormCheckbox = ({
@@ -8,7 +8,7 @@ const FormCheckbox = ({
   register,
   touchedFields,
   errors,
-}: UncontrolledFieldProps) => {
+}: ControlledFieldProps) => {
   return (
     <div className="field">
       <label htmlFor="t&c" className="field__label">

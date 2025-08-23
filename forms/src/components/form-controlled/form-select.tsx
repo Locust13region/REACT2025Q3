@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/redux/hooks';
-import type { UncontrolledFieldProps } from '@/types/types';
+import type { ControlledFieldProps } from '@/types/types';
 import FieldError from './field-error';
 
 const FormString = ({
@@ -9,7 +9,7 @@ const FormString = ({
   register,
   touchedFields,
   errors,
-}: UncontrolledFieldProps) => {
+}: ControlledFieldProps) => {
   const countries = useAppSelector((state) => state.countries);
   return (
     <div className="field">

@@ -1,14 +1,14 @@
-import type { UncontrolledFieldProps } from '@/types/types';
+import type { ControlledFieldProps } from '@/types/types';
 import FieldError from './field-error';
 
-const FormNumber = ({
+const FormString = ({
   form,
   field,
   fieldId,
   register,
   touchedFields,
   errors,
-}: UncontrolledFieldProps) => {
+}: ControlledFieldProps) => {
   return (
     <div className="field">
       <label htmlFor={fieldId} className="field__label">
@@ -18,9 +18,7 @@ const FormNumber = ({
         <input
           form={form}
           id={fieldId}
-          {...register(fieldId, {
-            setValueAs: (value: string) => Number(value),
-          })}
+          {...register(fieldId)}
           className="field__input"
         />
         <FieldError
@@ -33,4 +31,4 @@ const FormNumber = ({
   );
 };
 
-export default FormNumber;
+export default FormString;

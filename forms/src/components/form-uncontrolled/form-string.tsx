@@ -5,8 +5,6 @@ const FormString = ({
   form,
   field,
   fieldId,
-  register,
-  touchedFields,
   errors,
 }: UncontrolledFieldProps) => {
   return (
@@ -17,15 +15,11 @@ const FormString = ({
       <div className="field__info">
         <input
           form={form}
+          name={fieldId}
           id={fieldId}
-          {...register(fieldId)}
           className="field__input"
         />
-        <FieldError
-          fieldId={fieldId}
-          touchedFields={touchedFields}
-          errors={errors}
-        />
+        <FieldError fieldId={fieldId} errors={errors} />
       </div>
     </div>
   );

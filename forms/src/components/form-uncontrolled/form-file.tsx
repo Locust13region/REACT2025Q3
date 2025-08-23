@@ -1,20 +1,16 @@
-import { Controller, type Control, type UseFormWatch } from 'react-hook-form';
-import type { Form, UncontrolledFieldProps } from '@/types/types';
+import type { UncontrolledFieldProps } from '@/types/types';
 import FieldError from './field-error';
+import { useRef } from 'react';
 
-const FormFile = ({
-  form,
-  field,
-  fieldId,
-  touchedFields,
-  errors,
-  watch,
-  control,
-}: UncontrolledFieldProps & {
-  watch: UseFormWatch<Form>;
-  control: Control<Form>;
-}) => {
-  const file = watch(fieldId);
+const FormFile = ({ form, field, fieldId, errors }: UncontrolledFieldProps) => {
+  const labelRef = useRef<HTMLLabelElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileName = e.target.files?.[0]?.name;
+    if (labelRef.current) {
+      labelRef.current.textContent = fileName || '\u00A0';
+    }
+  };
 
   return (
     <div className="field">
@@ -23,30 +19,19 @@ const FormFile = ({
       </label>
       <div className="field__info">
         <div className="field__file">
-          <Controller
+          <input
+            form={form}
             name={fieldId}
-            control={control}
-            render={({ field }) => (
-              <input
-                form={form}
-                type="file"
-                id="picture"
-                ref={field.ref}
-                onBlur={field.onBlur}
-                accept="image/png, image/jpeg"
-                onChange={(e) => field.onChange(e.target.files?.[0] ?? null)}
-              />
-            )}
+            type="file"
+            id="picture"
+            accept="image/png, image/jpeg"
+            onChange={handleFileChange}
           />
-          <label className="file-name" htmlFor="picture">
-            {(file instanceof File && file?.name) || '\u00A0'}
+          <label htmlFor="picture" ref={labelRef} className="file-name">
+            {'\u00A0'}
           </label>
         </div>
-        <FieldError
-          fieldId={fieldId}
-          touchedFields={touchedFields}
-          errors={errors}
-        />
+        <FieldError fieldId={fieldId} errors={errors} />
       </div>
     </div>
   );

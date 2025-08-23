@@ -1,4 +1,4 @@
-import type { UncontrolledFieldErrorProps } from '@/types/types';
+import type { ControlledFieldErrorProps } from '@/types/types';
 
 const FieldError = ({
   fieldId,

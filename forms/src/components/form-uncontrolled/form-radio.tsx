@@ -5,8 +5,6 @@ const FormRadio = ({
   form,
   field,
   fieldId,
-  register,
-  touchedFields,
   errors,
 }: UncontrolledFieldProps) => {
   return (
@@ -19,26 +17,22 @@ const FormRadio = ({
           <input
             defaultChecked
             form={form}
+            name={fieldId}
             type="radio"
             value="Male"
             id="male"
-            {...register(fieldId)}
           />
           <label htmlFor="male">Male</label>
           <input
             form={form}
+            name={fieldId}
             type="radio"
             value="Female"
             id="female"
-            {...register(fieldId)}
           />
           <label htmlFor="female">Female</label>
         </div>
-        <FieldError
-          fieldId={fieldId}
-          touchedFields={touchedFields}
-          errors={errors}
-        />
+        <FieldError fieldId={fieldId} errors={errors} />
       </div>
     </div>
   );

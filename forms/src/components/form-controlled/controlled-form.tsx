@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { formSchema, type DataState, type Form } from '@/types/types';
+import { formSchema, type Form } from '@/types/types';
 import FormString from './form-string';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormRadio from './form-radio';
@@ -10,19 +10,22 @@ import FormSelect from './form-select';
 import { useAppDispatch } from '@/redux/hooks';
 import toBase64String from '@/utils/picture-to-base64';
 import { submitControlledThunk } from '@/redux/controlled-thunk';
-import { useState } from 'react';
-import { initialState } from '@/redux/form-data-slice';
 
 const ControlledForm = () => {
-  const dispatch = useAppDispatch();
-  const [userFormData, setUserFormData] = useState<Partial<DataState>>({});
-  const [showErrors, setShowErrors] = useState(false);
+  const {
+    reset,
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors, touchedFields, isValid },
+  } = useForm<Form>({
+    resolver: zodResolver(formSchema),
+    mode: 'all',
+  });
 
-  const formData = {
-    ...initialState.controlled,
-    ...userFormData,
-  };
-  setUserFormData();
+  const dispatch = useAppDispatch();
+
   const onSubmit = async (data: Form) => {
     if (!data.picture) return;
     const pictureBase64 = await toBase64String(data.picture);
@@ -31,19 +34,24 @@ const ControlledForm = () => {
       picture: pictureBase64,
     };
     dispatch(submitControlledThunk(submitData));
+    reset();
   };
 
   const commonProps = {
     form: 'controlledForm',
-    formData: formData,
-    setUserFormData: setUserFormData,
+    register: register,
+    touchedFields: touchedFields,
     errors: errors,
   };
 
   return (
     <div className="form">
       <h3>Controlled</h3>
-      <form id="controlledForm" onSubmit={} className="form__inner">
+      <form
+        id="controlledForm"
+        onSubmit={handleSubmit(onSubmit)}
+        className="form__inner"
+      >
         <FormString {...commonProps} field="Name" fieldId={'name'} />
         <FormNumber {...commonProps} field="Age" fieldId={'age'} />
         <FormRadio {...commonProps} field="Select gender" fieldId={'gender'} />
@@ -64,7 +72,7 @@ const ControlledForm = () => {
         />
         <FormCheckbox {...commonProps} field="Accept" fieldId={'acceptTerms'} />
       </form>
-      <button type="submit" form="uncontrolledForm">
+      <button type="submit" form="controlledForm" disabled={!isValid}>
         Update user
       </button>
     </div>

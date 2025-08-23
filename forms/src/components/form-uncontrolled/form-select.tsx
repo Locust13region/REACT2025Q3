@@ -6,8 +6,6 @@ const FormString = ({
   form,
   field,
   fieldId,
-  register,
-  touchedFields,
   errors,
 }: UncontrolledFieldProps) => {
   const countries = useAppSelector((state) => state.countries);
@@ -18,7 +16,7 @@ const FormString = ({
       </label>
       <div className="field__info">
         <div className="field__select">
-          <select form={form} id={fieldId} {...register(fieldId)}>
+          <select form={form} name={fieldId} id={fieldId}>
             <option value="">Please select a country</option>
             {countries &&
               countries.map((country) => (
@@ -28,11 +26,7 @@ const FormString = ({
               ))}
           </select>
         </div>
-        <FieldError
-          fieldId={fieldId}
-          touchedFields={touchedFields}
-          errors={errors}
-        />
+        <FieldError fieldId={fieldId} errors={errors} />
       </div>
     </div>
   );

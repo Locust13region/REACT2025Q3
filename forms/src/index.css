@@ -59,7 +59,7 @@ input {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+button:hover:not(:disabled) {
   border-color: var(--color-link-hover);
 }
 

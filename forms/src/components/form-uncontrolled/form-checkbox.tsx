@@ -5,8 +5,6 @@ const FormCheckbox = ({
   form,
   field,
   fieldId,
-  register,
-  touchedFields,
   errors,
 }: UncontrolledFieldProps) => {
   return (
@@ -16,19 +14,10 @@ const FormCheckbox = ({
       </label>
       <div className="field__info">
         <div className="field__checkbox">
-          <input
-            form={form}
-            type="checkbox"
-            id="t&c"
-            {...register(fieldId, { required: true })}
-          />
+          <input form={form} name={fieldId} type="checkbox" id="t&c" />
           <label htmlFor="t&c">Terms and Conditions</label>
         </div>
-        <FieldError
-          fieldId={fieldId}
-          touchedFields={touchedFields}
-          errors={errors}
-        />
+        <FieldError fieldId={fieldId} errors={errors} />
       </div>
     </div>
   );

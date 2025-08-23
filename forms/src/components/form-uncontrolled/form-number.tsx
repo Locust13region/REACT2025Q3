@@ -5,8 +5,6 @@ const FormNumber = ({
   form,
   field,
   fieldId,
-  register,
-  touchedFields,
   errors,
 }: UncontrolledFieldProps) => {
   return (
@@ -17,17 +15,11 @@ const FormNumber = ({
       <div className="field__info">
         <input
           form={form}
+          name={fieldId}
           id={fieldId}
-          {...register(fieldId, {
-            setValueAs: (value: string) => Number(value),
-          })}
           className="field__input"
         />
-        <FieldError
-          fieldId={fieldId}
-          touchedFields={touchedFields}
-          errors={errors}
-        />
+        <FieldError fieldId={fieldId} errors={errors} />
       </div>
     </div>
   );

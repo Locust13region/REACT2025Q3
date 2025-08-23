@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from 'react';
 import type {
   FieldErrors,
   FieldNamesMarkedBoolean,
@@ -74,15 +73,6 @@ export type FormsState = {
 
 export type ControlledFieldProps = {
   form: string;
-  formData: DataState;
-  setUserFormData: Dispatch<SetStateAction<keyof DataState>>;
-  field: string;
-  fieldId: keyof DataState;
-  errors: unknown;
-};
-
-export type UncontrolledFieldProps = {
-  form: string;
   field: string;
   fieldId: keyof Form;
   register: UseFormRegister<Form>;
@@ -90,7 +80,19 @@ export type UncontrolledFieldProps = {
   errors: FieldErrors<Form>;
 };
 
+export type ControlledFieldErrorProps = Pick<
+  ControlledFieldProps,
+  'fieldId' | 'touchedFields' | 'errors'
+>;
+
+export type UncontrolledFieldProps = {
+  form: string;
+  field: string;
+  fieldId: keyof DataState;
+  errors: Partial<Record<keyof Form, string>>;
+};
+
 export type UncontrolledFieldErrorProps = Pick<
   UncontrolledFieldProps,
-  'fieldId' | 'touchedFields' | 'errors'
+  'fieldId' | 'errors'
 >;

@@ -1,8 +1,8 @@
 const Controls = () => {
   return (
     <section className="controls">
-      <button>Uncontrolled</button>
       <button>Controlled</button>
+      <button>Uncontrolled</button>
     </section>
   );
 };

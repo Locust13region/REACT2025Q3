@@ -14,14 +14,14 @@ const FormsView = () => {
   return (
     <section className="tiles">
       <Card
-        type="Uncontrolled"
-        data={uncontrolled}
-        highlighter={highlighterUncontrolled}
-      />
-      <Card
         type="Controlled"
         data={controlled}
         highlighter={highlighterControlled}
+      />
+      <Card
+        type="Uncontrolled"
+        data={uncontrolled}
+        highlighter={highlighterUncontrolled}
       />
     </section>
   );

@@ -11,7 +11,7 @@ export const submitControlledThunk = createAsyncThunk<
 >('forms/submitControlled', async (data, { dispatch }) => {
   dispatch(setControlled(data));
 
-  await delay(800);
+  await delay(2000);
 
   dispatch(clearHighlightControlled());
   return undefined;

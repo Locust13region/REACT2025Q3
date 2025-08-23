@@ -1,12 +1,12 @@
 import type { ControlledFieldProps } from '@/types/types';
 import FieldError from './field-error';
 
-const FormString = ({
+const FormNumber = ({
   form,
-  formData,
-  setUserFormData,
   field,
   fieldId,
+  register,
+  touchedFields,
   errors,
 }: ControlledFieldProps) => {
   return (
@@ -18,16 +18,19 @@ const FormString = ({
         <input
           form={form}
           id={fieldId}
-          value={formData[fieldId]?.toString() ?? ''}
+          {...register(fieldId, {
+            setValueAs: (value: string) => Number(value),
+          })}
           className="field__input"
-          onChange={(e) =>
-            setUserFormData((l) => ({ ...l, [fieldId]: e.target.value }))
-          }
         />
-        <FieldError fieldId={fieldId} errors={errors} />
+        <FieldError
+          fieldId={fieldId}
+          touchedFields={touchedFields}
+          errors={errors}
+        />
       </div>
     </div>
   );
 };
 
-export default FormString;
+export default FormNumber;
