@@ -19,15 +19,12 @@ describe('FormsView', () => {
       </Provider>
     );
 
-    // заголовки карточек
     expect(screen.getByText('Controlled')).toBeInTheDocument();
     expect(screen.getByText('Uncontrolled')).toBeInTheDocument();
 
-    // проверяем пол gender
     const genderFields = screen.getAllByText('Male');
     expect(genderFields).toHaveLength(2);
 
-    // проверяем acceptTerms
     const acceptFields = screen.getAllByText('false');
     expect(acceptFields).toHaveLength(2);
   });
