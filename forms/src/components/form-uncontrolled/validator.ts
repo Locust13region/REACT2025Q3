@@ -16,7 +16,6 @@ export const validateAllFields = (
       const key = issue.path[0] as keyof Form;
       newErrors[key] = issue.message;
     });
-    console.log(newErrors);
     setErrors(newErrors);
     return false;
   }

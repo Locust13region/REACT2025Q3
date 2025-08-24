@@ -48,7 +48,9 @@ export const formSchema = z
       .file()
       .min(1, { error: 'File is empty' })
       .max(2000000, { error: 'File is too large.' })
-      .mime(['image/png', 'image/jpeg'], { error: 'Invalid file type' })
+      .mime(['image/png', 'image/jpeg'], {
+        error: 'Invalid file type',
+      })
       .nullable()
       .refine((value) => value !== null, { error: 'Please select file' }),
     country: z.string().min(1, 'Country is required'),
