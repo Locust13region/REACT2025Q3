@@ -63,4 +63,11 @@ export const {
   clearHighlightUncontrolled,
 } = formsSlice.actions;
 
+export const {
+  selectControlled,
+  selectUncontrolled,
+  selectHighlightControlled,
+  selectHighlightUncontrolled,
+} = formsSlice.selectors;
+
 export default formsSlice.reducer;

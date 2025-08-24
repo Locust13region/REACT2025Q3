@@ -57,6 +57,10 @@ input {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+button:hover:disabled {
+  cursor: no-drop;
+}
+
 button:hover:not(:disabled) {
   border-color: var(--color-link-hover);
 }
@@ -79,6 +83,7 @@ select {
   border: 2px solid var(--color-border);
   background: var(--color-surface);
   padding: 0.5em;
+  cursor: pointer;
 }
 select:hover,
 select:focus {

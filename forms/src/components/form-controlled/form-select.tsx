@@ -1,6 +1,7 @@
-import { useAppSelector } from '@/redux/hooks';
 import type { ControlledFieldProps } from '@/types/types';
 import FieldError from './field-error';
+import { useSelector } from 'react-redux';
+import { selectCountries } from '@/redux/countries-slice';
 
 const FormString = ({
   form,
@@ -10,7 +11,7 @@ const FormString = ({
   touchedFields,
   errors,
 }: ControlledFieldProps) => {
-  const countries = useAppSelector((state) => state.countries);
+  const countries = useSelector(selectCountries);
   return (
     <div className="field">
       <label htmlFor={fieldId} className="field__label">

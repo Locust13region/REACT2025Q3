@@ -1,15 +1,17 @@
-import { useAppSelector } from '@/redux/hooks';
 import Card from './card';
+import {
+  selectControlled,
+  selectHighlightControlled,
+  selectHighlightUncontrolled,
+  selectUncontrolled,
+} from '@/redux/form-data-slice';
+import { useAppSelector } from '@/redux/hooks';
 
 const FormsView = () => {
-  const uncontrolled = useAppSelector((state) => state.formsData.uncontrolled);
-  const controlled = useAppSelector((state) => state.formsData.controlled);
-  const highlighterControlled = useAppSelector(
-    (state) => state.formsData.highlightControlled
-  );
-  const highlighterUncontrolled = useAppSelector(
-    (state) => state.formsData.highlightUncontrolled
-  );
+  const controlled = useAppSelector(selectControlled);
+  const uncontrolled = useAppSelector(selectUncontrolled);
+  const highlighterControlled = useAppSelector(selectHighlightControlled);
+  const highlighterUncontrolled = useAppSelector(selectHighlightUncontrolled);
 
   return (
     <section className="tiles">

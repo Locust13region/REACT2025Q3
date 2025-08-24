@@ -11,4 +11,6 @@ export const countriesSlice = createSlice({
   reducers: {},
 });
 
+export const { selectCountries } = countriesSlice.selectors;
+
 export default countriesSlice.reducer;

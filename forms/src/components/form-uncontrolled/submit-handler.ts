@@ -22,13 +22,17 @@ export const handleSubmit = async (
   };
   const isFormValid = validateAllFields(data, setErrors);
 
+  console.log('isFormValid', isFormValid);
   if (isFormValid) {
+    console.log('picture from formData', data.picture);
     if (!data.picture) return;
     const pictureBase64 = await toBase64String(data.picture);
     const submitData = {
       ...data,
       picture: pictureBase64,
     };
+    console.log('submitData', submitData);
+
     dispatch(submitUncontrolledThunk(submitData));
     form.reset();
     setErrors({});
