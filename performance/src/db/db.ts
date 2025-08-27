@@ -1,16 +1,6 @@
 // db.ts
+import type { CountryData } from '@/types/types';
 import { openDB } from 'idb';
-
-export interface YearData {
-  year: number;
-  population?: number;
-  // ... остальные поля
-}
-
-export interface CountryData {
-  iso_code?: string;
-  data: YearData[];
-}
 
 const DB_NAME = 'co2-db';
 const STORE_NAME = 'countries';
@@ -39,5 +29,5 @@ export async function getCountry(
 
 export async function getAllCountriesKeys(): Promise<string[]> {
   const db = await getDb();
-  return db.getAllKeys(STORE_NAME) as string[];
+  return db.getAllKeys(STORE_NAME) as unknown as string[];
 }
