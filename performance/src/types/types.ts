@@ -5,10 +5,10 @@ import type {
 } from 'react-hook-form';
 import z from 'zod';
 
-export const co2dataSchema = z.object({
-  country: z.object({
-    iso_code: z.string().nullable(),
-    data: z.array(
+export const countryDataSchema = z.object({
+  iso_code: z.string().nullable(),
+  data: z
+    .array(
       z.object({
         year: z.number(),
         population: z.number().nullable(),
@@ -88,11 +88,21 @@ export const co2dataSchema = z.object({
         trade_co2: z.number().nullable(),
         trade_co2_share: z.number().nullable(),
       })
-    ),
-  }),
+    )
+    .nullable(),
 });
 
-export type Co2data = z.infer<typeof co2dataSchema>;
+export const countriesDataSchema = z.record(z.string(), countryDataSchema);
+
+export type Co2data = z.infer<typeof countriesDataSchema>;
+
+export type Countries = keyof Co2data;
+
+export type Co2DataState = {
+  co2Data: Co2data;
+  countries: Countries[];
+  loading: boolean;
+};
 
 export type Co2dataRow = Co2data['country']['data'];
 

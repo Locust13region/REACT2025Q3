@@ -1,7 +1,7 @@
-import { co2dataSchema } from '@/types/types';
+import { countriesDataSchema } from '@/types/types';
 
 export default function parseData(data: unknown) {
-  const result = co2dataSchema.safeParse(data);
+  const result = countriesDataSchema.safeParse(data);
   if (!result.success) {
     throw new Error(result.error.message);
   } else {

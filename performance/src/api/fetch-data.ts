@@ -1,4 +1,4 @@
-export async function fetchCoData() {
+export async function fetchCo2Data() {
   try {
     const response = await fetch('@/api/owid-co2-data.json');
     if (!response.ok) throw new Error('Fetch data error');

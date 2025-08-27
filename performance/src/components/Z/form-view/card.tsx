@@ -1,6 +1,6 @@
 import type { DataState } from '@/types/types';
 import fromBase64 from '@/utils/base64-to-picture';
-import { camelCaseTransform } from '@/utils/camel-case-transform';
+import { camelCaseTransform } from '@/utils/underline-case-transform';
 
 const Card = ({
   type,

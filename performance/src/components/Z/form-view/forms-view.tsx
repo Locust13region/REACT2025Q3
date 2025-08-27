@@ -4,7 +4,7 @@ import {
   selectHighlightControlled,
   selectHighlightUncontrolled,
   selectUncontrolled,
-} from '@/redux/form-data-slice';
+} from '@/redux/co2-slice';
 import { useAppSelector } from '@/redux/hooks';
 
 const FormsView = () => {

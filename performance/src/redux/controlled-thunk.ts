@@ -1,7 +1,7 @@
 import type { DataState } from '@/types/types';
 import { createAsyncThunk } from '@reduxjs/toolkit/react';
 import type { AppDispatch, RootState } from './store';
-import { clearHighlightControlled, setControlled } from './form-data-slice';
+import { clearHighlightControlled, setControlled } from './co2-slice';
 import { delay } from '@/utils/delay';
 
 export const submitControlledThunk = createAsyncThunk<
