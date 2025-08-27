@@ -1,5 +1,5 @@
-import type { Co2data } from '@/types/types';
+import type { RawCountries } from '@/types/types';
 
-export default function getCountriesKeys(data: Co2data) {
+export default function getCountriesKeys(data: RawCountries) {
   return Object.keys(data) as (keyof typeof data)[];
 }

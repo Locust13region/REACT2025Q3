@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import formsReducer from './co2-slice';
-import countriesSlice from './countries-slice';
+import co2DataSlice from './co2-slice';
 
 export const store = configureStore({
   reducer: {
-    formsData: formsReducer,
-    countries: countriesSlice,
+    co2data: co2DataSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+  devTools: true, // обязательно включаем DevTools вручную
 });
 
 export type RootState = ReturnType<typeof store.getState>;
