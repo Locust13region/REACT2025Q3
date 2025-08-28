@@ -1,11 +1,12 @@
 import type { CountryData, RawCountries, YearData } from '@/types/types';
 import { useContext, type FC } from 'react';
 import Co2DataContext from '../context/data-context';
+import TableRow from './table-row';
 
 type TableProps<K extends keyof YearData = keyof YearData> = {
   country: keyof RawCountries | undefined;
   year: number;
-  extraKeys?: K[];
+  extraKeys: K[];
 };
 
 const Table: FC<TableProps> = ({ country, year, extraKeys }) => {
@@ -15,14 +16,22 @@ const Table: FC<TableProps> = ({ country, year, extraKeys }) => {
     ? { [country]: co2Data[country] as CountryData }
     : co2Data;
 
-  const [rowsKeys, rowsValues] = Object.entries(countriesFilter);
-
-  console.log(countriesFilter);
+  const rowsKeys = Object.keys(countriesFilter);
 
   return (
     <div className="flex flex-col">
       <div className="heading">{}</div>
-      <div className="content">{rowsKeys.map(() => {})}</div>
+      <div className="flex flex-col">
+        {rowsKeys.map((cntry, index) => (
+          <TableRow
+            key={`${cntry}${index}`}
+            country={cntry}
+            year={year}
+            countryData={countriesFilter[cntry]}
+            extraKeys={extraKeys}
+          />
+        ))}
+      </div>
     </div>
   );
 };
