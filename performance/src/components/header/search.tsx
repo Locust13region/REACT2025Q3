@@ -37,9 +37,14 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
       const selected = selectSuggestions(newValue);
       setSuggestions(selected);
     } else {
-      setSuggestions([]);
+      setSuggestions(countries);
+      setCountry(undefined);
     }
   };
+
+  const onFocus = () => setSuggestions(countries);
+
+  const onBlur = () => setSuggestions([]);
 
   const onSuggestionClick = (value: keyof RawCountries) => {
     setValue(value);
@@ -48,12 +53,14 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <input
-        type="text"
+        type="search"
         placeholder="Country search"
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         className=""
       />
       <Suggestions

@@ -10,11 +10,13 @@ const Suggestions: FC<SuggestionsProps> = ({
   onSuggestionClick,
 }) => {
   return (
-    <ul>
+    <ul className="absolute top-[120%] left-[10%] max-h-[50vh] w-full overflow-auto ">
       {suggestions.length > 0 &&
         suggestions.map((country) => (
           <li key={country}>
-            <label onClick={() => onSuggestionClick(country)}>{country}</label>
+            <label onMouseDown={() => onSuggestionClick(country)}>
+              {country}
+            </label>
           </li>
         ))}
     </ul>

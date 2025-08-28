@@ -6,7 +6,12 @@ const co2DataPromise = fetchCo2Data();
 
 const Co2DataProvider = ({ children }: { children: ReactNode }) => {
   const co2Data = use(co2DataPromise);
-  return <Co2DataContext value={co2Data}>{children}</Co2DataContext>;
+
+  return co2Data ? (
+    <Co2DataContext value={co2Data}>{children}</Co2DataContext>
+  ) : (
+    <h1>Data unavailable</h1>
+  );
 };
 
 export default Co2DataProvider;

@@ -12,7 +12,7 @@ type HeaderProps = {
 
 const Header: FC<HeaderProps> = ({ country, setCountry, year, setYear }) => {
   return (
-    <header className={'h-15 pl-4 w-full flex'}>
+    <header className={'h-15 w-full pl-4 flex items-center'}>
       <Search country={country} setCountry={setCountry} />
       <SelectYear year={year} setYear={setYear} />
     </header>
