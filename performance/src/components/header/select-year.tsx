@@ -13,7 +13,7 @@ const SelectYear: FC<SelectYearProps> = ({ year, setYear }) => {
         type="number"
         value={year}
         onChange={(e) => setYear(Number(e.target.value))}
-        className=""
+        className="rounded-md pl-3 p-2 bg-gray-300 dark:bg-gray-800 cursor-pointer"
       />
     </div>
   );

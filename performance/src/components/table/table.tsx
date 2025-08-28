@@ -18,20 +18,23 @@ const Table: FC<TableProps> = ({ country, year, extraKeys }) => {
 
   const rowsKeys = Object.keys(countriesFilter);
 
+  const columnsCount = 2 + extraKeys.length;
+
   return (
-    <div className="flex flex-col h-full g-3">
-      <div className="heading">{}</div>
-      <div className="flex flex-col overflow-auto">
-        {rowsKeys.map((c, index) => (
-          <TableRow
-            key={`${c}${index}`}
-            country={c}
-            year={year}
-            countryData={countriesFilter[c]}
-            extraKeys={extraKeys}
-          />
-        ))}
-      </div>
+    <div
+      className="grid gap-2 overflow-auto w-full h-full p-2"
+      style={{ gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))` }}
+    >
+      {/* <div className="heading">{}</div> */}
+      {rowsKeys.map((c, index) => (
+        <TableRow
+          key={`${c}${index}`}
+          country={c}
+          year={year}
+          countryData={countriesFilter[c]}
+          extraKeys={extraKeys}
+        />
+      ))}
     </div>
   );
 };

@@ -10,11 +10,14 @@ const Suggestions: FC<SuggestionsProps> = ({
   onSuggestionClick,
 }) => {
   return (
-    <ul className="absolute top-[120%] left-[10%] max-h-[50vh] w-full overflow-auto  bg-gray-50 dark:bg-gray-950 ">
+    <ul className="absolute top-[120%] left-[10%] max-h-[50vh] px-5 py-3 empty:py-0 w-[120%] rounded-md overflow-auto bg-gray-300 dark:bg-gray-800">
       {suggestions.length > 0 &&
         suggestions.map((country) => (
           <li key={country}>
-            <label onMouseDown={() => onSuggestionClick(country)}>
+            <label
+              className="block w-full p-2 cursor-pointer "
+              onMouseDown={() => onSuggestionClick(country)}
+            >
               {country}
             </label>
           </li>

@@ -24,13 +24,11 @@ function App() {
             year={year}
             setYear={setYear}
           />
-          <Suspense fallback={<h3>Prepare data...</h3>}>
-            <Table
-              country={country}
-              year={year}
-              extraKeys={['year', 'population', 'co2', 'co2_per_capita']}
-            />
-          </Suspense>
+          <Table
+            country={country}
+            year={year}
+            extraKeys={['year', 'population', 'co2', 'co2_per_capita']}
+          />
         </Co2DataProvider>
       </Suspense>
     </div>

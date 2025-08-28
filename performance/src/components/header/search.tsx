@@ -61,7 +61,7 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
-        className=""
+        className="rounded-md pl-3 p-2 bg-gray-300 dark:bg-gray-800 cursor-pointer"
       />
       <Suggestions
         suggestions={suggestions}

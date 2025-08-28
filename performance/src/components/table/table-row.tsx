@@ -18,13 +18,13 @@ const TableRow: FC<TableRowProps> = ({
   const currentYearData = getYearData(countryData, year);
 
   return (
-    <div className="flex gap-3 px-4">
+    <>
       <Cell data={country} />
       <Cell data={countryData.iso_code} />
       {extraKeys.map((k) => (
         <Cell key={`${country}${year}${k}`} data={currentYearData[k]} />
       ))}
-    </div>
+    </>
   );
 };
 
