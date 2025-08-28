@@ -28,7 +28,7 @@ function App() {
             <Table
               country={country}
               year={year}
-              extraKeys={['population', 'cement_co2']}
+              extraKeys={['year', 'population', 'co2', 'co2_per_capita']}
             />
           </Suspense>
         </Co2DataProvider>

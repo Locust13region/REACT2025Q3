@@ -19,15 +19,15 @@ const Table: FC<TableProps> = ({ country, year, extraKeys }) => {
   const rowsKeys = Object.keys(countriesFilter);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full g-3">
       <div className="heading">{}</div>
-      <div className="flex flex-col">
-        {rowsKeys.map((cntry, index) => (
+      <div className="flex flex-col overflow-auto">
+        {rowsKeys.map((c, index) => (
           <TableRow
-            key={`${cntry}${index}`}
-            country={cntry}
+            key={`${c}${index}`}
+            country={c}
             year={year}
-            countryData={countriesFilter[cntry]}
+            countryData={countriesFilter[c]}
             extraKeys={extraKeys}
           />
         ))}

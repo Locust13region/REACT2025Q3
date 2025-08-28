@@ -2,7 +2,7 @@ import dataFormat from '@/utils/data-format';
 import { memo, useEffect, useState, type FC } from 'react';
 
 type CellProps = {
-  data: number;
+  data?: number | string;
 };
 
 const Cell: FC<CellProps> = ({ data }) => {
@@ -17,10 +17,10 @@ const Cell: FC<CellProps> = ({ data }) => {
 
   return (
     <div className={`cell__data ${highlight ? 'cell__data-highlight' : ''}`}>
-      {data ? dataFormat(data) : 'N/A'}
+      {data ? (typeof data === 'number' ? dataFormat(data) : data) : 'N/A'}
     </div>
   );
 };
 
-export default Cell;
-// export default memo(Cell);
+// export default Cell;
+export default memo(Cell);
