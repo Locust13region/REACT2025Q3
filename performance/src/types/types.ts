@@ -85,17 +85,13 @@ export const countrySchema = z.object({
 });
 export const countriesSchema = z.record(z.string(), countrySchema);
 
-export type RawCountries = Record<
-  string,
-  { iso_code?: string; data: unknown[] }
->;
+// export type Co2DataState = {
+//   countries: RawCountries;
+//   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+//   error?: string;
+// };
 
-export type Co2DataState = {
-  countries: RawCountries;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error?: string;
-};
-export interface YearData {
+export type YearData = {
   year: number;
   population?: number;
   gdp?: number;
@@ -173,9 +169,11 @@ export interface YearData {
   total_ghg_excluding_lucf?: number;
   trade_co2?: number;
   trade_co2_share?: number;
-}
+};
 
-export interface CountryData {
+export type CountryData = {
   iso_code?: string;
   data: YearData[];
-}
+};
+
+export type RawCountries = Record<string, CountryData>;

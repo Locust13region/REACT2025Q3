@@ -1,10 +1,14 @@
 import { Suspense, useState } from 'react';
 import Header from './components/header/header';
 import Co2DataProvider from './components/context/context-provider';
+import type { RawCountries, YearData } from './types/types';
+import Table from './components/table/table';
 
 function App() {
-  const [year, setYear] = useState(2023);
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState<keyof RawCountries | undefined>(
+    undefined
+  );
+  const [year, setYear] = useState<YearData['year']>(2023);
 
   return (
     <div
@@ -21,7 +25,11 @@ function App() {
             setYear={setYear}
           />
           <Suspense fallback={<h3>Prepare data...</h3>}>
-            <div>performance</div>
+            <Table
+              country={country}
+              year={year}
+              extraKeys={['population', 'cement_co2']}
+            />
           </Suspense>
         </Co2DataProvider>
       </Suspense>

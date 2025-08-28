@@ -1,6 +1,5 @@
 import {
   use,
-  useContext,
   useState,
   type ChangeEvent,
   type Dispatch,
@@ -10,36 +9,41 @@ import {
 import Co2DataContext from '../context/data-context';
 import getCountriesKeys from '@/utils/get-countries-keys';
 import Suggestions from './suggestions';
+import type { RawCountries } from '@/types/types';
 
 type SearchProps = {
-  country: string;
-  setCountry: Dispatch<SetStateAction<string>>;
+  country: keyof RawCountries | undefined;
+  setCountry: Dispatch<SetStateAction<keyof RawCountries | undefined>>;
 };
 
-const Search: FC<SearchProps> = ({ country, setCountry }) => {
+const Search: FC<SearchProps> = ({ setCountry }) => {
   const co2Data = use(Co2DataContext);
+
   const countries = getCountriesKeys(co2Data);
+  type CountryKey = (typeof countries)[number];
+
+  const [value, setValue] = useState('');
+  const [suggestions, setSuggestions] = useState<CountryKey[]>([]);
 
   const selectSuggestions = (text: string) => {
     return countries.filter((country) => country.includes(text));
   };
 
-  const [value, setValue] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const newValue = e.target.value;
+    setValue(newValue);
 
-    if (e.target.value.length > 0) {
-      const selected = selectSuggestions(e.target.value);
+    if (newValue.length > 0) {
+      const selected = selectSuggestions(newValue);
       setSuggestions(selected);
     } else {
       setSuggestions([]);
     }
   };
 
-  const onSuggestion = () => {
-    setValue(suggestion.label);
+  const onSuggestionClick = (value: keyof RawCountries) => {
+    setValue(value);
+    setCountry(value);
     setSuggestions([]);
   };
 
@@ -49,10 +53,13 @@ const Search: FC<SearchProps> = ({ country, setCountry }) => {
         type="text"
         placeholder="Country search"
         value={value}
-        className=""
         onChange={onChange}
+        className=""
       />
-      <Suggestions suggestions={suggestions} onClick={onSuggestion} />
+      <Suggestions
+        suggestions={suggestions}
+        onSuggestionClick={onSuggestionClick}
+      />
     </div>
   );
 };
