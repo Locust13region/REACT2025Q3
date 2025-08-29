@@ -1,5 +1,5 @@
 import type { YearData } from '@/types/types';
-import type { FC } from 'react';
+import { memo, type FC } from 'react';
 import Cell from '../cell/cell.';
 
 type TableHeaderProps<K extends keyof YearData = keyof YearData> = {
@@ -17,4 +17,4 @@ const TableHeader: FC<TableHeaderProps> = ({ extraColumns }) => {
   );
 };
 
-export default TableHeader;
+export default memo(TableHeader);

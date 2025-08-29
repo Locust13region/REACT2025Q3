@@ -13,7 +13,7 @@ function App() {
   return (
     <div
       className={
-        'h-screen w-screen flex flex-col bg-gray-50 dark:bg-gray-950 text-gray-950 dark:text-gray-100'
+        'h-screen w-screen flex flex-col bg-gray-50 dark:bg-gray-950 text-gray-950 dark:text-gray-200'
       }
     >
       <Suspense fallback={<h3>Loading data...</h3>}>

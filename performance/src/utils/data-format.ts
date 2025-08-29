@@ -4,8 +4,8 @@ export default function dataFormat(n: number) {
   const abs = Math.abs(n);
 
   if (abs < 0.00001) {
-    return n.toExponential(3);
+    return n.toExponential(5);
   }
 
-  return Number(n.toFixed(5)).toString();
+  return n.toFixed(5);
 }

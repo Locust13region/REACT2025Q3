@@ -30,7 +30,7 @@ const Cell: FC<CellProps> = ({ data }) => {
 
   return (
     <div
-      className={`p-2 border-b-2  border-b-gray-500 ${highlight ? 'bg-gray-700' : ''}`}
+      className={`px-3 py-2 border-b-2  border-b-gray-500 ${highlight ? 'bg-gray-700' : ''}`}
     >
       {displayValue()}
     </div>

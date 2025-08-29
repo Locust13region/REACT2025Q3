@@ -15,7 +15,10 @@ type TableProps = {
 const Table: FC<TableProps> = ({ country, year }) => {
   const co2Data = useContext(Co2DataContext);
   const [showModal, setShowModal] = useState(false);
-  const [extraColumns, setExtraColumns] = useState<(keyof YearData)[]>([]);
+  const [extraColumns, setExtraColumns] = useState<(keyof YearData)[]>([
+    'year',
+    'population',
+  ]);
 
   const countriesFilter = country
     ? { [country]: co2Data[country] as CountryData }
@@ -29,28 +32,27 @@ const Table: FC<TableProps> = ({ country, year }) => {
   const onOptionsClick = () => setShowModal(true);
 
   return (
-    <main className="relative overflow-auto">
+    <main className=" overflow-auto">
       {showModal &&
         createPortal(
           <Modal setShowModal={setShowModal}>
             <ColumnsPicker
               extraColumns={extraColumns}
               setExtraColumns={setExtraColumns}
-              setShowModal={setShowModal}
             />
           </Modal>,
           document.body
         )}
       <button
         onClick={onOptionsClick}
-        className="absolute top-2 right-5 p-2 rounded-md bg-gray-300 dark:bg-gray-800 cursor-pointer"
+        className="z-10 absolute top-10 right-5 p-2 rounded-md bg-gray-300 dark:bg-gray-800 cursor-pointer"
       >
         Options
       </button>
       <div
-        className="grid  w-full p-2"
+        className="grid w-full p-2"
         style={{
-          gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
+          gridTemplateColumns: `repeat(${columnsCount}, minmax(min-content, 1fr))`,
         }}
       >
         <TableHeader extraColumns={extraColumns} />

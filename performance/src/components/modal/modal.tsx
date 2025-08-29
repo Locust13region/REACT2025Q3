@@ -36,15 +36,14 @@ const Modal = ({
   return (
     <div
       onClick={handleOverlayClick}
-      className="fixed inset-0 bg-gray-900/80 flex justify-center items-center"
+      className="fixed inset-0  bg-gray-900/80 flex justify-center items-center"
     >
-      <div
-        ref={modalRef}
-        tabIndex={-1}
-        className="relative p-2 bg-gray-300 dark:bg-gray-500"
-      >
-        <button onClick={onClick} className="absolute right-2">
-          X
+      <div ref={modalRef} tabIndex={-1} className="relative">
+        <button
+          onClick={onClick}
+          className="absolute  text-gray-950 dark:text-gray-300 -top-4 -right-7 cursor-pointer"
+        >
+          x
         </button>
         {children}
       </div>

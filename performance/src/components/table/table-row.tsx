@@ -21,8 +21,11 @@ const TableRow: FC<TableRowProps> = ({
     <>
       <Cell data={country} />
       <Cell data={countryData.iso_code} />
-      {extraColumns.map((k) => (
-        <Cell key={`${country}${year}${k}`} data={currentYearData[k]} />
+      {extraColumns.map((c, index) => (
+        <Cell
+          key={`${country}${c}${index}`}
+          data={currentYearData ? currentYearData[c] : currentYearData}
+        />
       ))}
     </>
   );
