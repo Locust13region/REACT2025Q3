@@ -6,13 +6,13 @@ type TableRowProps<K extends keyof YearData = keyof YearData> = {
   country: keyof RawCountries;
   year: number;
   countryData: CountryData;
-  extraKeys: K[];
+  extraColumns: K[];
 };
 
 const TableRow: FC<TableRowProps> = ({
   country,
   countryData,
-  extraKeys,
+  extraColumns,
   year,
 }) => {
   const currentYearData = getYearData(countryData, year);
@@ -21,7 +21,7 @@ const TableRow: FC<TableRowProps> = ({
     <>
       <Cell data={country} />
       <Cell data={countryData.iso_code} />
-      {extraKeys.map((k) => (
+      {extraColumns.map((k) => (
         <Cell key={`${country}${year}${k}`} data={currentYearData[k]} />
       ))}
     </>

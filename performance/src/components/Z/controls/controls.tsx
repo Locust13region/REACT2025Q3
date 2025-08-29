@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ControlledForm from '@/components/Z/form-controlled/controlled-form';
 import UncontrolledForm from '@/components/Z/form-uncontrolled/uncontrolled-form';
 import { createPortal } from 'react-dom';
-import Modal from '@/components/Z/modal/modal';
+import Modal from '@/components/modal/modal';
 
 const Controls = () => {
   const [showControlled, setShowControlled] = useState(false);

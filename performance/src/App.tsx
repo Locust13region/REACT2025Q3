@@ -24,11 +24,7 @@ function App() {
             year={year}
             setYear={setYear}
           />
-          <Table
-            country={country}
-            year={year}
-            extraKeys={['year', 'population', 'co2', 'co2_per_capita']}
-          />
+          <Table country={country} year={year} />
         </Co2DataProvider>
       </Suspense>
     </div>

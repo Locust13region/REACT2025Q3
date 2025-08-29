@@ -10,7 +10,7 @@ const Suggestions: FC<SuggestionsProps> = ({
   onSuggestionClick,
 }) => {
   return (
-    <ul className="absolute top-[120%] left-[10%] max-h-[50vh] px-5 py-3 empty:py-0 w-[120%] rounded-md overflow-auto bg-gray-300 dark:bg-gray-800">
+    <ul className="absolute top-[120%] left-[10%] max-h-[50vh] px-8 py-3 empty:py-0 w-[150%] rounded-md overflow-auto bg-gray-300 dark:bg-gray-800">
       {suggestions.length > 0 &&
         suggestions.map((country) => (
           <li key={country}>
