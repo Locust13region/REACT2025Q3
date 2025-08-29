@@ -18,11 +18,12 @@ const Table: FC<TableProps> = ({ country, year, extraKeys }) => {
 
   const rowsKeys = Object.keys(countriesFilter);
 
-  const columnsCount = 2 + extraKeys.length;
+  const defaultColumns = 2; // columns: country, year
+  const columnsCount = defaultColumns + extraKeys.length;
 
   return (
     <div
-      className="grid gap-2 overflow-auto w-full h-full p-2"
+      className="grid overflow-auto w-full p-2"
       style={{ gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))` }}
     >
       {/* <div className="heading">{}</div> */}

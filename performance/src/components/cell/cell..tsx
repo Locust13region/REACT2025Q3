@@ -1,5 +1,5 @@
 import dataFormat from '@/utils/data-format';
-import { memo, useEffect, useState, type FC } from 'react';
+import { memo, useEffect, useMemo, useState, type FC } from 'react';
 
 type CellProps = {
   data?: number | string;
@@ -11,16 +11,31 @@ const Cell: FC<CellProps> = ({ data }) => {
   useEffect(() => {
     setHighlight(true);
 
-    const timer = setTimeout(() => setHighlight(false), 1000);
+    const highlightDelay = 400;
+
+    const timer = setTimeout(() => setHighlight(false), highlightDelay);
     return () => clearTimeout(timer);
   }, [data]);
 
+  const displayValue = () => {
+    if (data == null) return 'N/A';
+    if (typeof data === 'number') return dataFormat(data);
+    return data;
+  };
+  // const displayValue = useMemo(() => {
+  //   if (data == null) return 'N/A';
+  //   if (typeof data === 'number') return dataFormat(data);
+  //   return data;
+  // }, [data]);
+
   return (
-    <div className={`cell__data ${highlight ? 'cell__data-highlight' : ''}`}>
-      {data ? (typeof data === 'number' ? dataFormat(data) : data) : 'N/A'}
+    <div
+      className={`p-2 border-b-2  border-b-gray-500 ${highlight ? 'bg-gray-700' : ''}`}
+    >
+      {displayValue()}
     </div>
   );
 };
 
-// export default Cell;
-export default memo(Cell);
+export default Cell;
+// export default memo(Cell);
