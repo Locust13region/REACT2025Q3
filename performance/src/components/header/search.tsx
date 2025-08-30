@@ -1,5 +1,6 @@
 import {
   use,
+  useRef,
   useState,
   type ChangeEvent,
   type Dispatch,
@@ -24,9 +25,12 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
 
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState<CountryKey[]>([]);
+  const suggestionRef = useRef<HTMLUListElement>(null);
 
   const selectSuggestions = (text: string) => {
-    return countries.filter((country) => country.includes(text));
+    return countries.filter((country) =>
+      country.toLowerCase().includes(text.toLowerCase())
+    );
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +48,22 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
 
   const onFocus = () => setSuggestions(countries);
 
-  const onBlur = () => setSuggestions([]);
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (
+      e.relatedTarget &&
+      suggestionRef.current &&
+      suggestionRef.current.contains(e.relatedTarget as Node)
+    )
+      return;
+    setSuggestions([]);
+  };
+
+  const onDownKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown' && suggestionRef.current) {
+      e.preventDefault();
+      suggestionRef.current.focus();
+    }
+  };
 
   const onSuggestionClick = (value: keyof RawCountries) => {
     setValue(value);
@@ -61,11 +80,13 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        onKeyDown={onDownKeyDown}
         className="rounded-md pl-3 p-2 bg-gray-300 dark:bg-gray-800 cursor-pointer"
       />
       <Suggestions
         suggestions={suggestions}
         onSuggestionClick={onSuggestionClick}
+        ref={suggestionRef}
       />
     </div>
   );

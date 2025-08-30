@@ -1,20 +1,21 @@
-import type { FC } from 'react';
+import { forwardRef } from 'react';
 
 type SuggestionsProps = {
   suggestions: string[];
   onSuggestionClick: (value: string) => void;
 };
 
-const Suggestions: FC<SuggestionsProps> = ({
-  suggestions,
-  onSuggestionClick,
-}) => {
-  return (
-    <div className="scroll-py-3">
-      <ul className="z-10 absolute top-[120%] left-[10%] max-h-[50vh] px-5 w-[150%] rounded-md overflow-auto bg-gray-300 dark:bg-gray-800">
+const Suggestions = forwardRef<HTMLUListElement, SuggestionsProps>(
+  ({ suggestions, onSuggestionClick }, ref) => {
+    return (
+      <ul
+        ref={ref}
+        tabIndex={-1}
+        className="absolute top-[120%] left-[10%] max-h-[50vh] px-5 w-[150%] rounded-md overflow-auto bg-gray-300 dark:bg-gray-800"
+      >
         {suggestions.length > 0 &&
           suggestions.map((country) => (
-            <li key={country}>
+            <li tabIndex={-1} key={country}>
               <label
                 className="block w-full p-2 cursor-pointer "
                 onMouseDown={() => onSuggestionClick(country)}
@@ -24,8 +25,10 @@ const Suggestions: FC<SuggestionsProps> = ({
             </li>
           ))}
       </ul>
-    </div>
-  );
-};
+    );
+  }
+);
+
+Suggestions.displayName = 'Suggestions';
 
 export default Suggestions;
