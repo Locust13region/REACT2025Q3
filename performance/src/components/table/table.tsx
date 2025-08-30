@@ -45,12 +45,12 @@ const Table: FC<TableProps> = ({ country, year }) => {
         )}
       <button
         onClick={onOptionsClick}
-        className="z-10 absolute top-10 right-5 p-2 rounded-md bg-gray-300 dark:bg-gray-800 cursor-pointer"
+        className="z-10 absolute top-7 right-5 p-2 rounded-md bg-gray-300 dark:bg-gray-800 cursor-pointer"
       >
         Options
       </button>
       <div
-        className="grid w-full p-2"
+        className="grid w-full px-2 pb-2"
         style={{
           gridTemplateColumns: `repeat(${columnsCount}, minmax(min-content, 1fr))`,
         }}

@@ -7,5 +7,5 @@ export default function dataFormat(n: number) {
     return n.toExponential(5);
   }
 
-  return n.toFixed(5);
+  return Number(n.toFixed(8));
 }

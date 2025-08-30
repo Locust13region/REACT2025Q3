@@ -9,10 +9,10 @@ type TableHeaderProps<K extends keyof YearData = keyof YearData> = {
 const TableHeader: FC<TableHeaderProps> = ({ extraColumns }) => {
   return (
     <>
-      <Cell data={'Country'} />
-      <Cell data={'ISO'} />
+      <Cell sticky={true} data={'Country'} />
+      <Cell sticky={true} data={'ISO'} />
       {extraColumns.length > 0 &&
-        extraColumns.map((k) => <Cell key={`$${k}`} data={k} />)}
+        extraColumns.map((k) => <Cell sticky={true} key={`$${k}`} data={k} />)}
     </>
   );
 };
