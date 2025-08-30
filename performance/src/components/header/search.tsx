@@ -1,5 +1,5 @@
 import {
-  use,
+  useCallback,
   useRef,
   useState,
   type ChangeEvent,
@@ -7,8 +7,6 @@ import {
   type FC,
   type SetStateAction,
 } from 'react';
-import Co2DataContext from '../context/data-context';
-import getCountriesKeys from '@/utils/get-countries-keys';
 import Suggestions from './suggestions';
 import type { RawCountries } from '@/types/types';
 
@@ -18,44 +16,33 @@ type SearchProps = {
 };
 
 const Search: FC<SearchProps> = ({ setCountry }) => {
-  const co2Data = use(Co2DataContext);
-
-  const countries = getCountriesKeys(co2Data);
-  type CountryKey = (typeof countries)[number];
-
   const [value, setValue] = useState('');
-  const [suggestions, setSuggestions] = useState<CountryKey[]>([]);
-  const suggestionRef = useRef<HTMLUListElement>(null);
+  const [isSuggestionsOpen, setSuggestionsOpen] = useState(false);
 
-  const selectSuggestions = (text: string) => {
-    return countries.filter((country) =>
-      country.toLowerCase().includes(text.toLowerCase())
-    );
-  };
+  const suggestionRef = useRef<HTMLUListElement>(null);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
 
     if (newValue.length > 0) {
-      const selected = selectSuggestions(newValue);
-      setSuggestions(selected);
+      setSuggestionsOpen(true);
     } else {
-      setSuggestions(countries);
       setCountry(undefined);
     }
   };
 
-  const onFocus = () => setSuggestions(countries);
+  const onFocus = () => setSuggestionsOpen(true);
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (
       e.relatedTarget &&
       suggestionRef.current &&
       suggestionRef.current.contains(e.relatedTarget as Node)
-    )
+    ) {
       return;
-    setSuggestions([]);
+    }
+    setSuggestionsOpen(false);
   };
 
   const onDownKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -65,12 +52,14 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
     }
   };
 
-  const onSuggestionClick = (value: keyof RawCountries) => {
-    setValue(value);
-    setCountry(value);
-    setSuggestions([]);
-  };
-
+  const onSuggestionClick = useCallback(
+    (value: keyof RawCountries) => {
+      setValue(value);
+      setCountry(value);
+      setSuggestionsOpen(false);
+    },
+    [setCountry]
+  );
   return (
     <div className="relative">
       <input
@@ -84,7 +73,8 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
         className="rounded-md pl-3 p-2 bg-gray-300 dark:bg-gray-800 cursor-pointer"
       />
       <Suggestions
-        suggestions={suggestions}
+        inputValue={value}
+        isOpen={isSuggestionsOpen}
         onSuggestionClick={onSuggestionClick}
         ref={suggestionRef}
       />
