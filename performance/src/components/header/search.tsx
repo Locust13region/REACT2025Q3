@@ -1,5 +1,4 @@
 import {
-  lazy,
   useCallback,
   useRef,
   useState,
@@ -10,7 +9,7 @@ import {
 } from 'react';
 import type { RawCountries } from '@/types/types';
 
-const Suggestions = lazy(() => import('./suggestions'));
+import Suggestions from './suggestions';
 
 type SearchProps = {
   country: keyof RawCountries | undefined;
@@ -62,6 +61,7 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
     },
     [setCountry]
   );
+
   return (
     <div className="relative">
       <input
@@ -74,13 +74,12 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
         onKeyDown={onDownKeyDown}
         className="rounded-md pl-3 p-2 bg-gray-300 dark:bg-gray-800 cursor-pointer"
       />
-      {isSuggestionsOpen && (
-        <Suggestions
-          inputValue={value}
-          onSuggestionClick={onSuggestionClick}
-          ref={suggestionRef}
-        />
-      )}
+      <Suggestions
+        inputValue={value}
+        isOpen={isSuggestionsOpen}
+        onSuggestionClick={onSuggestionClick}
+        ref={suggestionRef}
+      />
     </div>
   );
 };
