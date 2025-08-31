@@ -1,69 +1,75 @@
-# React + TypeScript + Vite
+# React App Performance Profiling
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Add column
 
-Currently, two official plugins are available:
+Before
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **commit 1**
+- commit: 2.8s
+- render: 873.1ms
+  ![flame](./docs/before/add%20col%201%20flame.jpg)
+  ![ranked](./docs/before/add%20col%201%20ranked.jpg)
+- **commit 2**
+- commit: 6.4s
+- render: 1008.7ms
+  ![flame](./docs/before/add%20col%202%20flame.jpg)
+  ![ranked](./docs/before/add%20col%202%20ranked.jpg)
 
-## Expanding the ESLint configuration
+After
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **commit 1**
+- commit: 2.3s
+- render: 162ms
+  ![flame](./docs/after/add%20col%201%20flame.jpg)
+  ![ranked](./docs/after/add%20col%201%20rank.jpg)
+- **commit 2**
+- commit: 5s
+- render: 647.3ms
+  ![flame](./docs/after/add%20col%202%20flame.jpg)
+  ![ranked](./docs/after/add%20col%202%20rank.jpg)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Change year
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Before
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+- **commit 1**
+- commit: 2.7s
+- render: 841ms
+  ![flame](./docs/before/cng%20year%201%20fl.jpg)
+  ![ranked](./docs/before/cng%20year%201%20nank.jpg)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+After
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+- **commit 1**
+- commit: 5.7s
+- render: 771.1ms
+  ![flame](./docs/after/cng%20year%201%20fl.jpg)
+  ![ranked](./docs/after/cng%20year%201%20rank.jpg)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+## Select country
+
+Before
+
+- **commit 1**
+- commit: 1.6s
+- render: 151ms
+  ![flame](./docs/before/sel%20cntr%201%20fl.jpg)
+  ![ranked](./docs/before/sel%20cntr%201%20rank.jpg)
+- **commit 2**
+- commit: 9.7s
+- render: 27.5ms
+  ![flame](./docs/before/sel%20cntr%202%20fl.jpg)
+  ![ranked](./docs/before/sel%20cntr%202%20rank.jpg)
+
+After
+
+- **commit 1**
+- commit: 2.2s
+- render: 143.5ms
+  ![flame](./docs/after/sel%20cntr%201%20fl.jpg)
+  ![ranked](./docs/after/sel%20cntr%201%20rank.jpg)
+- **commit 2**
+- commit: 9.9s
+- render: 33.9ms
+  ![flame](./docs/after/sel%20cntr%202%20fl.jpg)
+  ![ranked](./docs/after/sel%20cntr%202%20rank.jpg)

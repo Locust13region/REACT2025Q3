@@ -1,5 +1,5 @@
 import dataFormat from '@/utils/data-format';
-import { memo, useEffect, useMemo, useState, type FC } from 'react';
+import { memo, useEffect, useState, type FC } from 'react';
 
 type CellProps = {
   data?: number | string;
@@ -23,11 +23,6 @@ const Cell: FC<CellProps> = ({ data, sticky }) => {
     if (typeof data === 'number') return dataFormat(data);
     return data;
   };
-  // const displayValue = useMemo(() => {
-  //   if (data == null) return 'N/A';
-  //   if (typeof data === 'number') return dataFormat(data);
-  //   return data;
-  // }, [data]);
 
   return (
     <div
@@ -38,5 +33,4 @@ const Cell: FC<CellProps> = ({ data, sticky }) => {
   );
 };
 
-export default Cell;
-// export default memo(Cell);
+export default memo(Cell);

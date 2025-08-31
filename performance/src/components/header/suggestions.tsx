@@ -12,7 +12,6 @@ const Suggestions = forwardRef<HTMLUListElement, SuggestionsProps>(
   ({ inputValue, isOpen, onSuggestionClick }, ref) => {
     const co2Data = use(Co2DataContext);
     const countries = useMemo(() => getCountriesKeys(co2Data), [co2Data]);
-    // const countries = getCountriesKeys(co2Data);
 
     const suggestions = inputValue
       ? countries.filter((country) =>

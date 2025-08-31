@@ -1,5 +1,5 @@
 import type { CountryData, RawCountries, YearData } from '@/types/types';
-import { useContext, useState, type FC } from 'react';
+import { memo, useContext, useMemo, useState, type FC } from 'react';
 import Co2DataContext from '../context/data-context';
 import TableRow from './table-row';
 import TableHeader from './table-header';
@@ -20,11 +20,15 @@ const Table: FC<TableProps> = ({ country, year }) => {
     'population',
   ]);
 
-  const countriesFilter = country
-    ? { [country]: co2Data[country] as CountryData }
-    : co2Data;
+  const countriesFilter = useMemo(
+    () => (country ? { [country]: co2Data[country] as CountryData } : co2Data),
+    [co2Data, country]
+  );
 
-  const rowsKeys = Object.keys(countriesFilter);
+  const rowsKeys = useMemo(
+    () => Object.keys(countriesFilter),
+    [countriesFilter]
+  );
 
   const defaultColumns = 2; // columns: country, year
   const columnsCount = defaultColumns + extraColumns.length;
@@ -70,4 +74,4 @@ const Table: FC<TableProps> = ({ country, year }) => {
   );
 };
 
-export default Table;
+export default memo(Table);

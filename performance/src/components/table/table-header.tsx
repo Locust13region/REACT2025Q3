@@ -12,7 +12,7 @@ const TableHeader: FC<TableHeaderProps> = ({ extraColumns }) => {
       <Cell sticky={true} data={'Country'} />
       <Cell sticky={true} data={'ISO'} />
       {extraColumns.length > 0 &&
-        extraColumns.map((k) => <Cell sticky={true} key={`$${k}`} data={k} />)}
+        extraColumns.map((k) => <Cell sticky={true} key={`${k}`} data={k} />)}
     </>
   );
 };

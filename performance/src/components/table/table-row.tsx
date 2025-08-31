@@ -1,5 +1,5 @@
 import type { CountryData, RawCountries, YearData } from '@/types/types';
-import type { FC } from 'react';
+import { memo, type FC } from 'react';
 import Cell from '../cell/cell.';
 
 type TableRowProps<K extends keyof YearData = keyof YearData> = {
@@ -15,7 +15,9 @@ const TableRow: FC<TableRowProps> = ({
   extraColumns,
   year,
 }) => {
-  const currentYearData = getYearData(countryData, year);
+  const currentYearData = countryData.data.find(
+    (yearData) => yearData.year === year
+  );
 
   return (
     <>
@@ -31,10 +33,4 @@ const TableRow: FC<TableRowProps> = ({
   );
 };
 
-export default TableRow;
-
-function getYearData(countryData: CountryData, year: number) {
-  return countryData.data.find(
-    (yearData) => yearData.year === year
-  ) as YearData;
-}
+export default memo(TableRow);
