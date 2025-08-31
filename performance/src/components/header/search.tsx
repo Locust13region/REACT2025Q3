@@ -1,4 +1,5 @@
 import {
+  lazy,
   useCallback,
   useRef,
   useState,
@@ -7,8 +8,9 @@ import {
   type FC,
   type SetStateAction,
 } from 'react';
-import Suggestions from './suggestions';
 import type { RawCountries } from '@/types/types';
+
+const Suggestions = lazy(() => import('./suggestions'));
 
 type SearchProps = {
   country: keyof RawCountries | undefined;
@@ -72,12 +74,13 @@ const Search: FC<SearchProps> = ({ setCountry }) => {
         onKeyDown={onDownKeyDown}
         className="rounded-md pl-3 p-2 bg-gray-300 dark:bg-gray-800 cursor-pointer"
       />
-      <Suggestions
-        inputValue={value}
-        isOpen={isSuggestionsOpen}
-        onSuggestionClick={onSuggestionClick}
-        ref={suggestionRef}
-      />
+      {isSuggestionsOpen && (
+        <Suggestions
+          inputValue={value}
+          onSuggestionClick={onSuggestionClick}
+          ref={suggestionRef}
+        />
+      )}
     </div>
   );
 };
